@@ -52,6 +52,16 @@ export function getFrontendDashboardRoutes(): RouteObject[] {
 			],
 		},
 		{
+			path: "commerce",
+			children: [
+				{ index: true, element: <Navigate to="categories" replace /> },
+				{ path: "categories", element: Component("/pages/commerce/categories") },
+				{ path: "products", element: Component("/pages/commerce/products") },
+				{ path: "orders", element: Component("/pages/commerce/orders") },
+				{ path: "revenue", element: Component("/pages/commerce/revenue") },
+			],
+		},
+		{
 			path: "error",
 			children: [
 				{ index: true, element: <Navigate to="403" replace /> },

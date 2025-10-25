@@ -61,6 +61,18 @@ export const frontendNavData: NavProps["data"] = [
 					},
 				],
 			},
+			// commerce
+			{
+				title: "sys.nav.commerce",
+				path: "/commerce",
+				icon: <Icon icon="local:ic-commerce" size="24" />,
+				children: [
+					{ title: "sys.nav.commerce.categories", path: "/commerce/categories" },
+					{ title: "sys.nav.commerce.products", path: "/commerce/products" },
+					{ title: "sys.nav.commerce.orders", path: "/commerce/orders" },
+					{ title: "sys.nav.commerce.revenue", path: "/commerce/revenue" },
+				],
+			},
 			// menulevel
 			{
 				title: "sys.nav.menulevel.index",

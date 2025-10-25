@@ -94,6 +94,46 @@
 			"services": ["src/api/services/userService.ts"]
 		},
 
+		"commerce": {
+			"name": "Commerce • Coffee Shop",
+			"routes": ["/commerce"],
+			"subRoutes": ["categories", "products", "orders", "revenue"],
+			"routingDefinedIn": "src/routes/sections/dashboard/frontend.tsx",
+			"sources": [
+				"src/pages/commerce/categories/index.tsx",
+				"src/pages/commerce/products/index.tsx",
+				"src/pages/commerce/orders/index.tsx",
+				"src/pages/commerce/revenue/index.tsx"
+			],
+			"api": [
+				"GET /categories",
+				"POST /categories",
+				"GET /categories/:id",
+				"PATCH /categories/:id",
+				"DELETE /categories/:id",
+				"GET /products?categoryId",
+				"POST /products",
+				"GET /products/:id",
+				"PATCH /products/:id",
+				"DELETE /products/:id",
+				"GET /orders?customerName",
+				"POST /orders",
+				"GET /orders/:id",
+				"PATCH /orders/:id",
+				"DELETE /orders/:id",
+				"GET /revenue/daily?date",
+				"GET /revenue/range?startDate&endDate"
+			],
+			"services": [
+				"src/api/services/categoryService.ts",
+				"src/api/services/productService.ts",
+				"src/api/services/orderService.ts",
+				"src/api/services/revenueService.ts"
+			],
+			"state": ["TanStack Query for server state (no persistent Zustand store)"],
+			"types": ["src/types/coffee.ts"]
+		},
+
 		"error": {
 			"name": "Error pages",
 			"routes": ["/error"],
