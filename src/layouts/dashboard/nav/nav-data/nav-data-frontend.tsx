@@ -63,7 +63,7 @@ export const frontendNavData: NavProps["data"] = [
 			},
 			// commerce
 			{
-				title: "sys.nav.commerce",
+				title: "sys.nav.commerce.index",
 				path: "/commerce",
 				icon: <Icon icon="local:ic-commerce" size="24" />,
 				children: [

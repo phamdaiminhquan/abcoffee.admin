@@ -5,6 +5,7 @@ import { initReactI18next } from "react-i18next";
 import { LocalEnum, StorageEnum } from "#/enum";
 import en_US from "./lang/en_US";
 import zh_CN from "./lang/zh_CN";
+import vi_VN from "./lang/vi_VN";
 
 const defaultLng = getStringItem(StorageEnum.I18N) || (LocalEnum.en_US as string);
 
@@ -29,6 +30,7 @@ i18n
 		resources: {
 			en_US: { translation: en_US },
 			zh_CN: { translation: zh_CN },
+			vi_VN: { translation: vi_VN },
 		},
 	});
 
