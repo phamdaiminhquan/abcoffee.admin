@@ -1,0 +1,163 @@
+{
+	"schemaVersion": "1.0",
+	"root": "context/main.json",
+	"lastUpdated": "2025-10-25",
+	"notes": "Modules are grouped where appropriate to keep this file compact. Use subRoutes to navigate to specific pages.",
+	"modules": {
+		"auth.login": {
+			"name": "Authentication • Login",
+			"routes": ["/auth/login"],
+			"routingDefinedIn": "src/routes/sections/auth.tsx",
+			"sources": [
+				"src/pages/sys/login/index.tsx",
+				"src/pages/sys/login/login-form.tsx",
+				"src/pages/sys/login/providers/login-provider.tsx"
+			],
+			"api": ["POST /auth/signin", "POST /auth/signup", "GET /auth/logout", "GET /auth/refresh"],
+			"services": ["src/api/services/userService.ts"],
+			"state": ["src/store/userStore.ts (useSignIn, tokens, userInfo)"]
+		},
+
+		"dashboard.workbench": {
+			"name": "Dashboard • Workbench",
+			"routes": ["/workbench"],
+			"routingDefinedIn": "src/routes/sections/dashboard/frontend.tsx",
+			"sources": ["src/pages/dashboard/workbench/index.tsx"]
+		},
+		"dashboard.analysis": {
+			"name": "Dashboard • Analysis",
+			"routes": ["/analysis"],
+			"routingDefinedIn": "src/routes/sections/dashboard/frontend.tsx",
+			"sources": ["src/pages/dashboard/analysis/index.tsx"]
+		},
+
+		"components": {
+			"name": "Components (demo suite)",
+			"routes": ["/components"],
+			"subRoutes": ["animate", "scroll", "multi-language", "icon", "upload", "chart", "toast"],
+			"routingDefinedIn": "src/routes/sections/dashboard/frontend.tsx",
+			"pagesGlob": "src/pages/components/**/index.tsx"
+		},
+
+		"functions": {
+			"name": "Functions (utilities)",
+			"routes": ["/functions"],
+			"subRoutes": ["clipboard", "token_expired"],
+			"routingDefinedIn": "src/routes/sections/dashboard/frontend.tsx",
+			"sources": ["src/pages/functions/clipboard/index.tsx", "src/pages/functions/token-expired/index.tsx"],
+			"api": ["POST /user/tokenExpired"],
+			"services": ["src/api/services/demoService.ts"]
+		},
+
+		"management.user.profile": {
+			"name": "Management • User • Profile",
+			"routes": ["/management/user/profile"],
+			"routingDefinedIn": "src/routes/sections/dashboard/frontend.tsx",
+			"sources": ["src/pages/management/user/profile/index.tsx"],
+			"services": ["src/api/services/userService.ts"]
+		},
+		"management.user.account": {
+			"name": "Management • User • Account",
+			"routes": ["/management/user/account"],
+			"routingDefinedIn": "src/routes/sections/dashboard/frontend.tsx",
+			"sources": ["src/pages/management/user/account/index.tsx"]
+		},
+
+		"management.system.permission": {
+			"name": "Management • System • Permission",
+			"routes": ["/management/system/permission"],
+			"routingDefinedIn": "src/routes/sections/dashboard/frontend.tsx",
+			"sources": ["src/pages/management/system/permission/index.tsx"],
+			"api": ["GET /menu"],
+			"services": ["src/api/services/menuService.ts"]
+		},
+		"management.system.role": {
+			"name": "Management • System • Role",
+			"routes": ["/management/system/role"],
+			"routingDefinedIn": "src/routes/sections/dashboard/frontend.tsx",
+			"sources": ["src/pages/management/system/role/index.tsx"]
+		},
+		"management.system.user": {
+			"name": "Management • System • User",
+			"routes": ["/management/system/user"],
+			"routingDefinedIn": "src/routes/sections/dashboard/frontend.tsx",
+			"sources": ["src/pages/management/system/user/index.tsx"],
+			"api": ["GET /user/:id"],
+			"services": ["src/api/services/userService.ts"]
+		},
+		"management.system.user.detail": {
+			"name": "Management • System • User Detail",
+			"routes": ["/management/system/user/:id"],
+			"routingDefinedIn": "src/routes/sections/dashboard/frontend.tsx",
+			"sources": ["src/pages/management/system/user/detail.tsx"],
+			"api": ["GET /user/:id"],
+			"services": ["src/api/services/userService.ts"]
+		},
+
+		"error": {
+			"name": "Error pages",
+			"routes": ["/error"],
+			"subRoutes": ["403", "404", "500"],
+			"routingDefinedIn": "src/routes/sections/dashboard/frontend.tsx",
+			"sources": [
+				"src/pages/sys/error/Page403.tsx",
+				"src/pages/sys/error/Page404.tsx",
+				"src/pages/sys/error/Page500.tsx"
+			]
+		},
+
+		"menu_level": {
+			"name": "Nested menu levels",
+			"routes": ["/menu_level"],
+			"subRoutes": ["1a", "1b/2a", "1b/2b/3a", "1b/2b/3b"],
+			"routingDefinedIn": "src/routes/sections/dashboard/frontend.tsx",
+			"sources": [
+				"src/pages/menu-level/menu-level-1a/index.tsx",
+				"src/pages/menu-level/menu-level-1b/menu-level-2a/index.tsx",
+				"src/pages/menu-level/menu-level-1b/menu-level-2b/menu-level-3a/index.tsx",
+				"src/pages/menu-level/menu-level-1b/menu-level-2b/menu-level-3b/index.tsx"
+			]
+		},
+
+		"link": {
+			"name": "Link (iframe/external)",
+			"routes": ["/link"],
+			"subRoutes": ["iframe", "external-link"],
+			"routingDefinedIn": "src/routes/sections/dashboard/frontend.tsx",
+			"sources": ["src/pages/sys/others/link/iframe.tsx", "src/pages/sys/others/link/external-link.tsx"]
+		},
+
+		"permission": {
+			"name": "Permission demos",
+			"routes": ["/permission"],
+			"subRoutes": ["(index)", "page-test"],
+			"routingDefinedIn": "src/routes/sections/dashboard/frontend.tsx",
+			"sources": ["src/pages/sys/others/permission/index.tsx", "src/pages/sys/others/permission/page-test.tsx"]
+		},
+
+		"others.calendar": {
+			"name": "Others • Calendar",
+			"routes": ["/calendar"],
+			"routingDefinedIn": "src/routes/sections/dashboard/frontend.tsx",
+			"sources": ["src/pages/sys/others/calendar/index.tsx"]
+		},
+		"others.kanban": {
+			"name": "Others • Kanban",
+			"routes": ["/kanban"],
+			"routingDefinedIn": "src/routes/sections/dashboard/frontend.tsx",
+			"sources": ["src/pages/sys/others/kanban/index.tsx"]
+		},
+		"others.blank": {
+			"name": "Others • Blank",
+			"routes": ["/blank"],
+			"routingDefinedIn": "src/routes/sections/dashboard/frontend.tsx",
+			"sources": ["src/pages/sys/others/blank.tsx"]
+		}
+	},
+	"seeAlso": [
+		"context/main.json#/usageGuidelines",
+		"context/main.json#/projectOverview",
+		"context/main.json#/codeStyleGuidelines",
+		"context/main.json#/moduleDevelopmentTemplate"
+	]
+}

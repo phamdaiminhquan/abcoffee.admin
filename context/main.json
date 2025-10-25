@@ -1,0 +1,160 @@
+{
+	"schemaVersion": "1.0",
+	"entry": "context/main.json",
+	"lastUpdated": "2025-10-25",
+	"usageGuidelines": {
+		"purpose": "This context system is a self-documenting map of the codebase. Start here, then jump to module-specific entries.",
+		"howToUse": [
+			"Begin at context/main.json (this file).",
+			"Read projectOverview for stack, architecture, and conventions.",
+			"Use moduleDiscovery.registry to find modules in context/modules.json.",
+			"Follow linkingStrategy.jsonPointer examples to jump to a module by id.",
+			"When adding a new feature, follow moduleDevelopmentTemplate to keep structure consistent."
+		],
+		"intendedConsumers": ["Developers", "AI assistants", "Contributors"]
+	},
+	"projectOverview": {
+		"name": "Slash Admin",
+		"techStack": {
+			"runtime": ["React 19", "TypeScript 5"],
+			"bundler": "Vite 6",
+			"routing": "React Router 7",
+			"state": ["Zustand (local UI state)", "@tanstack/react-query (server state)"],
+			"http": "Axios with interceptors (src/api/apiClient.ts)",
+			"ui": ["shadcn/ui (customized in src/ui)", "Tailwind CSS 4", "vanilla-extract tokens in src/theme"],
+			"i18n": "i18next + react-i18next (src/locales)",
+			"mocking": "MSW + Faker (src/_mock)",
+			"tooling": ["Biome (format/lint)", "lefthook (git hooks)"]
+		},
+		"architecture": {
+			"aliases": { "@/*": "src/*", "#/*": "src/types/*" },
+			"keyDirs": {
+				"api": "src/api (apiClient + services)",
+				"pages": "src/pages (feature pages/modules)",
+				"routes": "src/routes (route sections, guards, helpers)",
+				"layouts": "src/layouts (dashboard/simple)",
+				"components": "src/components (feature-level building blocks)",
+				"ui": "src/ui (shadcn primitives)",
+				"store": "src/store (Zustand stores)",
+				"theme": "src/theme (tokens, provider)",
+				"types": "src/types (shared TS types/enums)",
+				"utils": "src/utils",
+				"locales": "src/locales (i18n)",
+				"mock": "src/_mock"
+			},
+			"routing": {
+				"mode": "frontend | backend (GLOBAL_CONFIG.routerMode)",
+				"defaultRoute": "GLOBAL_CONFIG.defaultRoute",
+				"files": [
+					"src/routes/sections/index.tsx",
+					"src/routes/sections/auth.tsx",
+					"src/routes/sections/dashboard/*.tsx",
+					"src/routes/sections/main.tsx"
+				]
+			},
+			"apiConventions": {
+				"baseURL": "GLOBAL_CONFIG.apiBaseUrl (proxied via vite.config.ts)",
+				"resultEnvelope": "types/api.Result<T> with status/message/data",
+				"auth": "401 triggers userStore clear; interceptor displays toast"
+			}
+		},
+		"conventions": {
+			"naming": {
+				"components": "PascalCase .tsx",
+				"hooks": "useXxx camelCase",
+				"files": "kebab-case for non-components; index.tsx for page entry",
+				"types": "PascalCase for interfaces/types; enums in src/types/enum.ts"
+			},
+			"imports": {
+				"prefer": ["@/…", "#/…"],
+				"avoid": ["relative paths that traverse many levels"]
+			},
+			"styles": {
+				"tailwind": "Utility-first classes + project tokens (see tailwind.config.ts)",
+				"theme": "vanilla-extract tokens, dark mode via [data-theme-mode='dark']"
+			}
+		}
+	},
+	"moduleDiscovery": {
+		"registry": "context/modules.json",
+		"indexing": "Each module has a stable id. Use JSON Pointer to navigate.",
+		"examples": [
+			{
+				"id": "auth.login",
+				"pointer": "context/modules.json#/modules/auth.login"
+			},
+			{
+				"id": "dashboard.workbench",
+				"pointer": "context/modules.json#/modules/dashboard.workbench"
+			}
+		]
+	},
+	"linkingStrategy": {
+		"jsonPointer": {
+			"format": "{file}#/modules/{moduleId}",
+			"file": "context/modules.json",
+			"example": "context/modules.json#/modules/auth.login"
+		},
+		"fsPaths": {
+			"page": "src/pages/<module>/index.tsx",
+			"route": "src/routes/sections/<section>.tsx",
+			"service": "src/api/services/<service>.ts"
+		},
+		"resolutionOrder": [
+			"Check routes to confirm path",
+			"Open page component",
+			"Open related service/store",
+			"Review shared components if referenced"
+		]
+	},
+	"codeStyleGuidelines": {
+		"formatter": {
+			"tool": "Biome",
+			"lineWidth": 120,
+			"indent": "tabs",
+			"quotes": "double",
+			"organizeImports": true
+		},
+		"typescript": {
+			"strict": true,
+			"noImplicitAny": true,
+			"noUnusedLocals": true
+		},
+		"react": {
+			"components": "Functional components with hooks",
+			"state": "Zustand for app UI; React Query for server fetch",
+			"routing": "Use lazy imports where possible"
+		},
+		"css": {
+			"tailwind": "Prefer tokens and semantic class composition",
+			"shadcn": "Use src/ui primitives and Form pattern as in login-form"
+		},
+		"git": {
+			"commitMessage": "commitlint conventional commits",
+			"hooks": "lefthook preinstall"
+		}
+	},
+	"moduleDevelopmentTemplate": {
+		"steps": [
+			"Create a page at src/pages/<feature>/index.tsx (and sub-tabs if needed).",
+			"Add/extend route in src/routes/sections/dashboard/frontend.tsx (or backend.tsx if using server menus).",
+			"Create API service at src/api/services/<feature>Service.ts exporting typed methods.",
+			"If persistent UI state is needed, add a Zustand store in src/store/<feature>Store.ts.",
+			"Add i18n keys under src/locales/lang/en_US and zh_CN as needed.",
+			"Compose using src/ui primitives and project tokens; keep logic in hooks where appropriate.",
+			"Document the module by adding an entry to context/modules.json with id, route, sources, and API."
+		],
+		"folderSkeleton": {
+			"pages": "src/pages/<feature>/…",
+			"service": "src/api/services/<feature>Service.ts",
+			"store": "src/store/<feature>Store.ts (optional)",
+			"types": "src/types/<feature>.ts (optional)"
+		},
+		"checklist": [
+			"Type all API responses with types in src/types",
+			"Respect Result<T> envelope in apiClient",
+			"Use aliases @/ and #/",
+			"Add tests/mocks under src/_mock if API is not ready"
+		]
+	}
+}
