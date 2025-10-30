@@ -58,6 +58,7 @@ export function getFrontendDashboardRoutes(): RouteObject[] {
 				{ path: "categories", element: Component("/pages/commerce/categories") },
 				{ path: "products", element: Component("/pages/commerce/products") },
 				{ path: "orders", element: Component("/pages/commerce/orders") },
+				{ path: "pos", element: Component("/pages/commerce/pos") },
 				{ path: "revenue", element: Component("/pages/commerce/revenue") },
 			],
 		},

@@ -136,6 +136,7 @@
 			"workbench": "Bàn làm việc",
 			"commerce": {
 				"index": "Thương mại",
+				"pos": "Quầy thu ngân",
 				"categories": "Danh mục",
 				"products": "Sản phẩm",
 				"orders": "Đơn hàng",

@@ -93,13 +93,16 @@ export interface CreateOrderDetailDto {
 export interface CreateOrderDto {
 	customerName?: string;
 	userId?: number;
-	paymentMethod: PaymentMethod;
+	paymentMethod?: PaymentMethod; // Optional for POS pending orders
 	orderDetails: CreateOrderDetailDto[];
 }
 
 export interface UpdateOrderDto {
 	status?: OrderStatus;
 	cancellationReason?: string;
+	paymentMethod?: PaymentMethod; // Allow setting at payment time in POS
+	customerName?: string; // Allow editing customer name for pending orders
+	orderDetails?: CreateOrderDetailDto[]; // Allow modifying items (append/remove/update)
 }
 
 export interface PaymentMethodBreakdown {

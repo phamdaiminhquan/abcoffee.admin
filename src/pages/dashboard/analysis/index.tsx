@@ -26,11 +26,37 @@ const dashboardData = {
 			avgTimeChange: -0.2,
 			chart: {
 				series: [
-					{ name: "Natural", data: [40000, 60000, 90000, 100000, 80000, 70000, 60000, 50000, 70000, 90000, 80000, 90000] },
-					{ name: "Referral", data: [30000, 40000, 50000, 60000, 50000, 40000, 30000, 40000, 50000, 60000, 50000, 40000] },
-					{ name: "Direct", data: [50000, 60000, 40000, 30000, 40000, 50000, 60000, 70000, 80000, 70000, 60000, 50000] },
+					{
+						name: "Natural",
+						data: [40000, 60000, 90000, 100000, 80000, 70000, 60000, 50000, 70000, 90000, 80000, 90000],
+					},
+					{
+						name: "Referral",
+						data: [30000, 40000, 50000, 60000, 50000, 40000, 30000, 40000, 50000, 60000, 50000, 40000],
+					},
+					{
+						name: "Direct",
+						data: [50000, 60000, 40000, 30000, 40000, 50000, 60000, 70000, 80000, 70000, 60000, 50000],
+					},
+					{
+						name: "Direct",
+						data: [60000, 50000, 60000, 50000, 60000, 60000, 50000, 10000, 90000, 50000, 40000, 40000],
+					},
 				],
-				categories: ["01 Jun", "02 Jun", "03 Jun", "04 Jun", "05 Jun", "06 Jun", "07 Jun", "08 Jun", "09 Jun", "10 Jun", "11 Jun", "12 Jun"],
+				categories: [
+					"01 Jun",
+					"02 Jun",
+					"03 Jun",
+					"04 Jun",
+					"05 Jun",
+					"06 Jun",
+					"07 Jun",
+					"08 Jun",
+					"09 Jun",
+					"10 Jun",
+					"11 Jun",
+					"12 Jun",
+				],
 			},
 		},
 		week: {
@@ -40,11 +66,33 @@ const dashboardData = {
 			avgTimeChange: -0.5,
 			chart: {
 				series: [
-					{ name: "Natural", data: [400000, 600000, 900000, 1000000, 800000, 700000, 600000, 500000, 700000, 900000, 800000, 900000] },
-					{ name: "Referral", data: [300000, 400000, 500000, 600000, 500000, 400000, 300000, 400000, 500000, 600000, 500000, 400000] },
-					{ name: "Direct", data: [500000, 600000, 400000, 300000, 400000, 500000, 600000, 700000, 800000, 700000, 600000, 500000] },
+					{
+						name: "Natural",
+						data: [400000, 600000, 900000, 1000000, 800000, 700000, 600000, 500000, 700000, 900000, 800000, 900000],
+					},
+					{
+						name: "Referral",
+						data: [300000, 400000, 500000, 600000, 500000, 400000, 300000, 400000, 500000, 600000, 500000, 400000],
+					},
+					{
+						name: "Direct",
+						data: [500000, 600000, 400000, 300000, 400000, 500000, 600000, 700000, 800000, 700000, 600000, 500000],
+					},
 				],
-				categories: ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6", "Week 7", "Week 8", "Week 9", "Week 10", "Week 11", "Week 12"],
+				categories: [
+					"Week 1",
+					"Week 2",
+					"Week 3",
+					"Week 4",
+					"Week 5",
+					"Week 6",
+					"Week 7",
+					"Week 8",
+					"Week 9",
+					"Week 10",
+					"Week 11",
+					"Week 12",
+				],
 			},
 		},
 		month: {
@@ -54,9 +102,18 @@ const dashboardData = {
 			avgTimeChange: -0.3,
 			chart: {
 				series: [
-					{ name: "Natural", data: [50000, 60000, 65000, 67000, 62000, 64000, 66000, 68000, 69000, 70000, 71000, 72000] },
-					{ name: "Referral", data: [40000, 42000, 43000, 44000, 45000, 46000, 47000, 48000, 49000, 50000, 51000, 52000] },
-					{ name: "Direct", data: [45000, 47000, 48000, 49000, 50000, 51000, 52000, 53000, 54000, 55000, 56000, 57000] },
+					{
+						name: "Natural",
+						data: [50000, 60000, 65000, 67000, 62000, 64000, 66000, 68000, 69000, 70000, 71000, 72000],
+					},
+					{
+						name: "Referral",
+						data: [40000, 42000, 43000, 44000, 45000, 46000, 47000, 48000, 49000, 50000, 51000, 52000],
+					},
+					{
+						name: "Direct",
+						data: [45000, 47000, 48000, 49000, 50000, 51000, 52000, 53000, 54000, 55000, 56000, 57000],
+					},
 				],
 				categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
 			},
@@ -122,10 +179,10 @@ const dashboardData = {
 	},
 	topChannels: {
 		day: [
-			{ name: "Google", percent: 40, total: 31731, icon: "logos:google-icon" },
-			{ name: "Instagram", percent: 30, total: 23798, icon: "skill-icons:instagram" },
-			{ name: "Facebook", percent: 15, total: 11889, icon: "logos:facebook" },
-			{ name: "X", percent: 13, total: 10318, icon: "ri:twitter-x-fill" },
+			{ name: "Cà phê sữa", percent: 40, total: 31731, icon: "logos:google-icon" },
+			{ name: "String", percent: 30, total: 23798, icon: "skill-icons:instagram" },
+			{ name: "Trà dưỡng nhan", percent: 15, total: 11889, icon: "logos:facebook" },
+			{ name: "Cà phê đen", percent: 13, total: 10318, icon: "ri:twitter-x-fill" },
 		],
 		week: [
 			{ name: "Google", percent: 38, total: 61731, icon: "logos:google-icon" },
@@ -165,7 +222,6 @@ const dashboardData = {
 	},
 };
 
-// ---------------------- 组件区 ----------------------
 function Trend({ value }: { value: number }) {
 	const trendClass = value > 0 ? "text-success" : value < 0 ? "text-error" : "text-muted-foreground";
 	return (
@@ -221,15 +277,15 @@ export default function Analysis() {
 			<div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-none shadow-none">
 				<div>
 					<Title as="h4" className="text-xl mb-1">
-						Analysis overview
+						Báo cáo doanh thu
 					</Title>
 					<Text variant="body2" className="text-muted-foreground">
-						Explore the metrics to understand trends and drive.
+						Báo cáo các số liệu doanh thu và đơn hàng
 					</Text>
 				</div>
 				<div className="flex items-center gap-2">
 					<Text variant="body2" className="text-muted-foreground">
-						Show by:
+						Thời gian:
 					</Text>
 					<Select value={timeType} onValueChange={(v) => setTimeType(v as any)}>
 						<SelectTrigger className="w-32 h-9">
@@ -247,8 +303,8 @@ export default function Analysis() {
 			</div>
 
 			<div className="flex flex-col xl:grid grid-cols-4 gap-4">
-				{/* Web analytic 主图表卡片 */}
-				<Card className="col-span-4 xl:col-span-3">
+				{/* Web analytic */}
+				{/* <Card className="col-span-4 xl:col-span-3">
 					<CardHeader className="flex flex-row items-center justify-between pb-2">
 						<CardTitle>
 							<Title as="h3" className="text-lg">
@@ -285,7 +341,7 @@ export default function Analysis() {
 							<Chart type="line" height={320} options={chartOptions} series={webAnalytic.chart.series} />
 						</div>
 					</CardContent>
-				</Card>
+				</Card> */}
 
 				{/* 右侧三小卡 */}
 				<div className="xl:col-span-1 h-full">
@@ -359,7 +415,7 @@ export default function Analysis() {
 
 			<div className="grid grid-cols-12 gap-4">
 				{/* Top pages */}
-				<Card className="col-span-12 md:col-span-6 xl:col-span-4">
+				{/* <Card className="col-span-12 md:col-span-6 xl:col-span-4">
 					<CardHeader className="flex flex-row items-center justify-between pb-2">
 						<CardTitle>
 							<Title as="h3" className="text-lg">
@@ -403,10 +459,10 @@ export default function Analysis() {
 							</table>
 						</div>
 					</CardContent>
-				</Card>
+				</Card> */}
 
-				{/* Session devices 饼图 */}
-				<Card className="col-span-12 md:col-span-6 xl:col-span-4">
+				{/* Session devices */}
+				{/* <Card className="col-span-12 md:col-span-6 xl:col-span-4">
 					<CardHeader className="flex flex-row items-center justify-between pb-2">
 						<CardTitle>
 							<Title as="h3" className="text-lg">
@@ -432,20 +488,20 @@ export default function Analysis() {
 							</div>
 						</div>
 					</CardContent>
-				</Card>
+				</Card> */}
 
-				{/* Top channel */}
+				{/* Best seller */}
 				<Card className="col-span-12 xl:col-span-4">
 					<CardHeader className="flex flex-row items-center justify-between pb-2">
 						<CardTitle>
 							<Title as="h3" className="text-lg">
-								Top channel
+								Những món bán chạy nhất
 							</Title>
 						</CardTitle>
 						<CardAction>
 							<Button size="sm" variant="outline">
 								<Icon icon="mdi:download" className="mr-1" />
-								Export data
+								Xuất dữ liệu
 							</Button>
 						</CardAction>
 					</CardHeader>
@@ -464,9 +520,9 @@ export default function Analysis() {
 						<table className="w-full text-sm">
 							<thead>
 								<tr>
-									<th className="text-left py-1">CHANNEL</th>
-									<th className="text-right py-1">PERCENTAGE</th>
-									<th className="text-right py-1">TOTAL</th>
+									<th className="text-left py-1">SẢN PHẨM</th>
+									<th className="text-right py-1">TỈ LỆ</th>
+									<th className="text-right py-1">TỔNG SỐ</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -486,7 +542,7 @@ export default function Analysis() {
 				</Card>
 
 				{/* Traffic data 表格 */}
-				<Card className="col-span-12">
+				{/* <Card className="col-span-12">          	
 					<CardHeader className="flex flex-row items-center justify-between pb-2">
 						<CardTitle>
 							<Title as="h3" className="text-lg">
@@ -537,7 +593,7 @@ export default function Analysis() {
 							</table>
 						</div>
 					</CardContent>
-				</Card>
+				</Card> */}
 			</div>
 		</div>
 	);

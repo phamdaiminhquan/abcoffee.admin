@@ -1,127 +1,177 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import orderService from "@/api/services/orderService";
-import productService from "@/api/services/productService";
-import type { CreateOrderDto, Order, PaymentMethod, Product } from "#/coffee";
-import { Card, CardContent } from "@/ui/card";
+import type { CreateOrderDto, Order, UpdateOrderDto } from "#/coffee";
+import { OrderStatus } from "#/coffee";
+import { Card, CardContent, CardHeader } from "@/ui/card";
 import { Button } from "@/ui/button";
-import { Input } from "@/ui/input";
-import { Label } from "@/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/ui/select";
+import { Badge } from "@/ui/badge";
+import { Icon } from "@/components/icon";
+import { Table } from "antd";
+import type { ColumnsType } from "antd/es/table";
 import { toast } from "sonner";
+import { OrderModal } from "./order-modal";
+
+const DEFAULT_ORDER_VALUE: Partial<Order> = {
+	customerName: "",
+	paymentMethod: undefined,
+	status: OrderStatus.PENDING_PAYMENT,
+	orderDetails: [],
+};
 
 export default function OrdersPage() {
 	const qc = useQueryClient();
-	const { data: products = [] } = useQuery<Product[]>({
-		queryKey: ["products", "all"],
-		queryFn: () => productService.getAll(),
-	});
-	const { data: orders = [], isLoading } = useQuery<Order[]>({
+	const { data: orders = [] } = useQuery<Order[]>({
 		queryKey: ["orders"],
 		queryFn: () => orderService.getAll(),
 	});
 
-	const [customerName, setCustomerName] = useState("");
-	const [paymentMethod, setPaymentMethod] = useState<PaymentMethod | "">("");
-	const [productId, setProductId] = useState<string>("");
-	const [quantity, setQuantity] = useState<string>("1");
+	const [orderModalProps, setOrderModalProps] = useState<{
+		formValue: Partial<Order>;
+		title: string;
+		show: boolean;
+	}>({
+		formValue: { ...DEFAULT_ORDER_VALUE },
+		title: "New",
+		show: false,
+	});
 
 	const createMutation = useMutation({
 		mutationFn: (dto: CreateOrderDto) => orderService.create(dto),
 		onSuccess: () => {
-			toast.success("Order created");
+			toast.success("Order created successfully");
 			qc.invalidateQueries({ queryKey: ["orders"] });
-			setCustomerName("");
-			setPaymentMethod("");
-			setProductId("");
-			setQuantity("1");
+			setOrderModalProps((prev) => ({ ...prev, show: false }));
+		},
+		onError: () => {
+			toast.error("Failed to create order");
 		},
 	});
 
-	const selectedProduct = useMemo(() => products.find((p) => String(p.id) === productId), [products, productId]);
+	const updateMutation = useMutation({
+		mutationFn: ({ id, data }: { id: number; data: UpdateOrderDto }) => orderService.update(id, data),
+		onSuccess: () => {
+			toast.success("Order updated successfully");
+			qc.invalidateQueries({ queryKey: ["orders"] });
+			setOrderModalProps((prev) => ({ ...prev, show: false }));
+		},
+		onError: () => {
+			toast.error("Failed to update order");
+		},
+	});
+
+	const deleteMutation = useMutation({
+		mutationFn: (id: number) => orderService.remove(id),
+		onSuccess: () => {
+			toast.success("Order deleted successfully");
+			qc.invalidateQueries({ queryKey: ["orders"] });
+		},
+		onError: () => {
+			toast.error("Failed to delete order");
+		},
+	});
+
+	const columns: ColumnsType<Order> = [
+		{
+			title: "Order ID",
+			dataIndex: "id",
+			width: 100,
+			render: (id: number) => <span className="font-medium">#{id}</span>,
+		},
+		{
+			title: "Customer",
+			dataIndex: "customerName",
+			width: 200,
+			render: (name: string) => <span>{name || "Guest"}</span>,
+		},
+		{
+			title: "Payment Method",
+			dataIndex: "paymentMethod",
+			align: "center",
+			width: 150,
+			render: (method: string) => <Badge variant="info">{method === "cash" ? "Cash" : "Bank Transfer"}</Badge>,
+		},
+		{
+			title: "Status",
+			dataIndex: "status",
+			align: "center",
+			width: 150,
+			render: (status: string) => {
+				const variant = status === "cancelled" ? "error" : status === "paid" ? "success" : "warning";
+				const label = status === "pending_payment" ? "Pending" : status === "paid" ? "Paid" : "Cancelled";
+				return <Badge variant={variant}>{label}</Badge>;
+			},
+		},
+		{
+			title: "Total Items",
+			dataIndex: "orderDetails",
+			align: "center",
+			width: 120,
+			render: (details: any[]) => <span>{details?.length || 0}</span>,
+		},
+		{
+			title: "Created At",
+			dataIndex: "createdAt",
+			width: 180,
+			render: (date: string) => <span>{new Date(date).toLocaleString()}</span>,
+		},
+		{
+			title: "Action",
+			key: "operation",
+			align: "center",
+			width: 100,
+			render: (_, record) => (
+				<div className="flex w-full justify-center text-gray-500">
+					<Button variant="ghost" size="icon" onClick={() => onDelete(record.id)}>
+						<Icon icon="mingcute:delete-2-fill" size={18} className="text-error!" />
+					</Button>
+				</div>
+			),
+		},
+	];
+
+	const onCreate = () => {
+		setOrderModalProps({
+			show: true,
+			title: "Create New Order",
+			formValue: { ...DEFAULT_ORDER_VALUE },
+		});
+	};
+
+	const onDelete = (id: number) => {
+		if (window.confirm("Are you sure you want to delete this order?")) {
+			deleteMutation.mutate(id);
+		}
+	};
+
+	const onModalOk = (values: CreateOrderDto) => {
+		// Orders are only created, not edited in this implementation
+		createMutation.mutate(values);
+	};
+
+	const onModalCancel = () => {
+		setOrderModalProps((prev) => ({ ...prev, show: false }));
+	};
 
 	return (
 		<Card>
+			<CardHeader>
+				<div className="flex items-center justify-between">
+					<div>Order List</div>
+					<Button onClick={onCreate}>New</Button>
+				</div>
+			</CardHeader>
 			<CardContent>
-				<h2 className="text-lg font-semibold mb-4">Orders</h2>
-
-				{isLoading ? (
-					<div>Loading...</div>
-				) : (
-					<ul className="space-y-2 mb-6">
-						{orders.map((o) => (
-							<li key={o.id} className="p-2 rounded border">
-								<div className="font-medium">
-									#{o.id} • {o.customerName} • {o.status}
-								</div>
-								<div className="text-sm text-muted-foreground">
-									{new Date(o.createdAt).toLocaleString()} • {o.paymentMethod}
-								</div>
-							</li>
-						))}
-					</ul>
-				)}
-
-				<form
-					onSubmit={(e) => {
-						e.preventDefault();
-						if (!productId || !paymentMethod) return toast.error("Select product and payment method");
-						const unitPrice = selectedProduct?.price ?? 0;
-						const dto: CreateOrderDto = {
-							customerName: customerName || undefined,
-							paymentMethod: paymentMethod as PaymentMethod,
-							orderDetails: [{ productId: Number(productId), quantity: Number(quantity), unitPrice }],
-						};
-						createMutation.mutate(dto);
-					}}
-					className="grid gap-3 max-w-xl"
-				>
-					<h3 className="text-base font-semibold">Create order</h3>
-					<div>
-						<Label htmlFor="customer">Customer</Label>
-						<Input
-							id="customer"
-							value={customerName}
-							onChange={(e) => setCustomerName(e.target.value)}
-							placeholder="Optional"
-						/>
-					</div>
-					<div>
-						<Label>Payment method</Label>
-						<Select value={paymentMethod} onValueChange={(v) => setPaymentMethod(v as PaymentMethod)}>
-							<SelectTrigger className="w-60">
-								<SelectValue placeholder="Select method" />
-							</SelectTrigger>
-							<SelectContent>
-								<SelectItem value="cash">cash</SelectItem>
-								<SelectItem value="bank_transfer">bank_transfer</SelectItem>
-							</SelectContent>
-						</Select>
-					</div>
-					<div>
-						<Label>Product</Label>
-						<Select value={productId} onValueChange={setProductId}>
-							<SelectTrigger className="w-80">
-								<SelectValue placeholder="Select product" />
-							</SelectTrigger>
-							<SelectContent>
-								{products.map((p) => (
-									<SelectItem key={p.id} value={String(p.id)}>
-										{p.name} • {p.price.toLocaleString("vi-VN")} VND
-									</SelectItem>
-								))}
-							</SelectContent>
-						</Select>
-					</div>
-					<div>
-						<Label htmlFor="qty">Quantity</Label>
-						<Input id="qty" value={quantity} onChange={(e) => setQuantity(e.target.value)} type="number" min="1" />
-					</div>
-					<Button type="submit" disabled={createMutation.isPending}>
-						{createMutation.isPending ? "Creating..." : "Create Order"}
-					</Button>
-				</form>
+				<Table
+					rowKey="id"
+					size="small"
+					scroll={{ x: "max-content" }}
+					pagination={false}
+					columns={columns}
+					dataSource={orders}
+				/>
 			</CardContent>
+			<OrderModal {...orderModalProps} onOk={onModalOk} onCancel={onModalCancel} />
 		</Card>
 	);
 }

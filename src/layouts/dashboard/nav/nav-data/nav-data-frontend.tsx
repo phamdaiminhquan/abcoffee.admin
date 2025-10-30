@@ -67,6 +67,7 @@ export const frontendNavData: NavProps["data"] = [
 				path: "/commerce",
 				icon: <Icon icon="local:ic-commerce" size="24" />,
 				children: [
+					{ title: "sys.nav.commerce.pos", path: "/commerce/pos" },
 					{ title: "sys.nav.commerce.categories", path: "/commerce/categories" },
 					{ title: "sys.nav.commerce.products", path: "/commerce/products" },
 					{ title: "sys.nav.commerce.orders", path: "/commerce/orders" },

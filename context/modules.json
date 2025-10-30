@@ -1,7 +1,7 @@
 {
 	"schemaVersion": "1.0",
 	"root": "context/main.json",
-	"lastUpdated": "2025-10-25",
+	"lastUpdated": "2025-10-26",
 	"notes": "Modules are grouped where appropriate to keep this file compact. Use subRoutes to navigate to specific pages.",
 	"modules": {
 		"auth.login": {
@@ -97,12 +97,16 @@
 		"commerce": {
 			"name": "Commerce • Coffee Shop",
 			"routes": ["/commerce"],
-			"subRoutes": ["categories", "products", "orders", "revenue"],
+			"subRoutes": ["categories", "products", "orders", "pos", "revenue"],
 			"routingDefinedIn": "src/routes/sections/dashboard/frontend.tsx",
 			"sources": [
 				"src/pages/commerce/categories/index.tsx",
+				"src/pages/commerce/categories/category-modal.tsx",
 				"src/pages/commerce/products/index.tsx",
+				"src/pages/commerce/products/product-modal.tsx",
 				"src/pages/commerce/orders/index.tsx",
+				"src/pages/commerce/orders/order-modal.tsx",
+				"src/pages/commerce/pos/index.tsx",
 				"src/pages/commerce/revenue/index.tsx"
 			],
 			"api": [
@@ -131,7 +135,50 @@
 				"src/api/services/revenueService.ts"
 			],
 			"state": ["TanStack Query for server state (no persistent Zustand store)"],
-			"types": ["src/types/coffee.ts"]
+			"types": ["src/types/coffee.ts"],
+			"uiPattern": "List-based UI with Ant Design Table, modals for create/edit operations, following the same pattern as management.system.user",
+			"features": {
+				"categories": {
+					"description": "Category management with list view, create/edit modal, and delete functionality",
+					"components": [
+						"Table with name and description columns",
+						"CategoryModal for create/edit",
+						"Action buttons (edit, delete)"
+					]
+				},
+				"products": {
+					"description": "Product management with list view, category filter, create/edit modal, and delete functionality",
+					"components": [
+						"Table with product details",
+						"Category filter dropdown",
+						"ProductModal for create/edit",
+						"Action buttons (edit, delete)"
+					],
+					"fields": ["name", "description", "price", "category", "status", "image"]
+				},
+				"orders": {
+					"description": "Order management with list view, create modal, and delete functionality",
+					"components": ["Table with order details", "OrderModal for creating orders", "Action button (delete)"],
+					"fields": ["customerName", "paymentMethod", "status", "orderDetails"],
+					"notes": "Orders are created with product selection and quantity. Edit functionality not implemented as orders are typically immutable after creation."
+				},
+				"pos": {
+					"description": "Mobile-first POS for fast order creation with pending orders grid, product picker in modal/drawer, and detailed view for pending orders.",
+					"components": [
+						"Pending orders as cards",
+						"Category scroller",
+						"Product grid",
+						"Create Order in Drawer (mobile) / Dialog (desktop)",
+						"Pending order details dialog (view items, totals, status)",
+						"Edit customer name",
+						"Add/remove items for pending orders",
+						"Payment method dialog"
+					],
+					"routes": ["/commerce/pos"],
+					"sources": ["src/pages/commerce/pos/index.tsx"],
+					"notes": "Orders can be created without payment method as pending; completing payment marks order as paid and removes it from POS. Pending order details allow editing customer name and items. Backend must accept PATCH /orders/:id with { customerName, orderDetails } for editing."
+				}
+			}
 		},
 
 		"error": {
