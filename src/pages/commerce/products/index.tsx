@@ -10,9 +10,11 @@ import { Badge } from "@/ui/badge";
 import { Icon } from "@/components/icon";
 import { Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/ui/dropdown-menu";
 import { toast } from "sonner";
 import { ProductModal } from "./product-modal";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/ui/select";
+import { GLOBAL_CONFIG } from "@/global-config";
 
 const DEFAULT_PRODUCT_VALUE: Partial<Product> = {
 	name: "",
@@ -85,6 +87,26 @@ export default function ProductsPage() {
 
 	const columns: ColumnsType<Product> = [
 		{
+			title: "Image",
+			dataIndex: "image",
+			width: 80,
+			align: "center",
+			render: (_: any, record) => {
+				const src = record.image
+					? record.image.startsWith("http")
+						? record.image
+						: `${GLOBAL_CONFIG.apiBaseUrl}/${record.image}`
+					: "";
+				return src ? (
+					<img src={src} alt={record.name} className="h-10 w-10 rounded-md object-cover" />
+				) : (
+					<div className="h-10 w-10 rounded-md bg-muted flex items-center justify-center text-muted-foreground">
+						<Icon icon="solar:image-bold-duotone" size={18} />
+					</div>
+				);
+			},
+		},
+		{
 			title: "Name",
 			dataIndex: "name",
 			width: 200,
@@ -100,6 +122,7 @@ export default function ProductsPage() {
 			dataIndex: "category",
 			align: "center",
 			width: 150,
+			responsive: ["md"],
 			render: (category: Category) => <Badge variant="info">{category?.name}</Badge>,
 		},
 		{
@@ -107,6 +130,7 @@ export default function ProductsPage() {
 			dataIndex: "price",
 			align: "right",
 			width: 150,
+			responsive: ["md"],
 			render: (price: number) => <span>{price.toLocaleString("vi-VN")} VND</span>,
 		},
 		{
@@ -114,6 +138,7 @@ export default function ProductsPage() {
 			dataIndex: "status",
 			align: "center",
 			width: 120,
+			responsive: ["md"],
 			render: (status: string) => (
 				<Badge variant={status === "inactive" ? "error" : "success"}>
 					{status === "inactive" ? "Inactive" : "Active"}
@@ -124,15 +149,24 @@ export default function ProductsPage() {
 			title: "Action",
 			key: "operation",
 			align: "center",
-			width: 100,
+			width: 80,
 			render: (_, record) => (
-				<div className="flex w-full justify-center text-gray-500">
-					<Button variant="ghost" size="icon" onClick={() => onEdit(record)}>
-						<Icon icon="solar:pen-bold-duotone" size={18} />
-					</Button>
-					<Button variant="ghost" size="icon" onClick={() => onDelete(record.id)}>
-						<Icon icon="mingcute:delete-2-fill" size={18} className="text-error!" />
-					</Button>
+				<div className="flex w-full justify-center">
+					<DropdownMenu>
+						<DropdownMenuTrigger asChild>
+							<Button variant="ghost" size="icon" className="h-11 w-11">
+								<Icon icon="solar:menu-dots-bold" size={20} />
+							</Button>
+						</DropdownMenuTrigger>
+						<DropdownMenuContent align="end" className="w-40">
+							<DropdownMenuItem onClick={() => onEdit(record)}>
+								<Icon icon="solar:pen-bold-duotone" /> Edit
+							</DropdownMenuItem>
+							<DropdownMenuItem variant="destructive" onClick={() => onDelete(record.id)}>
+								<Icon icon="mingcute:delete-2-fill" /> Delete
+							</DropdownMenuItem>
+						</DropdownMenuContent>
+					</DropdownMenu>
 				</div>
 			),
 		},

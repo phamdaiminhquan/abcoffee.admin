@@ -16,6 +16,8 @@ import { RadioGroup, RadioGroupItem } from "@/ui/radio-group";
 import { Label } from "@/ui/label";
 import { Input } from "@/ui/input";
 import { Drawer, DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle } from "@/ui/drawer";
+import { GLOBAL_CONFIG } from "@/global-config";
+import { Icon } from "@/components/icon";
 
 // Responsive helper: bottom sheet on mobile, dialog on desktop
 function useIsDesktop() {
@@ -320,6 +322,19 @@ export default function POSPage() {
 								return (
 									<Card key={p.id} className="active:scale-[.99] transition">
 										<CardContent className="p-3">
+											<div className="mb-2 aspect-square w-full overflow-hidden rounded-md bg-muted">
+												{p.image ? (
+													<img
+														src={p.image.startsWith("http") ? p.image : `${GLOBAL_CONFIG.apiBaseUrl}/${p.image}`}
+														alt={p.name}
+														className="h-full w-full object-cover"
+													/>
+												) : (
+													<div className="flex h-full w-full items-center justify-center text-muted-foreground">
+														<Icon icon="solar:image-bold-duotone" size={24} />
+													</div>
+												)}
+											</div>
 											<div className="text-sm font-medium line-clamp-2">{p.name}</div>
 											<div className="text-xs text-muted-foreground">{p.category?.name}</div>
 											<div className="mt-1 text-sm font-semibold">{p.price.toLocaleString()}</div>
@@ -399,6 +414,19 @@ export default function POSPage() {
 									return (
 										<Card key={p.id} className="active:scale-[.99] transition">
 											<CardContent className="p-3">
+												<div className="mb-2 aspect-square w-full overflow-hidden rounded-md bg-muted">
+													{p.image ? (
+														<img
+															src={p.image.startsWith("http") ? p.image : `${GLOBAL_CONFIG.apiBaseUrl}/${p.image}`}
+															alt={p.name}
+															className="h-full w-full object-cover"
+														/>
+													) : (
+														<div className="flex h-full w-full items-center justify-center text-muted-foreground">
+															<Icon icon="solar:image-bold-duotone" size={24} />
+														</div>
+													)}
+												</div>
 												<div className="text-sm font-medium line-clamp-2">{p.name}</div>
 												<div className="text-xs text-muted-foreground">{p.category?.name}</div>
 												<div className="mt-1 text-sm font-semibold">{p.price.toLocaleString()}</div>
@@ -473,6 +501,19 @@ export default function POSPage() {
 									return (
 										<Card key={p.id} className="active:scale-[.99] transition">
 											<CardContent className="p-3">
+												<div className="mb-2 aspect-square w-full overflow-hidden rounded-md bg-muted">
+													{p.image ? (
+														<img
+															src={p.image.startsWith("http") ? p.image : `${GLOBAL_CONFIG.apiBaseUrl}/${p.image}`}
+															alt={p.name}
+															className="h-full w-full object-cover"
+														/>
+													) : (
+														<div className="flex h-full w-full items-center justify-center text-muted-foreground">
+															<Icon icon="solar:image-bold-duotone" size={24} />
+														</div>
+													)}
+												</div>
 												<div className="text-sm font-medium line-clamp-2">{p.name}</div>
 												<div className="text-xs text-muted-foreground">{p.category?.name}</div>
 												<div className="mt-1 text-sm font-semibold">{p.price.toLocaleString()}</div>
@@ -546,9 +587,28 @@ export default function POSPage() {
 							<div className="divide-y">
 								{orderItemsDraft.map((i) => (
 									<div key={i.productId} className="flex items-center justify-between py-2">
-										<div className="flex-1">
-											<div className="text-sm font-medium">{i.product?.name ?? `#${i.productId}`}</div>
-											<div className="text-xs text-muted-foreground">@ {(i.unitPrice ?? 0).toLocaleString()}</div>
+										<div className="flex items-center gap-2 flex-1">
+											<div className="h-10 w-10 overflow-hidden rounded-md bg-muted shrink-0">
+												{i.product?.image ? (
+													<img
+														src={
+															i.product.image.startsWith("http")
+																? i.product.image
+																: `${GLOBAL_CONFIG.apiBaseUrl}/${i.product.image}`
+														}
+														alt={i.product?.name ?? `#${i.productId}`}
+														className="h-full w-full object-cover"
+													/>
+												) : (
+													<div className="flex h-full w-full items-center justify-center text-muted-foreground">
+														<Icon icon="solar:image-bold-duotone" size={16} />
+													</div>
+												)}
+											</div>
+											<div>
+												<div className="text-sm font-medium">{i.product?.name ?? `#${i.productId}`}</div>
+												<div className="text-xs text-muted-foreground">@ {(i.unitPrice ?? 0).toLocaleString()}</div>
+											</div>
 										</div>
 										<div className="flex items-center gap-2">
 											<Button size="icon" variant="secondary" onClick={() => decItemInDraft(i.productId)}>
@@ -604,6 +664,19 @@ export default function POSPage() {
 								{products.map((p) => (
 									<Card key={p.id} className="active:scale-[.99] transition">
 										<CardContent className="p-3">
+											<div className="mb-2 aspect-square w-full overflow-hidden rounded-md bg-muted">
+												{p.image ? (
+													<img
+														src={p.image.startsWith("http") ? p.image : `${GLOBAL_CONFIG.apiBaseUrl}/${p.image}`}
+														alt={p.name}
+														className="h-full w-full object-cover"
+													/>
+												) : (
+													<div className="flex h-full w-full items-center justify-center text-muted-foreground">
+														<Icon icon="solar:image-bold-duotone" size={24} />
+													</div>
+												)}
+											</div>
 											<div className="text-sm font-medium line-clamp-2">{p.name}</div>
 											<div className="text-xs text-muted-foreground">{p.category?.name}</div>
 											<div className="mt-1 text-sm font-semibold">{p.price.toLocaleString()}</div>

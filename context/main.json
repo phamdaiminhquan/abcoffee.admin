@@ -1,7 +1,7 @@
 {
 	"schemaVersion": "1.0",
 	"entry": "context/main.json",
-	"lastUpdated": "2025-10-25",
+	"lastUpdated": "2025-10-31",
 	"usageGuidelines": {
 		"purpose": "This context system is a self-documenting map of the codebase. Start here, then jump to module-specific entries.",
 		"howToUse": [
@@ -20,8 +20,13 @@
 			"bundler": "Vite 6",
 			"routing": "React Router 7",
 			"state": ["Zustand (local UI state)", "@tanstack/react-query (server state)"],
-			"http": "Axios with interceptors (src/api/apiClient.ts)",
-			"ui": ["shadcn/ui (customized in src/ui)", "Tailwind CSS 4", "vanilla-extract tokens in src/theme"],
+			"http": "Axios — apiClient.ts returns Result<T> envelope; coffeeApiClient.ts returns raw JSON (Commerce modules)",
+			"ui": [
+				"shadcn/ui (customized in src/ui)",
+				"Ant Design (Table components in management screens)",
+				"Tailwind CSS 4",
+				"vanilla-extract tokens in src/theme"
+			],
 			"i18n": "i18next + react-i18next (src/locales)",
 			"mocking": "MSW + Faker (src/_mock)",
 			"tooling": ["Biome (format/lint)", "lefthook (git hooks)"]
@@ -44,7 +49,7 @@
 			},
 			"routing": {
 				"mode": "frontend | backend (GLOBAL_CONFIG.routerMode)",
-				"defaultRoute": "GLOBAL_CONFIG.defaultRoute",
+				"defaultRoute": "GLOBAL_CONFIG.defaultRoute (current: '/commerce/pos')",
 				"files": [
 					"src/routes/sections/index.tsx",
 					"src/routes/sections/auth.tsx",
@@ -53,9 +58,11 @@
 				]
 			},
 			"apiConventions": {
-				"baseURL": "GLOBAL_CONFIG.apiBaseUrl (proxied via vite.config.ts)",
-				"resultEnvelope": "types/api.Result<T> with status/message/data",
-				"auth": "401 triggers userStore clear; interceptor displays toast"
+				"baseURL": "GLOBAL_CONFIG.apiBaseUrl",
+				"clients": {
+					"default": "src/api/apiClient.ts — returns Result<T>.data; handles 401 (clears userStore) and shows toast",
+					"commerce": "src/api/coffeeApiClient.ts — returns raw JSON (no envelope); shows toast on error"
+				}
 			}
 		},
 		"conventions": {

@@ -6,6 +6,7 @@ export function getFrontendDashboardRoutes(): RouteObject[] {
 	const frontendDashboardRoutes: RouteObject[] = [
 		{ path: "workbench", element: Component("/pages/dashboard/workbench") },
 		{ path: "analysis", element: Component("/pages/dashboard/analysis") },
+		{ path: "kanban", element: Component("/pages/sys/others/kanban") },
 		{
 			path: "components",
 			children: [
@@ -59,6 +60,7 @@ export function getFrontendDashboardRoutes(): RouteObject[] {
 				{ path: "products", element: Component("/pages/commerce/products") },
 				{ path: "orders", element: Component("/pages/commerce/orders") },
 				{ path: "pos", element: Component("/pages/commerce/pos") },
+				{ path: "images", element: Component("/pages/commerce/images") },
 				{ path: "revenue", element: Component("/pages/commerce/revenue") },
 			],
 		},
@@ -112,7 +114,6 @@ export function getFrontendDashboardRoutes(): RouteObject[] {
 			],
 		},
 		{ path: "calendar", element: Component("/pages/sys/others/calendar") },
-		{ path: "kanban", element: Component("/pages/sys/others/kanban") },
 		{ path: "blank", element: Component("/pages/sys/others/blank") },
 	];
 	return frontendDashboardRoutes;

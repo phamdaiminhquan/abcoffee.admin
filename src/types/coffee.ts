@@ -116,3 +116,23 @@ export interface RevenueReportDto {
 	totalRevenue: number;
 	paymentMethodBreakdown: PaymentMethodBreakdown;
 }
+
+// Generic paginated response shape used by Upload Admin API
+export interface Paginated<T> {
+	data: T[];
+	page: number;
+	limit: number;
+	total: number;
+}
+
+// Upload module types
+export interface UploadedImage {
+	id: number;
+	originalFilename: string;
+	savedFilename: string;
+	filepath: string; // relative path, e.g., "uploads/123-abc.jpg"
+	url: string; // absolute URL served by backend
+	filesize: number;
+	mimetype: string;
+	createdAt: string | Date;
+}

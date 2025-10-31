@@ -7,6 +7,7 @@ import { Button } from "@/ui/button";
 import { Icon } from "@/components/icon";
 import { Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/ui/dropdown-menu";
 import { toast } from "sonner";
 import { CategoryModal } from "./category-modal";
 
@@ -77,21 +78,31 @@ export default function CategoriesPage() {
 		{
 			title: "Description",
 			dataIndex: "description",
+			responsive: ["md"],
 			render: (description: string | null) => <span className="text-text-secondary">{description || "-"}</span>,
 		},
 		{
 			title: "Action",
 			key: "operation",
 			align: "center",
-			width: 100,
+			width: 80,
 			render: (_, record) => (
-				<div className="flex w-full justify-center text-gray-500">
-					<Button variant="ghost" size="icon" onClick={() => onEdit(record)}>
-						<Icon icon="solar:pen-bold-duotone" size={18} />
-					</Button>
-					<Button variant="ghost" size="icon" onClick={() => onDelete(record.id)}>
-						<Icon icon="mingcute:delete-2-fill" size={18} className="text-error!" />
-					</Button>
+				<div className="flex w-full justify-center">
+					<DropdownMenu>
+						<DropdownMenuTrigger asChild>
+							<Button variant="ghost" size="icon" className="h-11 w-11">
+								<Icon icon="solar:menu-dots-bold" size={20} />
+							</Button>
+						</DropdownMenuTrigger>
+						<DropdownMenuContent align="end" className="w-40">
+							<DropdownMenuItem onClick={() => onEdit(record)}>
+								<Icon icon="solar:pen-bold-duotone" /> Edit
+							</DropdownMenuItem>
+							<DropdownMenuItem variant="destructive" onClick={() => onDelete(record.id)}>
+								<Icon icon="mingcute:delete-2-fill" /> Delete
+							</DropdownMenuItem>
+						</DropdownMenuContent>
+					</DropdownMenu>
 				</div>
 			),
 		},

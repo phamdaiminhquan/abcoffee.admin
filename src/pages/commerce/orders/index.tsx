@@ -7,8 +7,10 @@ import { Card, CardContent, CardHeader } from "@/ui/card";
 import { Button } from "@/ui/button";
 import { Badge } from "@/ui/badge";
 import { Icon } from "@/components/icon";
+import { GLOBAL_CONFIG } from "@/global-config";
 import { Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/ui/dropdown-menu";
 import { toast } from "sonner";
 import { OrderModal } from "./order-modal";
 
@@ -89,6 +91,7 @@ export default function OrdersPage() {
 			dataIndex: "paymentMethod",
 			align: "center",
 			width: 150,
+			responsive: ["md"],
 			render: (method: string) => <Badge variant="info">{method === "cash" ? "Cash" : "Bank Transfer"}</Badge>,
 		},
 		{
@@ -107,24 +110,35 @@ export default function OrdersPage() {
 			dataIndex: "orderDetails",
 			align: "center",
 			width: 120,
+			responsive: ["md"],
 			render: (details: any[]) => <span>{details?.length || 0}</span>,
 		},
 		{
 			title: "Created At",
 			dataIndex: "createdAt",
 			width: 180,
+			responsive: ["md"],
 			render: (date: string) => <span>{new Date(date).toLocaleString()}</span>,
 		},
 		{
 			title: "Action",
 			key: "operation",
 			align: "center",
-			width: 100,
+			width: 80,
 			render: (_, record) => (
-				<div className="flex w-full justify-center text-gray-500">
-					<Button variant="ghost" size="icon" onClick={() => onDelete(record.id)}>
-						<Icon icon="mingcute:delete-2-fill" size={18} className="text-error!" />
-					</Button>
+				<div className="flex w-full justify-center">
+					<DropdownMenu>
+						<DropdownMenuTrigger asChild>
+							<Button variant="ghost" size="icon" className="h-11 w-11">
+								<Icon icon="solar:menu-dots-bold" size={20} />
+							</Button>
+						</DropdownMenuTrigger>
+						<DropdownMenuContent align="end" className="w-40">
+							<DropdownMenuItem variant="destructive" onClick={() => onDelete(record.id)}>
+								<Icon icon="mingcute:delete-2-fill" /> Delete
+							</DropdownMenuItem>
+						</DropdownMenuContent>
+					</DropdownMenu>
 				</div>
 			),
 		},
@@ -167,6 +181,44 @@ export default function OrdersPage() {
 					size="small"
 					scroll={{ x: "max-content" }}
 					pagination={false}
+					expandable={{
+						expandedRowRender: (record: Order) => (
+							<div className="space-y-1">
+								{record.orderDetails?.map((d) => {
+									const src = d.product?.image
+										? d.product.image.startsWith("http")
+											? d.product.image
+											: `${GLOBAL_CONFIG.apiBaseUrl}/${d.product.image}`
+										: "";
+									return (
+										<div key={d.productId} className="flex items-center gap-2 py-1">
+											<div className="h-10 w-10 overflow-hidden rounded-md bg-muted shrink-0">
+												{src ? (
+													<img
+														src={src}
+														alt={d.product?.name ?? `#${d.productId}`}
+														className="h-full w-full object-cover"
+													/>
+												) : (
+													<div className="flex h-full w-full items-center justify-center text-muted-foreground">
+														<Icon icon="solar:image-bold-duotone" size={16} />
+													</div>
+												)}
+											</div>
+											<div className="flex-1">
+												<div className="text-sm font-medium">{d.product?.name ?? `#${d.productId}`}</div>
+												<div className="text-xs text-muted-foreground">
+													x{d.quantity} @ {d.unitPrice.toLocaleString()}
+												</div>
+											</div>
+											<div className="text-sm font-semibold">{(d.quantity * d.unitPrice).toLocaleString()}</div>
+										</div>
+									);
+								})}
+								{!record.orderDetails?.length && <div className="py-2 text-sm text-muted-foreground">No items</div>}
+							</div>
+						),
+					}}
 					columns={columns}
 					dataSource={orders}
 				/>

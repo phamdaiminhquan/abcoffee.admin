@@ -1,7 +1,7 @@
 {
 	"schemaVersion": "1.0",
 	"root": "context/main.json",
-	"lastUpdated": "2025-10-26",
+	"lastUpdated": "2025-10-31",
 	"notes": "Modules are grouped where appropriate to keep this file compact. Use subRoutes to navigate to specific pages.",
 	"modules": {
 		"auth.login": {
@@ -97,7 +97,7 @@
 		"commerce": {
 			"name": "Commerce • Coffee Shop",
 			"routes": ["/commerce"],
-			"subRoutes": ["categories", "products", "orders", "pos", "revenue"],
+			"subRoutes": ["categories", "products", "orders", "images", "pos", "revenue"],
 			"routingDefinedIn": "src/routes/sections/dashboard/frontend.tsx",
 			"sources": [
 				"src/pages/commerce/categories/index.tsx",
@@ -107,7 +107,9 @@
 				"src/pages/commerce/orders/index.tsx",
 				"src/pages/commerce/orders/order-modal.tsx",
 				"src/pages/commerce/pos/index.tsx",
-				"src/pages/commerce/revenue/index.tsx"
+				"src/pages/commerce/revenue/index.tsx",
+				"src/pages/commerce/images/index.tsx",
+				"src/components/media/image-picker-dialog.tsx"
 			],
 			"api": [
 				"GET /categories",
@@ -126,42 +128,66 @@
 				"PATCH /orders/:id",
 				"DELETE /orders/:id",
 				"GET /revenue/daily?date",
-				"GET /revenue/range?startDate&endDate"
+				"GET /revenue/range?startDate&endDate",
+				"POST /upload/image",
+				"GET /upload/images",
+				"GET /upload/image/:id",
+				"DELETE /upload/image/:id"
 			],
 			"services": [
 				"src/api/services/categoryService.ts",
 				"src/api/services/productService.ts",
 				"src/api/services/orderService.ts",
-				"src/api/services/revenueService.ts"
+				"src/api/services/revenueService.ts",
+				"src/api/services/uploadService.ts"
 			],
 			"state": ["TanStack Query for server state (no persistent Zustand store)"],
 			"types": ["src/types/coffee.ts"],
-			"uiPattern": "List-based UI with Ant Design Table, modals for create/edit operations, following the same pattern as management.system.user",
+			"uiPattern": "List-based UI with Ant Design Table, modals for create/edit; Mobile-optimized with responsive column hiding + kebab action menu across management screens",
 			"features": {
 				"categories": {
 					"description": "Category management with list view, create/edit modal, and delete functionality",
 					"components": [
 						"Table with name and description columns",
 						"CategoryModal for create/edit",
-						"Action buttons (edit, delete)"
+						"Action menu (kebab) with edit/delete; responsive: hide Description on mobile"
 					]
 				},
 				"products": {
 					"description": "Product management with list view, category filter, create/edit modal, and delete functionality",
 					"components": [
-						"Table with product details",
+						"Table with product details and image thumbnail column",
 						"Category filter dropdown",
-						"ProductModal for create/edit",
-						"Action buttons (edit, delete)"
+						"ProductModal for create/edit (includes upload + ImagePickerDialog)",
+						"Action menu (kebab) with edit/delete; responsive: hide Category/Price/Status on mobile"
 					],
 					"fields": ["name", "description", "price", "category", "status", "image"]
 				},
 				"orders": {
 					"description": "Order management with list view, create modal, and delete functionality",
-					"components": ["Table with order details", "OrderModal for creating orders", "Action button (delete)"],
+					"components": [
+						"Table with order details (expandable rows show line items with product images)",
+						"OrderModal for creating orders",
+						"Action menu (kebab) with delete; responsive: hide Payment Method/Total Items/Created At on mobile"
+					],
 					"fields": ["customerName", "paymentMethod", "status", "orderDetails"],
 					"notes": "Orders are created with product selection and quantity. Edit functionality not implemented as orders are typically immutable after creation."
 				},
+				"images": {
+					"description": "Image management with responsive gallery, details dialog, and delete",
+					"components": [
+						"Responsive grid gallery with thumbnails",
+						"Details dialog (preview + metadata)",
+						"Kebab action menu (view details, delete) with 44x44 trigger",
+						"Optimistic delete via TanStack Query"
+					],
+					"routes": ["/commerce/images"],
+					"sources": ["src/pages/commerce/images/index.tsx", "src/components/media/image-picker-dialog.tsx"],
+					"services": ["src/api/services/uploadService.ts"],
+					"api": ["POST /upload/image", "GET /upload/images", "GET /upload/image/:id", "DELETE /upload/image/:id"],
+					"types": ["src/types/coffee.ts#UploadedImage"]
+				},
+
 				"pos": {
 					"description": "Mobile-first POS for fast order creation with pending orders grid, product picker in modal/drawer, and detailed view for pending orders.",
 					"components": [

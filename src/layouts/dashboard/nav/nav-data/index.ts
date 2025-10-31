@@ -4,7 +4,7 @@ import { useUserPermissions } from "@/store/userStore";
 import { checkAny } from "@/utils";
 import { useMemo } from "react";
 import { backendNavData } from "./nav-data-backend";
-import { frontendNavData } from "./nav-data-frontend";
+import { frontendNavData } from "./nav-data-pos-only";
 
 const navData = GLOBAL_CONFIG.routerMode === "backend" ? backendNavData : frontendNavData;
 

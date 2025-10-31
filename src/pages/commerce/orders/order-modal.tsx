@@ -10,6 +10,7 @@ import { Input } from "@/ui/input";
 import { Label } from "@/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/ui/select";
+import { GLOBAL_CONFIG } from "@/global-config";
 
 import type { CreateOrderDto, Order, Product } from "#/coffee";
 import { PaymentMethod } from "#/coffee";
@@ -138,7 +139,22 @@ export function OrderModal({ title, show, formValue, onOk, onCancel }: OrderModa
 												<SelectContent>
 													{products.map((p) => (
 														<SelectItem key={p.id} value={String(p.id)}>
-															{p.name} • {p.price.toLocaleString("vi-VN")} VND
+															<div className="flex items-center gap-2">
+																<div className="h-6 w-6 overflow-hidden rounded bg-muted shrink-0">
+																	{p.image ? (
+																		<img
+																			src={
+																				p.image.startsWith("http") ? p.image : `${GLOBAL_CONFIG.apiBaseUrl}/${p.image}`
+																			}
+																			alt={p.name}
+																			className="h-full w-full object-cover"
+																		/>
+																	) : null}
+																</div>
+																<span>
+																	{p.name} • {p.price.toLocaleString("vi-VN")} VND
+																</span>
+															</div>
 														</SelectItem>
 													))}
 												</SelectContent>
