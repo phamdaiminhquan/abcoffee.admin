@@ -26,9 +26,9 @@ export type TaskComment = {
 export type Task = {
 	id: string;
 	title: string;
-	reporter: string; // avatar
+	reporter: string; // avatar của người báo cáo
 	priority: TaskPriority;
-	assignee?: string[]; // avatar array
+	assignee?: string[]; // danh sách avatar người được giao
 	tags?: string[];
 	date?: Date;
 	description?: string;

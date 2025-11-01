@@ -196,12 +196,12 @@ export type UILibraryAdapterProps = {
 };
 export type UILibraryAdapter = React.FC<UILibraryAdapterProps>;
 
-// is leaf object
+// kiểm tra object lá
 export type IsLeafObject<T> = T extends object ? (T[keyof T] extends null | string ? true : false) : false;
 
-// add channel
+// thêm channel
 export type AddChannelToLeaf<T> = T extends object
 	? IsLeafObject<T> extends true
-		? T & { [K in keyof T as `${string & K}Channel`]: string } // only add channel to leaf
-		: { [K in keyof T]: AddChannelToLeaf<T[K]> } // recursive other level
+		? T & { [K in keyof T as `${string & K}Channel`]: string } // chỉ thêm channel cho object lá
+		: { [K in keyof T]: AddChannelToLeaf<T[K]> } // đệ quy xuống cấp tiếp theo
 	: T;

@@ -7,7 +7,7 @@ import { Navigate } from "react-router";
 import { Component } from "./utils";
 
 /**
- * get route path from menu path and parent path
+ * Lấy đoạn path còn lại dựa trên menuPath và parentPath
  * @param menuPath '/a/b/c'
  * @param parentPath '/a/b'
  * @returns '/c'
@@ -19,7 +19,7 @@ const getRoutePath = (menuPath?: string, parentPath?: string) => {
 	const menuPathArr = menuPath?.split("/").filter(Boolean) || [];
 	const parentPathArr = parentPath?.split("/").filter(Boolean) || [];
 
-	// remove parentPath items from menuPath
+	// Loại bỏ phần trùng với parentPath khỏi menuPath
 	const result = menuPathArr.slice(parentPathArr.length).join("/");
 	return result;
 };
@@ -47,14 +47,14 @@ const convertToRoute = (items: MenuTree[], parent?: MenuTree): RouteObject[] => 
 	const routes: RouteObject[] = [];
 
 	const processItem = (item: MenuTree) => {
-		// if group, process children
+		// Nếu là nhóm, tiếp tục xử lý các mục con
 		if (item.type === PermissionType.GROUP) {
 			for (const child of item.children || []) {
 				processItem(child);
 			}
 		}
 
-		// if catalogue, process children
+		// Nếu là catalogue, tiếp tục xử lý các mục con
 		if (item.type === PermissionType.CATALOGUE) {
 			const children = item.children || [];
 			if (children.length > 0) {
@@ -74,7 +74,7 @@ const convertToRoute = (items: MenuTree[], parent?: MenuTree): RouteObject[] => 
 			}
 		}
 
-		// if menu, create route
+		// Nếu là menu, tạo route tương ứng
 		if (item.type === PermissionType.MENU) {
 			const props = generateProps(item);
 

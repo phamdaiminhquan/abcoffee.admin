@@ -75,12 +75,12 @@ export default function Calendar() {
 	}, [view]);
 
 	/**
-	 * calendar grid events
+	 * Xử lý các sự kiện trên lưới lịch
 	 */
-	// select date range
+	// Chọn khoảng ngày
 	const handleDateSelect = (selectInfo: DateSelectArg) => {
 		const calendarApi = selectInfo.view.calendar;
-		calendarApi.unselect(); // clear date selection
+		calendarApi.unselect(); // Xóa lựa chọn ngày
 		setOpen(true);
 		setEventFormType("add");
 		setEventInitValue({
@@ -94,9 +94,9 @@ export default function Calendar() {
 	};
 
 	/**
-	 * calendar event events
+	 * Xử lý sự kiện tương tác với lịch
 	 */
-	// click event and open modal
+	// Click sự kiện và mở modal
 	const handleEventClick = (arg: EventClickArg) => {
 		const { title, extendedProps, allDay, start, end, backgroundColor, id } = arg.event;
 		setOpen(true);
@@ -121,7 +121,7 @@ export default function Calendar() {
 		setEventInitValue(DefaultEventInitValue);
 		setOpen(false);
 	};
-	// edit event
+	// Chỉnh sửa sự kiện
 	const handleEdit = (values: CalendarEventFormFieldType) => {
 		const { id, title = "", description, start, end, allDay = false, color } = values;
 		const calendarApi = fullCalendarRef.current?.getApi();
@@ -140,11 +140,11 @@ export default function Calendar() {
 		if (start) newEvent.start = start.toDate();
 		if (end) newEvent.end = end.toDate();
 
-		// 刷新日历显示
+		// Làm mới hiển thị lịch
 		oldEvent?.remove();
 		calendarApi.addEvent(newEvent);
 	};
-	// create event
+	// Tạo sự kiện
 	const handleCreate = (values: CalendarEventFormFieldType) => {
 		const calendarApi = fullCalendarRef.current?.getApi();
 		if (!calendarApi) return;
@@ -162,10 +162,10 @@ export default function Calendar() {
 		if (start) newEvent.start = start.toDate();
 		if (end) newEvent.end = end.toDate();
 
-		// 刷新日历显示
+		// Làm mới hiển thị lịch
 		calendarApi.addEvent(newEvent);
 	};
-	// delete event
+	// Xóa sự kiện
 	const handleDelete = (id: string) => {
 		const calendarApi = fullCalendarRef.current?.getApi();
 		if (!calendarApi) return;

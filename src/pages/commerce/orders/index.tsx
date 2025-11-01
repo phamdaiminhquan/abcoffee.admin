@@ -34,79 +34,74 @@ export default function OrdersPage() {
 		show: boolean;
 	}>({
 		formValue: { ...DEFAULT_ORDER_VALUE },
-		title: "New",
+		title: "T\u1ea1o m\u1edbi",
 		show: false,
 	});
 
 	const createMutation = useMutation({
 		mutationFn: (dto: CreateOrderDto) => orderService.create(dto),
 		onSuccess: () => {
-			toast.success("Order created successfully");
+			toast.success("T\u1ea1o \u0111\u01a1n h\u00e0ng th\u00e0nh c\u00f4ng");
 			qc.invalidateQueries({ queryKey: ["orders"] });
 			setOrderModalProps((prev) => ({ ...prev, show: false }));
 		},
 		onError: () => {
-			toast.error("Failed to create order");
-		},
-	});
-
-	const updateMutation = useMutation({
-		mutationFn: ({ id, data }: { id: number; data: UpdateOrderDto }) => orderService.update(id, data),
-		onSuccess: () => {
-			toast.success("Order updated successfully");
-			qc.invalidateQueries({ queryKey: ["orders"] });
-			setOrderModalProps((prev) => ({ ...prev, show: false }));
-		},
-		onError: () => {
-			toast.error("Failed to update order");
+			toast.error("T\u1ea1o \u0111\u01a1n h\u00e0ng th\u1ea5t b\u1ea1i");
 		},
 	});
 
 	const deleteMutation = useMutation({
 		mutationFn: (id: number) => orderService.remove(id),
 		onSuccess: () => {
-			toast.success("Order deleted successfully");
+			toast.success("X\u00f3a \u0111\u01a1n h\u00e0ng th\u00e0nh c\u00f4ng");
 			qc.invalidateQueries({ queryKey: ["orders"] });
 		},
 		onError: () => {
-			toast.error("Failed to delete order");
+			toast.error("X\u00f3a \u0111\u01a1n h\u00e0ng th\u1ea5t b\u1ea1i");
 		},
 	});
 
 	const columns: ColumnsType<Order> = [
 		{
-			title: "Order ID",
+			title: "M\u00e3 \u0111\u01a1n",
 			dataIndex: "id",
 			width: 100,
 			render: (id: number) => <span className="font-medium">#{id}</span>,
 		},
 		{
-			title: "Customer",
+			title: "Kh\u00e1ch h\u00e0ng",
 			dataIndex: "customerName",
 			width: 200,
-			render: (name: string) => <span>{name || "Guest"}</span>,
+			render: (name: string) => <span>{name || "Kh\u00e1ch l\u1ebb"}</span>,
 		},
 		{
-			title: "Payment Method",
+			title: "Ph\u01b0\u01a1ng th\u1ee9c thanh to\u00e1n",
 			dataIndex: "paymentMethod",
 			align: "center",
 			width: 150,
 			responsive: ["md"],
-			render: (method: string) => <Badge variant="info">{method === "cash" ? "Cash" : "Bank Transfer"}</Badge>,
+			render: (method: string) => (
+				<Badge variant="info">{method === "cash" ? "Ti\u1ec1n m\u1eb7t" : "Chuy\u1ec3n kho\u1ea3n"}</Badge>
+			),
 		},
 		{
-			title: "Status",
+			title: "Tr\u1ea1ng th\u00e1i",
 			dataIndex: "status",
 			align: "center",
 			width: 150,
 			render: (status: string) => {
 				const variant = status === "cancelled" ? "error" : status === "paid" ? "success" : "warning";
-				const label = status === "pending_payment" ? "Pending" : status === "paid" ? "Paid" : "Cancelled";
+				const label =
+					status === "pending_payment"
+						? "Ch\u1edd thanh to\u00e1n"
+						: status === "paid"
+							? "\u0110\u00e3 thanh to\u00e1n"
+							: "\u0110\u00e3 h\u1ee7y";
 				return <Badge variant={variant}>{label}</Badge>;
 			},
 		},
 		{
-			title: "Total Items",
+			title: "S\u1ed1 m\u1eb7t h\u00e0ng",
 			dataIndex: "orderDetails",
 			align: "center",
 			width: 120,
@@ -114,14 +109,14 @@ export default function OrdersPage() {
 			render: (details: any[]) => <span>{details?.length || 0}</span>,
 		},
 		{
-			title: "Created At",
+			title: "Th\u1eddi gian t\u1ea1o",
 			dataIndex: "createdAt",
 			width: 180,
 			responsive: ["md"],
-			render: (date: string) => <span>{new Date(date).toLocaleString()}</span>,
+			render: (date: string) => <span>{new Date(date).toLocaleString("vi-VN")}</span>,
 		},
 		{
-			title: "Action",
+			title: "Thao t\u00e1c",
 			key: "operation",
 			align: "center",
 			width: 80,
@@ -135,7 +130,7 @@ export default function OrdersPage() {
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align="end" className="w-40">
 							<DropdownMenuItem variant="destructive" onClick={() => onDelete(record.id)}>
-								<Icon icon="mingcute:delete-2-fill" /> Delete
+								<Icon icon="mingcute:delete-2-fill" /> X\u00f3a
 							</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>
@@ -147,13 +142,13 @@ export default function OrdersPage() {
 	const onCreate = () => {
 		setOrderModalProps({
 			show: true,
-			title: "Create New Order",
+			title: "T\u1ea1o \u0111\u01a1n h\u00e0ng",
 			formValue: { ...DEFAULT_ORDER_VALUE },
 		});
 	};
 
 	const onDelete = (id: number) => {
-		if (window.confirm("Are you sure you want to delete this order?")) {
+		if (window.confirm("B\u1ea1n c\u00f3 ch\u1eafc mu\u1ed1n x\u00f3a \u0111\u01a1n h\u00e0ng n\u00e0y?")) {
 			deleteMutation.mutate(id);
 		}
 	};
@@ -171,8 +166,8 @@ export default function OrdersPage() {
 		<Card>
 			<CardHeader>
 				<div className="flex items-center justify-between">
-					<div>Order List</div>
-					<Button onClick={onCreate}>New</Button>
+					<div>Danh s\u00e1ch \u0111\u01a1n h\u00e0ng</div>
+					<Button onClick={onCreate}>T\u1ea1o m\u1edbi</Button>
 				</div>
 			</CardHeader>
 			<CardContent>

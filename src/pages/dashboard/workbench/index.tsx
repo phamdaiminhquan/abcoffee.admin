@@ -111,12 +111,12 @@ export default function Workbench() {
 		plotOptions: { pie: { donut: { size: "70%" } } },
 	});
 
-	// throw new Error("test error"); // 注释掉直接抛错，改用演示组件
+	// throw new Error("test error"); // Đã ghi chú để tránh ném lỗi, dùng component demo thay thế
 
 	return (
 		<div className="flex flex-col gap-4 w-full">
 			<BannerCard />
-			{/* 顶部四个统计卡片 */}
+			{/* Bốn thẻ thống kê ở đầu trang */}
 			<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 				{quickStats.map((stat) => (
 					<Card key={stat.label} className="flex flex-col justify-between h-full">
@@ -163,7 +163,7 @@ export default function Workbench() {
 				))}
 			</div>
 
-			{/* 月度收入+项目进度区块 */}
+			{/* Khối doanh thu tháng và tiến độ dự án */}
 			<div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
 				<Card className="lg:col-span-2">
 					<CardContent className="p-6">
@@ -202,7 +202,7 @@ export default function Workbench() {
 				</Card>
 			</div>
 
-			{/* 项目概览区块 */}
+			{/* Khối tổng quan dự án */}
 			<div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
 				<Card className="lg:col-span-2 flex flex-col gap-4 p-6">
 					<Text variant="body2" className="font-semibold mb-2">
@@ -259,7 +259,7 @@ export default function Workbench() {
 				</Card>
 			</div>
 
-			{/* 交易+收入区块 */}
+			{/* Khối giao dịch và doanh thu */}
 			<div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
 				<Card className="lg:col-span-2 flex flex-col p-6">
 					<div className="flex items-center gap-4 mb-4">

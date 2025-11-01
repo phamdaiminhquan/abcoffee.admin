@@ -5,17 +5,17 @@ import { PermissionType } from "#/enum";
 const { GROUP, MENU, CATALOGUE } = PermissionType;
 
 export const DB_MENU: Menu[] = [
-	// group
-	{ id: "group_dashboard", name: "sys.nav.dashboard", code: "dashboard", parentId: "", type: GROUP },
-	{ id: "group_pages", name: "sys.nav.pages", code: "pages", parentId: "", type: GROUP },
-	{ id: "group_ui", name: "sys.nav.ui", code: "ui", parentId: "", type: GROUP },
-	{ id: "group_others", name: "sys.nav.others", code: "others", parentId: "", type: GROUP },
+	// Nhóm gốc
+	{ id: "group_dashboard", name: "B\u1ea3ng \u0111i\u1ec1u khi\u1ec3n", code: "dashboard", parentId: "", type: GROUP },
+	{ id: "group_pages", name: "Trang", code: "pages", parentId: "", type: GROUP },
+	{ id: "group_ui", name: "Giao di\u1ec7n", code: "ui", parentId: "", type: GROUP },
+	{ id: "group_others", name: "Kh\u00e1c", code: "others", parentId: "", type: GROUP },
 
-	// group_dashboard
+	// Nhóm dashboard
 	{
 		id: "workbench",
 		parentId: "group_dashboard",
-		name: "sys.nav.workbench",
+		name: "B\u00e0n l\u00e0m vi\u1ec7c",
 		code: "workbench",
 		icon: "local:ic-workbench",
 		type: MENU,
@@ -25,7 +25,7 @@ export const DB_MENU: Menu[] = [
 	{
 		id: "analysis",
 		parentId: "group_dashboard",
-		name: "sys.nav.analysis",
+		name: "Ph\u00e2n t\u00edch",
 		code: "analysis",
 		icon: "local:ic-analysis",
 		type: MENU,
@@ -33,22 +33,29 @@ export const DB_MENU: Menu[] = [
 		component: "/pages/dashboard/analysis",
 	},
 
-	// group_pages
-	// management
+	// Nhóm pages
+	// Khu vực quản lý
 	{
 		id: "management",
 		parentId: "group_pages",
-		name: "sys.nav.management",
+		name: "Qu\u1ea3n l\u00fd",
 		code: "management",
 		icon: "local:ic-management",
 		type: CATALOGUE,
 		path: "/management",
 	},
-	{ id: "management_user", parentId: "management", name: "sys.nav.user.index", code: "management:user", type: CATALOGUE, path: "/management/user" },
+	{
+		id: "management_user",
+		parentId: "management",
+		name: "Ng\u01b0\u1eddi d\u00f9ng",
+		code: "management:user",
+		type: CATALOGUE,
+		path: "/management/user",
+	},
 	{
 		id: "management_user_profile",
 		parentId: "management_user",
-		name: "sys.nav.user.profile",
+		name: "H\u1ed3 s\u01a1",
 		code: "management:user:profile",
 		type: MENU,
 		path: "management/user/profile",
@@ -57,17 +64,24 @@ export const DB_MENU: Menu[] = [
 	{
 		id: "management_user_account",
 		parentId: "management_user",
-		name: "sys.nav.user.account",
+		name: "T\u00e0i kho\u1ea3n",
 		code: "management:user:account",
 		type: MENU,
 		path: "management/user/account",
 		component: "/pages/management/user/account",
 	},
-	{ id: "management_system", parentId: "management", name: "sys.nav.system.index", code: "management:system", type: CATALOGUE, path: "management/system" },
+	{
+		id: "management_system",
+		parentId: "management",
+		name: "H\u1ec7 th\u1ed1ng",
+		code: "management:system",
+		type: CATALOGUE,
+		path: "management/system",
+	},
 	{
 		id: "management_system_user",
 		parentId: "management_system",
-		name: "sys.nav.system.user",
+		name: "Ng\u01b0\u1eddi d\u00f9ng",
 		code: "management:system:user",
 		type: MENU,
 		path: "/management/system/user",
@@ -76,7 +90,7 @@ export const DB_MENU: Menu[] = [
 	{
 		id: "management_system_role",
 		parentId: "management_system",
-		name: "sys.nav.system.role",
+		name: "Vai tr\u00f2",
 		code: "management:system:role",
 		type: MENU,
 		path: "/management/system/role",
@@ -85,17 +99,17 @@ export const DB_MENU: Menu[] = [
 	{
 		id: "management_system_permission",
 		parentId: "management_system",
-		name: "sys.nav.system.permission",
+		name: "Ph\u00e2n quy\u1ec1n",
 		code: "management:system:permission",
 		type: MENU,
 		path: "/management/system/permission",
 		component: "/pages/management/system/permission",
 	},
-	// menulevel
+	// Cấp menu
 	{
 		id: "menulevel",
 		parentId: "group_pages",
-		name: "sys.nav.menulevel.index",
+		name: "C\u1ea5u tr\u00fac menu",
 		code: "menulevel",
 		icon: "local:ic-menulevel",
 		type: CATALOGUE,
@@ -104,7 +118,7 @@ export const DB_MENU: Menu[] = [
 	{
 		id: "menulevel_1a",
 		parentId: "menulevel",
-		name: "sys.nav.menulevel.1a",
+		name: "M\u1ee5c 1A",
 		code: "menulevel:1a",
 		type: MENU,
 		path: "/menu_level/1a",
@@ -113,7 +127,7 @@ export const DB_MENU: Menu[] = [
 	{
 		id: "menulevel_1b",
 		parentId: "menulevel",
-		name: "sys.nav.menulevel.1b.index",
+		name: "M\u1ee5c 1B",
 		code: "menulevel:1b",
 		type: CATALOGUE,
 		path: "/menu_level/1b",
@@ -122,7 +136,7 @@ export const DB_MENU: Menu[] = [
 	{
 		id: "menulevel_1b_2a",
 		parentId: "menulevel_1b",
-		name: "sys.nav.menulevel.1b.2a",
+		name: "M\u1ee5c 2A",
 		code: "menulevel:1b:2a",
 		type: MENU,
 		path: "/menu_level/1b/2a",
@@ -131,7 +145,7 @@ export const DB_MENU: Menu[] = [
 	{
 		id: "menulevel_1b_2b",
 		parentId: "menulevel_1b",
-		name: "sys.nav.menulevel.1b.2b.index",
+		name: "M\u1ee5c 2B",
 		code: "menulevel:1b:2b",
 		type: CATALOGUE,
 		path: "/menu_level/1b/2b",
@@ -139,7 +153,7 @@ export const DB_MENU: Menu[] = [
 	{
 		id: "menulevel_1b_2b_3a",
 		parentId: "menulevel_1b_2b",
-		name: "sys.nav.menulevel.1b.2b.3a",
+		name: "M\u1ee5c 3A",
 		code: "menulevel:1b:2b:3a",
 		type: MENU,
 		path: "/menu_level/1b/2b/3a",
@@ -148,34 +162,66 @@ export const DB_MENU: Menu[] = [
 	{
 		id: "menulevel_1b_2b_3b",
 		parentId: "menulevel_1b_2b",
-		name: "sys.nav.menulevel.1b.2b.3b",
+		name: "M\u1ee5c 3B",
 		code: "menulevel:1b:2b:3b",
 		type: MENU,
 		path: "/menu_level/1b/2b/3b",
 		component: "/pages/menu-level/menu-level-1b/menu-level-2b/menu-level-3b",
 	},
-	// erros
-	{ id: "error", parentId: "group_pages", name: "sys.nav.error.index", code: "error", icon: "bxs:error-alt", type: CATALOGUE, path: "/error" },
-	{ id: "error_403", parentId: "error", name: "sys.nav.error.403", code: "error:403", type: MENU, path: "/error/403", component: "/pages/sys/error/Page403" },
-	{ id: "error_404", parentId: "error", name: "sys.nav.error.404", code: "error:404", type: MENU, path: "/error/404", component: "/pages/sys/error/Page404" },
-	{ id: "error_500", parentId: "error", name: "sys.nav.error.500", code: "error:500", type: MENU, path: "/error/500", component: "/pages/sys/error/Page500" },
+	// Nhóm lỗi
+	{
+		id: "error",
+		parentId: "group_pages",
+		name: "Trang l\u1ed7i",
+		code: "error",
+		icon: "bxs:error-alt",
+		type: CATALOGUE,
+		path: "/error",
+	},
+	{
+		id: "error_403",
+		parentId: "error",
+		name: "L\u1ed7i 403",
+		code: "error:403",
+		type: MENU,
+		path: "/error/403",
+		component: "/pages/sys/error/Page403",
+	},
+	{
+		id: "error_404",
+		parentId: "error",
+		name: "L\u1ed7i 404",
+		code: "error:404",
+		type: MENU,
+		path: "/error/404",
+		component: "/pages/sys/error/Page404",
+	},
+	{
+		id: "error_500",
+		parentId: "error",
+		name: "L\u1ed7i 500",
+		code: "error:500",
+		type: MENU,
+		path: "/error/500",
+		component: "/pages/sys/error/Page500",
+	},
 
-	// group_ui
-	// components
+	// Nhóm UI
+	// Thành phần
 	{
 		id: "components",
 		parentId: "group_ui",
-		name: "sys.nav.components",
+		name: "Th\u00e0nh ph\u1ea7n",
 		code: "components",
 		icon: "solar:widget-5-bold-duotone",
 		type: CATALOGUE,
 		path: "/components",
-		caption: "sys.nav.custom_ui_components",
+		caption: "Th\u00e0nh ph\u1ea7n UI t\u00f9y ch\u1ec9nh",
 	},
 	{
 		id: "components_icon",
 		parentId: "components",
-		name: "sys.nav.icon",
+		name: "Bi\u1ec3u t\u01b0\u1ee3ng",
 		code: "components:icon",
 		type: MENU,
 		path: "/components/icon",
@@ -184,7 +230,7 @@ export const DB_MENU: Menu[] = [
 	{
 		id: "components_animate",
 		parentId: "components",
-		name: "sys.nav.animate",
+		name: "Hi\u1ec7u \u1ee9ng",
 		code: "components:animate",
 		type: MENU,
 		path: "/components/animate",
@@ -193,7 +239,7 @@ export const DB_MENU: Menu[] = [
 	{
 		id: "components_scroll",
 		parentId: "components",
-		name: "sys.nav.scroll",
+		name: "Cu\u1ed9n",
 		code: "components:scroll",
 		type: MENU,
 		path: "/components/scroll",
@@ -202,7 +248,7 @@ export const DB_MENU: Menu[] = [
 	{
 		id: "components_i18n",
 		parentId: "components",
-		name: "sys.nav.i18n",
+		name: "\u0110a ng\u00f4n ng\u1eef",
 		code: "components:i18n",
 		type: MENU,
 		path: "/components/multi-language",
@@ -211,7 +257,7 @@ export const DB_MENU: Menu[] = [
 	{
 		id: "components_upload",
 		parentId: "components",
-		name: "sys.nav.upload",
+		name: "T\u1ea3i l\u00ean",
 		code: "components:upload",
 		type: MENU,
 		path: "/components/upload",
@@ -220,7 +266,7 @@ export const DB_MENU: Menu[] = [
 	{
 		id: "components_chart",
 		parentId: "components",
-		name: "sys.nav.chart",
+		name: "Bi\u1ec3u \u0111\u1ed3",
 		code: "components:chart",
 		type: MENU,
 		path: "/components/chart",
@@ -229,17 +275,17 @@ export const DB_MENU: Menu[] = [
 	{
 		id: "components_toast",
 		parentId: "components",
-		name: "sys.nav.toast",
+		name: "Toast",
 		code: "components:toast",
 		type: MENU,
 		path: "/components/toast",
 		component: "/pages/components/toast",
 	},
-	// functions
+	// Chức năng
 	{
 		id: "functions",
 		parentId: "group_ui",
-		name: "sys.nav.functions",
+		name: "Ch\u1ee9c n\u0103ng",
 		code: "functions",
 		icon: "solar:plain-2-bold-duotone",
 		type: CATALOGUE,
@@ -248,7 +294,7 @@ export const DB_MENU: Menu[] = [
 	{
 		id: "functions_clipboard",
 		parentId: "functions",
-		name: "sys.nav.clipboard",
+		name: "B\u1ea3ng t\u1ea1m",
 		code: "functions:clipboard",
 		type: MENU,
 		path: "/functions/clipboard",
@@ -257,18 +303,18 @@ export const DB_MENU: Menu[] = [
 	{
 		id: "functions_tokenExpired",
 		parentId: "functions",
-		name: "sys.nav.token_expired",
+		name: "H\u1ebft phi\u00ean",
 		code: "functions:token_expired",
 		type: MENU,
 		path: "/functions/token_expired",
 		component: "/pages/functions/token-expired",
 	},
 
-	// group_others
+	// Nhóm khác
 	{
 		id: "permission",
 		parentId: "group_others",
-		name: "sys.nav.permission",
+		name: "Ph\u00e2n quy\u1ec1n",
 		code: "permission",
 		icon: "mingcute:safe-lock-fill",
 		type: MENU,
@@ -278,7 +324,7 @@ export const DB_MENU: Menu[] = [
 	{
 		id: "permission_page_test",
 		parentId: "group_others",
-		name: "sys.nav.permission.page_test",
+		name: "Ki\u1ec3m tra ph\u00e2n quy\u1ec1n",
 		code: "permission:page_test",
 		icon: "mingcute:safe-lock-fill",
 		type: MENU,
@@ -290,7 +336,7 @@ export const DB_MENU: Menu[] = [
 	{
 		id: "calendar",
 		parentId: "group_others",
-		name: "sys.nav.calendar",
+		name: "L\u1ecbch",
 		code: "calendar",
 		icon: "solar:calendar-bold-duotone",
 		type: MENU,
@@ -301,7 +347,7 @@ export const DB_MENU: Menu[] = [
 	{
 		id: "kanban",
 		parentId: "group_others",
-		name: "sys.nav.kanban",
+		name: "Kanban",
 		code: "kanban",
 		icon: "solar:clipboard-bold-duotone",
 		type: MENU,
@@ -311,7 +357,7 @@ export const DB_MENU: Menu[] = [
 	{
 		id: "disabled",
 		parentId: "group_others",
-		name: "sys.nav.disabled",
+		name: "B\u1ecb v\u00f4 hi\u1ec7u ho\u00e1",
 		code: "disabled",
 		icon: "local:ic-disabled",
 		type: MENU,
@@ -319,12 +365,29 @@ export const DB_MENU: Menu[] = [
 		disabled: true,
 		component: "/pages/sys/others/disabled",
 	},
-	{ id: "label", parentId: "group_others", name: "sys.nav.label", code: "label", icon: "local:ic-label", type: MENU, path: "#label", info: "New" },
-	{ id: "link", parentId: "group_others", name: "sys.nav.link", code: "link", icon: "local:ic-external", type: CATALOGUE, path: "/link" },
+	{
+		id: "label",
+		parentId: "group_others",
+		name: "Nhãn",
+		code: "label",
+		icon: "local:ic-label",
+		type: MENU,
+		path: "#label",
+		info: "M\u1edbi",
+	},
+	{
+		id: "link",
+		parentId: "group_others",
+		name: "Li\u00ean k\u1ebft",
+		code: "link",
+		icon: "local:ic-external",
+		type: CATALOGUE,
+		path: "/link",
+	},
 	{
 		id: "link_external",
 		parentId: "link",
-		name: "sys.nav.external_link",
+		name: "Li\u00ean k\u1ebft ngo\u00e0i",
 		code: "link:external_link",
 		type: MENU,
 		path: "/link/external_link",
@@ -334,7 +397,7 @@ export const DB_MENU: Menu[] = [
 	{
 		id: "link_iframe",
 		parentId: "link",
-		name: "sys.nav.iframe",
+		name: "Iframe",
 		code: "link:iframe",
 		type: MENU,
 		path: "/link/iframe",
@@ -344,7 +407,7 @@ export const DB_MENU: Menu[] = [
 	{
 		id: "blank",
 		parentId: "group_others",
-		name: "sys.nav.blank",
+		name: "Trang tr\u1ed1ng",
 		code: "blank",
 		icon: "local:ic-blank",
 		type: MENU,
@@ -354,9 +417,27 @@ export const DB_MENU: Menu[] = [
 ];
 
 export const DB_USER: User[] = [
-	{ id: "user_admin_id", username: "admin", password: "demo1234", avatar: faker.image.avatarGitHub(), email: "admin@slash.com" },
-	{ id: "user_test_id", username: "test", password: "demo1234", avatar: faker.image.avatarGitHub(), email: "test@slash.com" },
-	{ id: "user_guest_id", username: "guest", password: "demo1234", avatar: faker.image.avatarGitHub(), email: "guest@slash.com" },
+	{
+		id: "user_admin_id",
+		username: "admin",
+		password: "demo1234",
+		avatar: faker.image.avatarGitHub(),
+		email: "admin@slash.com",
+	},
+	{
+		id: "user_test_id",
+		username: "test",
+		password: "demo1234",
+		avatar: faker.image.avatarGitHub(),
+		email: "test@slash.com",
+	},
+	{
+		id: "user_guest_id",
+		username: "guest",
+		password: "demo1234",
+		avatar: faker.image.avatarGitHub(),
+		email: "guest@slash.com",
+	},
 ];
 
 export const DB_ROLE: Role[] = [

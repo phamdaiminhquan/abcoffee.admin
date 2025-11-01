@@ -9,7 +9,7 @@ import type { ColumnsType } from "antd/es/table";
 import type { Role_Old, UserInfo } from "#/entity";
 import { BasicStatus } from "#/enum";
 
-// TODO: fix
+// TODO: cần sửa
 // const USERS: UserInfo[] = USER_LIST as UserInfo[];
 const USERS: UserInfo[] = [];
 
@@ -46,7 +46,11 @@ export default function UserPage() {
 			dataIndex: "status",
 			align: "center",
 			width: 120,
-			render: (status) => <Badge variant={status === BasicStatus.DISABLE ? "error" : "success"}>{status === BasicStatus.DISABLE ? "Disable" : "Enable"}</Badge>,
+			render: (status) => (
+				<Badge variant={status === BasicStatus.DISABLE ? "error" : "success"}>
+					{status === BasicStatus.DISABLE ? "Disable" : "Enable"}
+				</Badge>
+			),
 		},
 		{
 			title: "Action",
@@ -84,7 +88,14 @@ export default function UserPage() {
 				</div>
 			</CardHeader>
 			<CardContent>
-				<Table rowKey="id" size="small" scroll={{ x: "max-content" }} pagination={false} columns={columns} dataSource={USERS} />
+				<Table
+					rowKey="id"
+					size="small"
+					scroll={{ x: "max-content" }}
+					pagination={false}
+					columns={columns}
+					dataSource={USERS}
+				/>
 			</CardContent>
 		</Card>
 	);

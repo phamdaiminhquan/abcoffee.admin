@@ -2,7 +2,7 @@ import { useParams } from "@/routes/hooks";
 import { Card, CardContent } from "@/ui/card";
 import type { UserInfo } from "#/entity";
 
-// TODO: fix
+// TODO: cần sửa
 // const USERS: UserInfo[] = USER_LIST as UserInfo[];
 const USERS: UserInfo[] = [];
 

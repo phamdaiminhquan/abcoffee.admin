@@ -1,8 +1,8 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/ui/card";
+import { Card, CardContent, CardTitle } from "@/ui/card";
 import { Button } from "@/ui/button";
 import { Input } from "@/ui/input";
 import { Switch } from "@/ui/switch";
@@ -70,13 +70,13 @@ export default function ImagesPage() {
 			}
 			const status = err?.response?.status;
 			if (status === 409) {
-				const message = err?.response?.data?.message || "Image is in use";
+				const message = err?.response?.data?.message || "\u1ea2nh \u0111ang \u0111\u01b0\u1ee3c s\u1eed d\u1ee5ng";
 				const productIds = err?.response?.data?.details?.productIds;
-				toast.error(productIds?.length ? `${message} (products: ${productIds.join(", ")})` : message);
+				toast.error(productIds?.length ? `${message} (s\u1ea3n ph\u1ea9m: ${productIds.join(", ")})` : message);
 			}
 		},
 		onSuccess: () => {
-			toast.success("Image deleted");
+			toast.success("\u0110\u00e3 x\u00f3a \u1ea3nh");
 		},
 		onSettled: () => {
 			qc.invalidateQueries({ queryKey: ["images"] });
@@ -86,32 +86,19 @@ export default function ImagesPage() {
 	return (
 		<div className="space-y-3">
 			<div className="flex items-center justify-between gap-2">
-				<CardTitle className="text-base">Image Management</CardTitle>
+				<CardTitle className="text-base">Qu\u1ea3n l\u00fd H\u00ecnh \u1ea3nh</CardTitle>
 				<div className="flex items-center gap-2">
 					<Input
-						placeholder="Search by filename..."
+						placeholder="T\u00ecm theo t\u00ean t\u1ec7p..."
 						value={search}
 						onChange={(e) => {
 							setSearch(e.target.value);
 							setPage(1);
-
-							const updateNameMutation = useMutation({
-								mutationFn: async () => {
-									if (!detail) throw new Error("No image selected");
-									const updated = await uploadService.updateImageMetadata(detail.id, { originalFilename: editName });
-									return updated;
-								},
-								onSuccess: (updated) => {
-									setDetail(updated);
-									toast.success("Filename updated");
-									qc.invalidateQueries({ queryKey: ["images"] });
-								},
-							});
 						}}
 						className="w-60"
 					/>
 					<div className="flex items-center gap-2">
-						<span className="text-sm">Unused only</span>
+						<span className="text-sm">Ch\u1ec9 \u1ea3nh ch\u01b0a d\u00f9ng</span>
 						<Switch
 							checked={unusedOnly}
 							onCheckedChange={(v) => {
@@ -122,7 +109,7 @@ export default function ImagesPage() {
 					</div>
 
 					<div className="flex items-center gap-1 text-sm">
-						<span>Per page</span>
+						<span>M\u1ed7i trang</span>
 						<select
 							className="h-9 rounded-md border bg-background px-2"
 							value={pageSize}
@@ -182,16 +169,16 @@ export default function ImagesPage() {
 													setEditName(img.originalFilename || "");
 												}}
 											>
-												<Icon icon="solar:alt-arrow-right-bold-duotone" /> View details
+												<Icon icon="solar:alt-arrow-right-bold-duotone" /> Xem chi ti\u1ebft
 											</DropdownMenuItem>
 											<DropdownMenuItem
 												variant="destructive"
 												onClick={() => {
-													if (window.confirm("Delete this image? This cannot be undone."))
+													if (window.confirm("X\u00f3a \u1ea3nh n\u00e0y? Kh\u00f4ng th\u1ec3 ho\u00e0n t\u00e1c."))
 														deleteMutation.mutate(img.id);
 												}}
 											>
-												<Icon icon="mingcute:delete-2-fill" /> Delete
+												<Icon icon="mingcute:delete-2-fill" /> X\u00f3a
 											</DropdownMenuItem>
 										</DropdownMenuContent>
 									</DropdownMenu>
@@ -200,7 +187,9 @@ export default function ImagesPage() {
 						);
 					})}
 					{images.length === 0 && (
-						<div className="col-span-full py-8 text-center text-sm text-muted-foreground">No images</div>
+						<div className="col-span-full py-8 text-center text-sm text-muted-foreground">
+							Kh\u00f4ng c\u00f3 \u1ea3nh
+						</div>
 					)}
 				</div>
 			)}
@@ -208,11 +197,11 @@ export default function ImagesPage() {
 			{/* Pagination */}
 			<div className="flex items-center justify-between text-sm">
 				<div>
-					Page {currentPage} / {totalPages} • {total} images
+					Trang {currentPage} / {totalPages} • {total} \u1ea3nh
 				</div>
 				<div className="flex items-center gap-2">
 					<Button size="sm" variant="secondary" onClick={() => setPage(1)} disabled={currentPage === 1}>
-						First
+						\u0110\u1ea7u
 					</Button>
 					<Button
 						size="sm"
@@ -220,7 +209,7 @@ export default function ImagesPage() {
 						onClick={() => setPage((p) => Math.max(1, p - 1))}
 						disabled={currentPage === 1}
 					>
-						Prev
+						Tr\u01b0\u1edbc
 					</Button>
 					<Button
 						size="sm"
@@ -228,7 +217,7 @@ export default function ImagesPage() {
 						onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
 						disabled={currentPage === totalPages}
 					>
-						Next
+						Sau
 					</Button>
 					<Button
 						size="sm"
@@ -236,7 +225,7 @@ export default function ImagesPage() {
 						onClick={() => setPage(totalPages)}
 						disabled={currentPage === totalPages}
 					>
-						Last
+						Cu\u1ed1i
 					</Button>
 				</div>
 			</div>
@@ -245,7 +234,7 @@ export default function ImagesPage() {
 			<Dialog open={!!detail} onOpenChange={(open) => !open && setDetail(null)}>
 				<DialogContent>
 					<DialogHeader>
-						<DialogTitle>Image Details</DialogTitle>
+						<DialogTitle>Chi ti\u1ebft \u1ea3nh</DialogTitle>
 					</DialogHeader>
 					{detail && (
 						<div className="space-y-3">
@@ -258,19 +247,19 @@ export default function ImagesPage() {
 							</div>
 							<div className="grid grid-cols-2 gap-3 text-sm">
 								<div>
-									<Label className="text-muted-foreground">Original Filename</Label>
+									<Label className="text-muted-foreground">T\u00ean t\u1ec7p g\u1ed1c</Label>
 									<div>{detail.originalFilename}</div>
 								</div>
 								<div>
-									<Label className="text-muted-foreground">Saved Filename</Label>
+									<Label className="text-muted-foreground">T\u00ean t\u1ec7p l\u01b0u</Label>
 									<div>{detail.savedFilename}</div>
 								</div>
 								<div>
-									<Label className="text-muted-foreground">Filesize</Label>
+									<Label className="text-muted-foreground">K\u00edch th\u01b0\u1edbc</Label>
 									<div>{(detail.filesize / 1024).toFixed(0)} KB</div>
 								</div>
 								<div>
-									<Label className="text-muted-foreground">Uploaded At</Label>
+									<Label className="text-muted-foreground">Th\u1eddi \u0111i\u1ec3m t\u1ea3i l\u00ean</Label>
 									<div>{new Date(detail.createdAt as any).toLocaleString()}</div>
 								</div>
 							</div>

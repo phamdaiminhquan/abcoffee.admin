@@ -47,7 +47,7 @@ export const presetsColors = {
 };
 
 /**
- * We recommend picking colors with these values for [Eva Color Design](https://colors.eva.design/):
+ * Gợi ý chọn các cấp độ màu theo [Eva Color Design](https://colors.eva.design/):
  *  + lighter : 100
  *  + light : 300
  *  + main : 500

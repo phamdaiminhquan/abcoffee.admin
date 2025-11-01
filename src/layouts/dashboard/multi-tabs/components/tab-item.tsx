@@ -1,24 +1,22 @@
 import { Icon } from "@/components/icon";
 import { Dropdown, type MenuProps } from "antd";
-import { useTranslation } from "react-i18next";
 import { MultiTabOperation } from "#/enum";
 import { useTabLabelRender } from "../hooks/use-tab-label-render";
 import { useMultiTabsContext } from "../providers/multi-tabs-provider";
 import type { TabItemProps } from "../types";
 
 export function TabItem({ tab, style, onClose }: TabItemProps) {
-	const { t } = useTranslation();
 	const { tabs, refreshTab, closeTab, closeOthersTab, closeLeft, closeRight, closeAll } = useMultiTabsContext();
 
 	const renderTabLabel = useTabLabelRender();
 	const menuItems: MenuProps["items"] = [
 		{
-			label: t(`sys.tab.${MultiTabOperation.REFRESH}`),
+			label: "L\u00e0m m\u1edbi",
 			key: MultiTabOperation.REFRESH,
 			icon: <Icon icon="mdi:reload" size={18} />,
 		},
 		{
-			label: t(`sys.tab.${MultiTabOperation.CLOSE}`),
+			label: "\u0110\u00f3ng tab",
 			key: MultiTabOperation.CLOSE,
 			icon: <Icon icon="material-symbols:close" size={18} />,
 			disabled: tabs.length === 1,
@@ -27,13 +25,13 @@ export function TabItem({ tab, style, onClose }: TabItemProps) {
 			type: "divider",
 		},
 		{
-			label: t(`sys.tab.${MultiTabOperation.CLOSELEFT}`),
+			label: "\u0110\u00f3ng c\u00e1c tab b\u00ean tr\u00e1i",
 			key: MultiTabOperation.CLOSELEFT,
 			icon: <Icon icon="material-symbols:tab-close-right-outline" size={18} className="rotate-180" />,
 			disabled: tabs.findIndex((t) => t.key === tab.key) === 0,
 		},
 		{
-			label: t(`sys.tab.${MultiTabOperation.CLOSERIGHT}`),
+			label: "\u0110\u00f3ng c\u00e1c tab b\u00ean ph\u1ea3i",
 			key: MultiTabOperation.CLOSERIGHT,
 			icon: <Icon icon="material-symbols:tab-close-right-outline" size={18} />,
 			disabled: tabs.findIndex((t) => t.key === tab.key) === tabs.length - 1,
@@ -42,13 +40,13 @@ export function TabItem({ tab, style, onClose }: TabItemProps) {
 			type: "divider",
 		},
 		{
-			label: t(`sys.tab.${MultiTabOperation.CLOSEOTHERS}`),
+			label: "\u0110\u00f3ng c\u00e1c tab kh\u00e1c",
 			key: MultiTabOperation.CLOSEOTHERS,
 			icon: <Icon icon="material-symbols:tab-close-outline" size={18} />,
 			disabled: tabs.length === 1,
 		},
 		{
-			label: t(`sys.tab.${MultiTabOperation.CLOSEALL}`),
+			label: "\u0110\u00f3ng t\u1ea5t c\u1ea3",
 			key: MultiTabOperation.CLOSEALL,
 			icon: <Icon icon="mdi:collapse-all-outline" size={18} />,
 		},

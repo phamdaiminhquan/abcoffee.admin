@@ -1,7 +1,14 @@
 import type { NavItemDataProps } from "@/components/nav";
 import { useFilteredNavData } from "@/layouts/dashboard/nav";
-import useLocale from "@/locales/use-locale";
-import { Breadcrumb, BreadcrumbEllipsis, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/ui/breadcrumb";
+import {
+	Breadcrumb,
+	BreadcrumbEllipsis,
+	BreadcrumbItem,
+	BreadcrumbLink,
+	BreadcrumbList,
+	BreadcrumbPage,
+	BreadcrumbSeparator,
+} from "@/ui/breadcrumb";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
 import * as React from "react";
@@ -26,7 +33,6 @@ interface BreadcrumbItemData {
 }
 
 export default function BreadCrumb({ maxItems = 3 }: BreadCrumbProps) {
-	const { t } = useLocale();
 	const matches = useMatches();
 	const navData = useFilteredNavData();
 
@@ -59,17 +65,17 @@ export default function BreadCrumb({ maxItems = 3 }: BreadCrumbProps) {
 				const children =
 					currentItem.children?.map((child) => ({
 						key: child.path,
-						label: t(child.title),
+						label: child.title,
 					})) ?? [];
 
 				return {
 					key: currentItem.path,
-					label: t(currentItem.title),
+					label: currentItem.title,
 					items: children,
 				};
 			})
 			.filter((item): item is BreadcrumbItemData => item !== null);
-	}, [matches, t, findPathInNavData, navData]);
+	}, [matches, findPathInNavData, navData]);
 
 	const renderBreadcrumbItem = (item: BreadcrumbItemData, isLast: boolean) => {
 		const hasItems = item.items && item.items.length > 0;
@@ -117,7 +123,7 @@ export default function BreadCrumb({ maxItems = 3 }: BreadCrumbProps) {
 			));
 		}
 
-		// Show first item, ellipsis, and last maxItems-1 items
+		// Hiển thị mục đầu, dấu ba chấm và maxItems-1 mục cuối
 		const firstItem = breadCrumbs[0];
 		const lastItems = breadCrumbs.slice(-(maxItems - 1));
 		const hiddenItems = breadCrumbs.slice(1, -(maxItems - 1));

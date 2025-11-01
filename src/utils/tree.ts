@@ -1,9 +1,9 @@
 import { chain } from "ramda";
 
 /**
- * Flatten an array containing a tree structure
- * @param {T[]} trees - An array containing a tree structure
- * @returns {T[]} - Flattened array
+ * Trải phẳng mảng chứa cấu trúc cây
+ * @param {T[]} trees - Mảng dữ liệu dạng cây
+ * @returns {T[]} - Mảng đã được trải phẳng
  */
 export function flattenTrees<T extends { children?: T[] }>(trees: T[] = []): T[] {
 	return chain((node) => {
@@ -13,9 +13,9 @@ export function flattenTrees<T extends { children?: T[] }>(trees: T[] = []): T[]
 }
 
 /**
- * Convert an array to a tree structure
- * @param items - An array of items
- * @returns A tree structure
+ * Chuyển một mảng thành cấu trúc cây
+ * @param items - Mảng phần tử
+ * @returns Cây với thuộc tính children
  */
 export function convertToTree<T extends { children?: T[] }>(items: T[]): T[] {
 	const tree = items.map((item) => ({ ...item, children: convertToTree(item.children || []) }));
@@ -24,20 +24,20 @@ export function convertToTree<T extends { children?: T[] }>(items: T[]): T[] {
 }
 
 /**
- * Convert a flat array with parentId to a tree structure
- * @param items - An array of items with parentId
- * @returns A tree structure with children property
+ * Chuyển mảng phẳng có parentId thành cấu trúc cây
+ * @param items - Mảng phần tử kèm parentId
+ * @returns Cây với thuộc tính children
  */
 export function convertFlatToTree<T extends { id: string; parentId: string }>(items: T[]): (T & { children: T[] })[] {
 	const itemMap = new Map<string, T & { children: T[] }>();
 	const result: (T & { children: T[] })[] = [];
 
-	// First pass: create a map of all items
+	// Vòng lặp đầu: tạo map chứa toàn bộ phần tử
 	for (const item of items) {
 		itemMap.set(item.id, { ...item, children: [] });
 	}
 
-	// Second pass: build the tree
+	// Vòng lặp thứ hai: xây dựng cây hoàn chỉnh
 	for (const item of items) {
 		const node = itemMap.get(item.id);
 		if (!node) continue;

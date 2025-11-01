@@ -22,12 +22,12 @@ export const themeVars = createThemeContract({
 	colors: addColorChannels(themeTokens.colors),
 });
 
-// theme mode
+// chế độ giao diện
 for (const themeMode of Object.values(ThemeMode)) {
 	createGlobalTheme(`:root[${HtmlDataAttribute.ThemeMode}=${themeMode}]`, themeVars, getThemeTokens(themeMode));
 }
 
-// dynamic color palette
+// bảng màu động
 for (const preset of Object.values(ThemeColorPresets)) {
 	globalStyle(`:root[${HtmlDataAttribute.ColorPalette}=${preset}]`, {
 		vars: assignVars(themeVars.colors.palette.primary, {

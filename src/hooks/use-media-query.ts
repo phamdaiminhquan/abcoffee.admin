@@ -39,15 +39,15 @@ const buildMediaQuery = (config: MediaQueryConfig | string): string => {
  * @returns boolean - Returns true if the media query matches
  *
  * @example
- * // Basic usage - Mobile detection
+ * // Ví dụ cơ bản - phát hiện thiết bị di động
  * const isMobile = useMediaQuery({ maxWidth: 768 });
  *
  * @example
- * // Using predefined breakpoints
+ * // Sử dụng breakpoint có sẵn
  * const isDesktop = useMediaQuery(up('lg'));
  *
  * @example
- * // Complex query - Tablet in landscape mode
+ * // Truy vấn phức tạp - máy tính bảng chế độ ngang
  * const isTabletLandscape = useMediaQuery({
  *   minWidth: 768,
  *   maxWidth: 1024,
@@ -55,54 +55,54 @@ const buildMediaQuery = (config: MediaQueryConfig | string): string => {
  * });
  *
  * @example
- * // User preferences
+ * // Tùy chọn người dùng
  * const isDarkMode = useMediaQuery({ prefersColorScheme: 'dark' });
  * const prefersReducedMotion = useMediaQuery({ prefersReducedMotion: true });
  *
  * @example
- * // Device capabilities
+ * // Khả năng của thiết bị
  * const isTouchDevice = useMediaQuery({ pointerType: 'coarse' });
  * const isRetina = useMediaQuery({ devicePixelRatio: 2 });
  *
  * @example
- * // Range queries using helpers
+ * // Truy vấn khoảng bằng helper
  * const isTablet = useMediaQuery(between('sm', 'md'));
  *
  * @example
- * // Raw media query string
+ * // Chuỗi media query thô
  * const isPortrait = useMediaQuery('(orientation: portrait)');
  *
  * @see {@link MediaQueryConfig} for all supported configuration options
  */
 export const useMediaQuery = (config: MediaQueryConfig | string) => {
-	// 服务器端渲染时默认为 false
+	// Khi render phía server, mặc định là false
 	const [matches, setMatches] = useState(false);
 
-	// 将 config 转换为 mediaQuery 字符串
+	// Chuyển config thành chuỗi media query
 	const mediaQueryString = useMemo(() => buildMediaQuery(config), [config]);
 
 	useEffect(() => {
-		// 客户端渲染时立即检查当前状态
+		// Kiểm tra trạng thái ngay khi render phía client
 		const mediaQuery = window.matchMedia(mediaQueryString);
 		setMatches(mediaQuery.matches);
 
-		// 监听变化
+		// Lắng nghe thay đổi
 		const handler = (e: MediaQueryListEvent) => setMatches(e.matches);
 
-		// 使用新旧两种 API 以确保最大兼容性
+		// Dùng cả API mới và cũ để tương thích tối đa
 		if (mediaQuery.addEventListener) {
 			mediaQuery.addEventListener("change", handler);
 		} else {
-			// 兼容旧版浏览器
+			// Tương thích trình duyệt cũ
 			mediaQuery.addListener(handler);
 		}
 
-		// 清理函数
+		// Hàm dọn dẹp
 		return () => {
 			if (mediaQuery.removeEventListener) {
 				mediaQuery.removeEventListener("change", handler);
 			} else {
-				// 兼容旧版浏览器
+				// Tương thích trình duyệt cũ
 				mediaQuery.removeListener(handler);
 			}
 		};
@@ -113,13 +113,13 @@ export const useMediaQuery = (config: MediaQueryConfig | string) => {
 
 type Breakpoints = typeof breakpointsTokens;
 type BreakpointsKeys = keyof Breakpoints;
-// 辅助函数
+// Hàm tiện ích
 export const up = (key: BreakpointsKeys) => ({
 	minWidth: removePx(breakpointsTokens[key]),
 });
 
 export const down = (key: BreakpointsKeys) => ({
-	maxWidth: removePx(breakpointsTokens[key]) - 0.05, // 减去0.05px避免断点重叠
+	maxWidth: removePx(breakpointsTokens[key]) - 0.05, // Trừ 0.05px để tránh chồng lấn breakpoint
 });
 
 export const between = (start: BreakpointsKeys, end: BreakpointsKeys) => ({

@@ -1,5 +1,4 @@
 import Icon from "@/components/icon/icon";
-import useLocale from "@/locales/use-locale";
 import { TooltipContent } from "@/ui/tooltip";
 import { Tooltip } from "@/ui/tooltip";
 import { TooltipTrigger } from "@/ui/tooltip";
@@ -11,7 +10,6 @@ import type { NavItemProps } from "../types";
 
 export function NavItem(item: NavItemProps) {
 	const { title, icon, info, caption, open, active, disabled, depth, hasChild } = item;
-	const { t } = useLocale();
 
 	const content = (
 		<>
@@ -23,17 +21,17 @@ export function NavItem(item: NavItemProps) {
 			{/* Texts */}
 			<span style={navItemStyles.texts} className="min-h-[24px]">
 				{/* Title */}
-				<span style={navItemStyles.title}>{t(title)}</span>
+				<span style={navItemStyles.title}>{title}</span>
 
 				{/* Caption */}
 				{caption && (
 					<TooltipProvider>
 						<Tooltip>
 							<TooltipTrigger asChild>
-								<span style={navItemStyles.caption}>{t(caption)}</span>
+								<span style={navItemStyles.caption}>{caption}</span>
 							</TooltipTrigger>
 							<TooltipContent side="top" align="start">
-								{t(caption)}
+								{caption}
 							</TooltipContent>
 						</Tooltip>
 					</TooltipProvider>

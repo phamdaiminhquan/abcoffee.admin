@@ -2,8 +2,13 @@ import { useLoginStateContext } from "@/pages/sys/login/providers/login-provider
 import { useRouter } from "@/routes/hooks";
 import { useUserActions, useUserInfo } from "@/store/userStore";
 import { Button } from "@/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/ui/dropdown-menu";
-import { useTranslation } from "react-i18next";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from "@/ui/dropdown-menu";
 import { NavLink } from "react-router";
 
 /**
@@ -14,7 +19,6 @@ export default function AccountDropdown() {
 	const { username, email, avatar } = useUserInfo();
 	const { clearUserInfoAndToken } = useUserActions();
 	const { backToLogin } = useLoginStateContext();
-	const { t } = useTranslation();
 	const logout = () => {
 		try {
 			clearUserInfoAndToken();
@@ -44,18 +48,18 @@ export default function AccountDropdown() {
 				<DropdownMenuSeparator />
 				<DropdownMenuItem asChild>
 					<NavLink to="https://docs-admin.slashspaces.com/" target="_blank">
-						{t("sys.docs")}
+						T\u00e0i li\u1ec7u
 					</NavLink>
 				</DropdownMenuItem>
 				<DropdownMenuItem asChild>
-					<NavLink to="/management/user/profile">{t("sys.nav.user.profile")}</NavLink>
+					<NavLink to="/management/user/profile">H\u1ed3 s\u01a1</NavLink>
 				</DropdownMenuItem>
 				<DropdownMenuItem asChild>
-					<NavLink to="/management/user/account">{t("sys.nav.user.account")}</NavLink>
+					<NavLink to="/management/user/account">T\u00e0i kho\u1ea3n</NavLink>
 				</DropdownMenuItem>
 				<DropdownMenuSeparator />
 				<DropdownMenuItem className="font-bold text-warning" onClick={logout}>
-					{t("sys.login.logout")}
+					\u0110\u0103ng xu\u1ea5t
 				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>

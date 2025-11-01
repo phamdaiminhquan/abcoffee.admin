@@ -9,14 +9,14 @@ import { Text, Title } from "@/ui/typography";
 import { cn } from "@/utils";
 import { useState } from "react";
 
-// ---------------------- 数据区 ----------------------
+// ---------------------- Khu vực dữ liệu ----------------------
 const timeOptions = [
 	{ label: "Day", value: "day" },
 	{ label: "Week", value: "week" },
 	{ label: "Month", value: "month" },
 ];
 
-// 所有数据都按 day/week/month 维度组织
+// Toàn bộ dữ liệu được tổ chức theo các mốc day/week/month
 const dashboardData = {
 	webAnalytic: {
 		day: {
@@ -273,7 +273,7 @@ export default function Analysis() {
 
 	return (
 		<div className="flex flex-col gap-4">
-			{/* summary 区块 */}
+			{/* Khối tóm tắt */}
 			<div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-none shadow-none">
 				<div>
 					<Title as="h4" className="text-xl mb-1">
@@ -343,7 +343,7 @@ export default function Analysis() {
 					</CardContent>
 				</Card> */}
 
-				{/* 右侧三小卡 */}
+				{/* Ba thẻ nhỏ bên phải */}
 				<div className="xl:col-span-1 h-full">
 					<div className="flex flex-col xl:flex-col md:flex-row gap-4 h-full">
 						<Card className="flex-1">
@@ -541,7 +541,7 @@ export default function Analysis() {
 					</CardContent>
 				</Card>
 
-				{/* Traffic data 表格 */}
+				{/* Bảng dữ liệu lưu lượng truy cập */}
 				{/* <Card className="col-span-12">          	
 					<CardHeader className="flex flex-row items-center justify-between pb-2">
 						<CardTitle>

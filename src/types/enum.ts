@@ -13,7 +13,6 @@ export enum StorageEnum {
 	UserInfo = "userInfo",
 	UserToken = "userToken",
 	Settings = "settings",
-	I18N = "i18nextLng",
 }
 
 export enum ThemeMode {
@@ -34,11 +33,6 @@ export enum ThemeColorPresets {
 	Blue = "blue",
 	Orange = "orange",
 	Red = "red",
-}
-
-export enum LocalEnum {
-	en_US = "en_US",
-	vi_VN = "vi_VN",
 }
 
 export enum MultiTabOperation {

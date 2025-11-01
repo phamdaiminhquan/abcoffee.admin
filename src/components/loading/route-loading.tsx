@@ -29,7 +29,7 @@ export function RouteLoadingProgress() {
 			};
 		};
 
-		// 监听 href 变化
+		// Theo dõi mọi thay đổi của href
 		const observer = new MutationObserver(() => {
 			const currentHref = window.location.href;
 			if (currentHref !== lastHref) {
@@ -38,19 +38,19 @@ export function RouteLoadingProgress() {
 			}
 		});
 
-		// 观察整个文档的变化
+		// Quan sát toàn bộ tài liệu để phát hiện thay đổi liên quan
 		observer.observe(document, {
 			subtree: true,
 			childList: true,
 		});
 
-		// 监听 popstate 事件（处理浏览器前进后退）
+		// Lắng nghe sự kiện popstate để xử lý nút tiến/lùi của trình duyệt
 		window.addEventListener("popstate", handleRouteChange);
 
-		// 初始加载时触发一次
+		// Kích hoạt một lần khi tải trang ban đầu
 		handleRouteChange();
 
-		// 清理监听器
+		// Dọn dẹp toàn bộ bộ lắng nghe khi component unmount
 		return () => {
 			observer.disconnect();
 			window.removeEventListener("popstate", handleRouteChange);

@@ -16,12 +16,10 @@ import { Text } from "@/ui/typography";
 import { cn } from "@/utils";
 import { type CSSProperties, useCallback, useEffect, useState } from "react";
 
-import { useTranslation } from "react-i18next";
 import screenfull from "screenfull";
 import { type ThemeColorPresets, ThemeLayout, ThemeMode } from "#/enum";
 
 export default function SettingButton() {
-	const { t } = useTranslation();
 	const settings = useSettings();
 	const { themeMode, themeColorPresets, themeLayout, themeStretch, breadCrumb, fontSize, fontFamily } = settings;
 	const { setSettings } = useSettingActions();
@@ -85,14 +83,14 @@ export default function SettingButton() {
 			</SheetTrigger>
 			<SheetContent style={sheetContentBgStyle} className="gap-0" onOpenAutoFocus={(e) => e.preventDefault()}>
 				<SheetHeader className="flex flex-row items-center justify-between px-6 py-4 shrink-0">
-					<SheetTitle>{t("sys.settings.title")}</SheetTitle>
+					<SheetTitle>Thi\u1ebft l\u1eadp</SheetTitle>
 					<SheetDescription />
 				</SheetHeader>
 				<ScrollArea>
 					<div className="flex flex-col gap-6 px-6 py-2">
 						{/* theme mode */}
 						<div className="flex flex-col gap-2">
-							<Text variant="subTitle1">{t("sys.settings.mode")}</Text>
+							<Text variant="subTitle1">Ch\u1ebf \u0111\u1ed9</Text>
 							<div className="flex flex-row gap-4">
 								<Card
 									onClick={() => updateSettings({ themeMode: ThemeMode.Light })}
@@ -119,7 +117,7 @@ export default function SettingButton() {
 
 						{/* theme layout */}
 						<div className="flex flex-col gap-2">
-							<Text variant="subTitle1">{t("sys.settings.layout")}</Text>
+							<Text variant="subTitle1">B\u1ed1 c\u1ee5c</Text>
 
 							<div className="grid grid-cols-3 gap-4">
 								{/* vertical */}
@@ -245,10 +243,12 @@ export default function SettingButton() {
 							<div className="flex flex-row items-center justify-between">
 								<Tooltip delayDuration={700} defaultOpen={false} disableHoverableContent>
 									<TooltipTrigger>
-										<Text variant="subTitle2">{t("sys.settings.stretch")}</Text>
+										<Text variant="subTitle2">K\u00e9o gi\u00e3n chi\u1ec1u r\u1ed9ng</Text>
 										<Icon icon="solar:question-circle-linear" className="ml-1" />
 									</TooltipTrigger>
-									<TooltipContent>{t("sys.settings.stretchTip")}</TooltipContent>
+									<TooltipContent>
+										N\u1ebfu t\u1eaft, n\u1ed9i dung s\u1ebd c\u00f3 \u0111\u1ed9 r\u1ed9ng c\u1ed1 \u0111\u1ecbnh
+									</TooltipContent>
 								</Tooltip>
 								<Switch
 									checked={themeStretch}
@@ -259,7 +259,7 @@ export default function SettingButton() {
 
 						{/* theme presets */}
 						<div className="flex flex-col gap-2">
-							<Text variant="subTitle1">{t("sys.settings.presetThemes")}</Text>
+							<Text variant="subTitle1">Ch\u1ee7 \u0111\u1ec1 m\u00e0u</Text>
 							<div className="flex flex-wrap gap-1">
 								{Object.entries(presetsColors).map(([preset, color]) => (
 									<div
@@ -286,9 +286,9 @@ export default function SettingButton() {
 
 						{/* font */}
 						<div className="flex flex-col gap-2">
-							<Text variant="subTitle1">{t("sys.settings.font")}</Text>
+							<Text variant="subTitle1">Ph\u00f4ng ch\u1eef</Text>
 
-							<Text variant="subTitle2">{t("sys.settings.family")}</Text>
+							<Text variant="subTitle2">H\u1ecd ch\u1eef</Text>
 							<div className="flex flex-row gap-3">
 								{Object.entries(FontFamilyPreset).map(([font, family]) => (
 									<Card
@@ -310,7 +310,7 @@ export default function SettingButton() {
 								))}
 							</div>
 
-							<Text variant="subTitle2">{t("sys.settings.size")}</Text>
+							<Text variant="subTitle2">K\u00edch th\u01b0\u1edbc ch\u1eef</Text>
 							<Slider
 								min={12}
 								max={20}
@@ -322,9 +322,9 @@ export default function SettingButton() {
 
 						{/* Page config */}
 						<div className="flex flex-col gap-2">
-							<Text variant="subTitle1">{t("sys.settings.page")}</Text>
+							<Text variant="subTitle1">C\u1ea5u h\u00ecnh trang</Text>
 							<div className="flex items-center justify-between">
-								<Text variant="subTitle2">{t("sys.settings.breadcrumb")}</Text>
+								<Text variant="subTitle2">Hi\u1ec3n th\u1ecb breadcrumb</Text>
 								<Switch checked={breadCrumb} onCheckedChange={(checked) => updateSettings({ breadCrumb: checked })} />
 								{/* <div className="flex items-center justify-between text-sm text-text-disabled">
 									<div>{t("sys.settings.multiTab")}</div>
@@ -350,17 +350,17 @@ export default function SettingButton() {
 					>
 						<div
 							className="flex items-center justify-center"
-							aria-label={isFullscreen ? t("sys.settings.exitFullscreen") : t("sys.settings.fullscreen")}
+							aria-label={isFullscreen ? "Tho\u00e1t to\u00e0n m\u00e0n h\u00ecnh" : "To\u00e0n m\u00e0n h\u00ecnh"}
 						>
 							{isFullscreen ? (
 								<>
 									<Icon icon="local:ic-settings-exit-fullscreen" />
-									<span className="ml-2">{t("sys.settings.exitFullscreen")}</span>
+									<span className="ml-2">Tho\u00e1t to\u00e0n m\u00e0n h\u00ecnh</span>
 								</>
 							) : (
 								<>
 									<Icon icon="local:ic-settings-fullscreen" />
-									<span className="ml-2">{t("sys.settings.fullscreen")}</span>
+									<span className="ml-2">To\u00e0n m\u00e0n h\u00ecnh</span>
 								</>
 							)}
 						</div>

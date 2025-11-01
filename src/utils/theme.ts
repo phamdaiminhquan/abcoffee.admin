@@ -19,10 +19,10 @@ import { type AddChannelToLeaf, themeTokens } from "../theme/type";
  * console.log(rgb); // "rgba(200, 250, 214, 0.24)"
  */
 export function rgbAlpha(colorVal: string | string[] | number[], alpha: number): string {
-	// ensure alpha value is between 0-1
+	// Đảm bảo giá trị alpha nằm trong khoảng 0-1
 	const safeAlpha = Math.max(0, Math.min(1, alpha));
 
-	// if color is CSS variable
+	// Nếu màu là biến CSS
 	if (typeof colorVal === "string") {
 		if (colorVal.startsWith("#")) {
 			return color(colorVal).alpha(safeAlpha).toString();
@@ -34,7 +34,7 @@ export function rgbAlpha(colorVal: string | string[] | number[], alpha: number):
 			return `rgba(var(${colorVal}) / ${safeAlpha})`;
 		}
 
-		// handle "200, 250, 214" or "200 250 214" format
+		// Xử lý chuỗi dạng "200, 250, 214" hoặc "200 250 214"
 		if (colorVal.includes(",") || colorVal.includes(" ")) {
 			const rgb = colorVal
 				.split(/[,\s]+/)
@@ -44,7 +44,7 @@ export function rgbAlpha(colorVal: string | string[] | number[], alpha: number):
 		}
 	}
 
-	// handle array format [200, 250, 214]
+	// Xử lý mảng dạng [200, 250, 214]
 	if (Array.isArray(colorVal)) {
 		return `rgba(${colorVal.join(", ")}, ${safeAlpha})`;
 	}
@@ -53,16 +53,16 @@ export function rgbAlpha(colorVal: string | string[] | number[], alpha: number):
 }
 
 /**
- * convert to CSS vars
- * @param propertyPath example: `colors.palette.primary`
- * @returns example: `--colors-palette-primary`
+ * Chuyển property sang biến CSS
+ * @param propertyPath ví dụ: `colors.palette.primary`
+ * @returns ví dụ: `--colors-palette-primary`
  */
 export const toCssVar = (propertyPath: string) => {
 	return `--${propertyPath.split(".").join("-")}`;
 };
 
 /**
- * convert to CSS vars
+ * Chuyển các biến thành đối tượng dùng cho Tailwind
  */
 export const createTailwinConfg = (propertyPath: string) => {
 	const variants = getThemeTokenVariants(propertyPath);
@@ -77,9 +77,9 @@ export const createTailwinConfg = (propertyPath: string) => {
 };
 
 /**
- * Get RGB values from color channels
- * @param propertyPath example: `colors.palette.primary`
- * @returns example: `{ DEFAULT: "rgb(var(--colors-palette-primary-defaultChannel))" }`
+ * Lấy giá trị RGB từ các channel màu
+ * @param propertyPath ví dụ: `colors.palette.primary`
+ * @returns ví dụ: `{ DEFAULT: "rgb(var(--colors-palette-primary-defaultChannel))" }`
  */
 export const creatColorChannel = (propertyPath: string) => {
 	const variants = getThemeTokenVariants(propertyPath);
@@ -95,9 +95,9 @@ export const creatColorChannel = (propertyPath: string) => {
 };
 
 /**
- * get variants in {@link themeTokens}
- * @param propertyPath example: `colors.palette.primary`
- * @returns example: `["lighter", "light", "main", "dark", "darker"]`
+ * Lấy danh sách variant trong {@link themeTokens}
+ * @param propertyPath ví dụ: `colors.palette.primary`
+ * @returns ví dụ: `["lighter", "light", "main", "dark", "darker"]`
  */
 export const getThemeTokenVariants = (propertyPath: string) => {
 	const keys = propertyPath.split(".");
@@ -112,38 +112,38 @@ export const getThemeTokenVariants = (propertyPath: string) => {
 };
 
 /**
- * remove px unit
- * @param value example: "16px"
- * @returns example: 16
+ * Loại bỏ đơn vị px khỏi chuỗi
+ * @param value ví dụ: "16px"
+ * @returns ví dụ: 16
  */
 /**
- * remove px unit and convert to number
- * @param value example: "16px", "16.5px", "-16px", "16", 16
- * @returns example: 16, 16.5, -16, 16, 16
- * @throws Error if value is invalid
+ * Loại bỏ đơn vị px và chuyển sang số
+ * @param value ví dụ: "16px", "16.5px", "-16px", "16", 16
+ * @returns ví dụ: 16, 16.5, -16, 16, 16
+ * @throws Lỗi nếu giá trị không hợp lệ
  */
 export const removePx = (value: string | number): number => {
-	// 如果已经是数字，直接返回
+	// Nếu đã là số thì trả về ngay
 	if (typeof value === "number") return value;
 
-	// 如果是空字符串，抛出错误
+	// Nếu là chuỗi rỗng thì báo lỗi
 	if (!value) {
 		throw new Error("Invalid value: empty string");
 	}
 
-	// 移除所有空格
+	// Loại bỏ toàn bộ khoảng trắng
 	const trimmed = value.trim();
 
-	// 检查是否以 px 结尾（不区分大小写）
+	// Kiểm tra có kết thúc bằng px hay không (không phân biệt hoa thường)
 	const hasPx = /px$/i.test(trimmed);
 
-	// 提取数字部分
+	// Lấy phần số
 	const num = hasPx ? trimmed.slice(0, -2) : trimmed;
 
-	// 转换为数字
+	// Chuyển thành số
 	const result = Number.parseFloat(num);
 
-	// 验证结果是否为有效数字
+	// Kiểm tra kết quả có hợp lệ không
 	if (Number.isNaN(result)) {
 		throw new Error(`Invalid value: ${value}`);
 	}
@@ -152,24 +152,24 @@ export const removePx = (value: string | number): number => {
 };
 
 /**
- * add color channels to the color tokens {@link themeTokens}
- * @param obj example: `{ palette: { primary: "#000000" } }`
- * @returns example: `{ palette: { primary: "#000000", primaryChannel: "0, 0, 0" } }`
+ * Thêm các channel màu vào token {@link themeTokens}
+ * @param obj ví dụ: `{ palette: { primary: "#000000" } }`
+ * @returns ví dụ: `{ palette: { primary: "#000000", primaryChannel: "0, 0, 0" } }`
  */
 export const addColorChannels = <T extends Record<string, any>>(obj: T): AddChannelToLeaf<T> => {
 	const result: Record<string, any> = {};
 
-	// check if the object is a leaf object
+	// Kiểm tra object hiện tại có phải là node lá hay không
 	const isLeafObject = Object.values(obj).every((v) => v === null || typeof v === "string");
 
 	if (isLeafObject) {
-		// add channel to the leaf object
+		// Thêm channel cho object lá
 		for (const [key, value] of Object.entries(obj)) {
 			result[key] = value;
 			result[`${key}Channel`] = color(value).rgb().array().join(" ");
 		}
 	} else {
-		// recursively process non-leaf objects
+		// Đệ quy xử lý các object con
 		for (const [key, value] of Object.entries(obj)) {
 			if (typeof value === "object" && value !== null) {
 				result[key] = addColorChannels(value);

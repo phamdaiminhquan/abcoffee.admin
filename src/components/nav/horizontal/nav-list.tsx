@@ -16,17 +16,17 @@ export function NavList({ data, depth = 0 }: NavListProps) {
 		return (
 			<NavItem
 				key={data.title}
-				// data
+				// dữ liệu hiển thị
 				path={data.path}
 				title={data.title}
 				caption={data.caption}
 				info={data.info}
 				icon={data.icon}
 				auth={data.auth}
-				// state
+				// trạng thái điều khiển
 				disabled={data.disabled}
 				active={isActive}
-				// options
+				// tùy chọn bổ sung
 				hasChild={hasChild}
 				depth={depth}
 			/>

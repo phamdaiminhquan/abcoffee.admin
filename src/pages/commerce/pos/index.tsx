@@ -171,7 +171,6 @@ export default function POSPage() {
 		setSelectedOrder(null);
 		setOrderItemsDraft([]);
 		setOrderCustomerName("");
-		setDetailCategoryId(null);
 	};
 	const addItemToDraft = (p: Product) => {
 		setOrderItemsDraft((prev) => {
@@ -234,18 +233,18 @@ export default function POSPage() {
 			<div className="flex items-center justify-between gap-2">
 				<h1 className="text-lg font-semibold">POS</h1>
 				<Button size="sm" onClick={onStart}>
-					Create Order
+					Tạo đơn hàng
 				</Button>
 			</div>
 
 			{/* Pending Orders */}
 			<div className="mt-3">
 				<div className="mb-2 flex items-center justify-between">
-					<h2 className="text-base font-medium">Pending Orders</h2>
+					<h2 className="text-base font-medium">Đơn hàng chưa thanh toán</h2>
 					<Badge variant="warning">{pendingOrders.length}</Badge>
 				</div>
 				{pendingOrders.length === 0 ? (
-					<div className="text-sm text-muted-foreground">No pending orders</div>
+					<div className="text-sm text-muted-foreground">Chưa có đơn hàng nào</div>
 				) : (
 					<div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4">
 						{pendingOrders.map((o) => {
@@ -255,14 +254,16 @@ export default function POSPage() {
 								<Card key={o.id} className="shadow-sm cursor-pointer" onClick={() => openOrderDetails(o)}>
 									<CardHeader className="p-3 pb-1">
 										<div className="flex items-center justify-between text-sm">
-											<span className="font-medium">Order #{o.id}</span>
-											<Badge variant="warning">Pending</Badge>
+											<span className="font-medium">Đơn hàng #{o.id}</span>
+											<Badge variant="warning">Chưa thanh toán</Badge>
 										</div>
 									</CardHeader>
 									<CardContent className="p-3 pt-1">
-										<div className="text-xs text-muted-foreground">{new Date(o.createdAt).toLocaleTimeString()}</div>
+										<div className="text-xs text-muted-foreground">
+											{new Date(o.createdAt).toLocaleTimeString("vi-VN")}
+										</div>
 										<div className="mt-1 text-sm">Items: {items}</div>
-										<div className="text-sm font-semibold">Total: {amount.toLocaleString()}</div>
+										<div className="text-sm font-semibold">Tổng: {amount.toLocaleString("vi-VN")}</div>
 										<div className="mt-2 flex gap-2">
 											<Button
 												size="sm"
@@ -274,7 +275,7 @@ export default function POSPage() {
 													setShowPaymentDialog(true);
 												}}
 											>
-												Complete
+												Hoàn thành
 											</Button>
 											{/* Future: Resume adding items to this order */}
 										</div>
@@ -297,7 +298,7 @@ export default function POSPage() {
 								variant={selectedCategoryId === null ? "default" : "secondary"}
 								onClick={() => setSelectedCategoryId(null)}
 							>
-								All
+								Tổng cộng
 							</Button>
 							{categories.map((c) => (
 								<Button
@@ -337,8 +338,8 @@ export default function POSPage() {
 											</div>
 											<div className="text-sm font-medium line-clamp-2">{p.name}</div>
 											<div className="text-xs text-muted-foreground">{p.category?.name}</div>
-											<div className="mt-1 text-sm font-semibold">{p.price.toLocaleString()}</div>
-											{qty > 0 && <div className="mt-1 text-xs">In cart: {qty}</div>}
+											<div className="mt-1 text-sm font-semibold">{p.price.toLocaleString("vi-VN")}</div>
+											{qty > 0 && <div className="mt-1 text-xs">Trong giỏ hàng: {qty}</div>}
 											<div className="mt-2 flex gap-2">
 												<Button size="sm" className="flex-1" onClick={() => inc(p)}>
 													+1
@@ -363,17 +364,17 @@ export default function POSPage() {
 				<div className="fixed inset-x-0 bottom-0 z-10 border-t bg-background/95 p-3 shadow-lg backdrop-blur supports-[backdrop-filter]:bg-background/60">
 					<div className="mx-auto flex max-w-5xl items-center gap-2">
 						<div className="flex-1 text-sm">
-							<div className="font-medium">Items: {totalItems}</div>
-							<div>Total: {total.toLocaleString()}</div>
+							<div className="font-medium">Số lượng: {totalItems}</div>
+							<div>Tổng: {total.toLocaleString("vi-VN")}</div>
 						</div>
 						<Button variant="secondary" disabled={cart.length === 0} onClick={() => setCart([])}>
 							Clear
 						</Button>
 						<Button disabled={cart.length === 0} onClick={onSavePending}>
-							Save as Pending
+							Lưu trạng thái chờ
 						</Button>
 						<Button disabled={cart.length === 0} onClick={() => setShowPaymentDialog(true)}>
-							Complete Payment
+							Thanh toán
 						</Button>
 					</div>
 				</div>
@@ -384,7 +385,7 @@ export default function POSPage() {
 				<Drawer open={showPicker} onOpenChange={setShowPicker}>
 					<DrawerContent>
 						<DrawerHeader>
-							<DrawerTitle>Create Order</DrawerTitle>
+							<DrawerTitle>Tạo đơn hàng</DrawerTitle>
 						</DrawerHeader>
 						<div className="p-3 space-y-3">
 							<div className="flex gap-2 overflow-x-auto">
@@ -393,7 +394,7 @@ export default function POSPage() {
 									variant={selectedCategoryId === null ? "default" : "secondary"}
 									onClick={() => setSelectedCategoryId(null)}
 								>
-									All
+									Tất cả
 								</Button>
 								{categories.map((c) => (
 									<Button
@@ -429,8 +430,8 @@ export default function POSPage() {
 												</div>
 												<div className="text-sm font-medium line-clamp-2">{p.name}</div>
 												<div className="text-xs text-muted-foreground">{p.category?.name}</div>
-												<div className="mt-1 text-sm font-semibold">{p.price.toLocaleString()}</div>
-												{qty > 0 && <div className="mt-1 text-xs">In cart: {qty}</div>}
+												<div className="mt-1 text-sm font-semibold">{p.price.toLocaleString("vi-VN")}</div>
+												{qty > 0 && <div className="mt-1 text-xs">Trong giỏ: {qty}</div>}
 												<div className="mt-2 flex gap-2">
 													<Button size="sm" className="flex-1" onClick={() => inc(p)}>
 														+1
@@ -450,17 +451,17 @@ export default function POSPage() {
 						<DrawerFooter>
 							<div className="flex items-center justify-between">
 								<div className="text-sm">
-									Items: {totalItems} • Total: {total.toLocaleString()}
+									Số lượng sản phẩm: {totalItems} • Tổng: {total.toLocaleString("vi-VN")}
 								</div>
 								<div className="flex gap-2">
 									<Button variant="secondary" disabled={cart.length === 0} onClick={() => setCart([])}>
-										Clear
+										Làm mới
 									</Button>
 									<Button disabled={cart.length === 0} onClick={onSavePending}>
-										Save as Pending
+										Lưu trạng thái chờ
 									</Button>
 									<Button disabled={cart.length === 0} onClick={() => setShowPaymentDialog(true)}>
-										Complete Payment
+										Thanh toán
 									</Button>
 								</div>
 							</div>
@@ -471,7 +472,7 @@ export default function POSPage() {
 				<Dialog open={showPicker} onOpenChange={setShowPicker}>
 					<DialogContent className="max-w-3xl">
 						<DialogHeader>
-							<DialogTitle>Create Order</DialogTitle>
+							<DialogTitle>Tạo đơn hàng</DialogTitle>
 						</DialogHeader>
 						<div className="space-y-3">
 							<div className="flex flex-wrap gap-2">
@@ -480,7 +481,7 @@ export default function POSPage() {
 									variant={selectedCategoryId === null ? "default" : "secondary"}
 									onClick={() => setSelectedCategoryId(null)}
 								>
-									All
+									Tất cả
 								</Button>
 								{categories.map((c) => (
 									<Button
@@ -516,8 +517,8 @@ export default function POSPage() {
 												</div>
 												<div className="text-sm font-medium line-clamp-2">{p.name}</div>
 												<div className="text-xs text-muted-foreground">{p.category?.name}</div>
-												<div className="mt-1 text-sm font-semibold">{p.price.toLocaleString()}</div>
-												{qty > 0 && <div className="mt-1 text-xs">In cart: {qty}</div>}
+												<div className="mt-1 text-sm font-semibold">{p.price.toLocaleString("vi-VN")}</div>
+												{qty > 0 && <div className="mt-1 text-xs">Trong giỏ hàng: {qty}</div>}
 												<div className="mt-2 flex gap-2">
 													<Button size="sm" className="flex-1" onClick={() => inc(p)}>
 														+1
@@ -537,17 +538,17 @@ export default function POSPage() {
 						<DialogFooter>
 							<div className="flex w-full items-center justify-between">
 								<div className="text-sm">
-									Items: {totalItems} • Total: {total.toLocaleString()}
+									Số lượng sản phẩm: {totalItems} • Tổng: {total.toLocaleString("vi-VN")}
 								</div>
 								<div className="flex gap-2">
 									<Button variant="secondary" disabled={cart.length === 0} onClick={() => setCart([])}>
-										Clear
+										Làm mới
 									</Button>
 									<Button disabled={cart.length === 0} onClick={onSavePending}>
-										Save as Pending
+										Lưu trạng thái chờ
 									</Button>
 									<Button disabled={cart.length === 0} onClick={() => setShowPaymentDialog(true)}>
-										Complete Payment
+										Thanh toán
 									</Button>
 								</div>
 							</div>
@@ -565,25 +566,25 @@ export default function POSPage() {
 			>
 				<DialogContent className="max-w-3xl">
 					<DialogHeader>
-						<DialogTitle>Order #{selectedOrder?.id}</DialogTitle>
+						<DialogTitle>Đơn hàng #{selectedOrder?.id}</DialogTitle>
 					</DialogHeader>
 					<div className="space-y-3">
 						<div className="text-sm text-muted-foreground">
 							Created: {selectedOrder ? new Date(selectedOrder.createdAt).toLocaleString() : ""}
 						</div>
 						<div className="flex items-center gap-2">
-							<Label className="w-28">Customer</Label>
+							<Label className="w-28">Khách hàng</Label>
 							<Input
 								value={orderCustomerName}
 								onChange={(e) => setOrderCustomerName(e.target.value)}
-								placeholder="Enter name"
+								placeholder="Nhập tên khách hàng"
 							/>
 							<Button size="sm" onClick={saveCustomerName} disabled={!selectedOrder}>
-								Save
+								Lưu
 							</Button>
 						</div>
 						<div>
-							<div className="mb-2 text-sm font-medium">Items</div>
+							<div className="mb-2 text-sm font-medium">Món hàng</div>
 							<div className="divide-y">
 								{orderItemsDraft.map((i) => (
 									<div key={i.productId} className="flex items-center justify-between py-2">
@@ -607,7 +608,9 @@ export default function POSPage() {
 											</div>
 											<div>
 												<div className="text-sm font-medium">{i.product?.name ?? `#${i.productId}`}</div>
-												<div className="text-xs text-muted-foreground">@ {(i.unitPrice ?? 0).toLocaleString()}</div>
+												<div className="text-xs text-muted-foreground">
+													@ {(i.unitPrice ?? 0).toLocaleString("vi-VN")}
+												</div>
 											</div>
 										</div>
 										<div className="flex items-center gap-2">
@@ -621,7 +624,7 @@ export default function POSPage() {
 												</Button>
 											)}
 											<div className="w-20 text-right text-sm font-medium">
-												{(i.quantity * (i.unitPrice ?? 0)).toLocaleString()}
+												{(i.quantity * (i.unitPrice ?? 0)).toLocaleString("vi-VN")}
 											</div>
 											<Button size="icon" variant="ghost" onClick={() => removeItemFromDraft(i.productId)}>
 												✕
@@ -629,24 +632,26 @@ export default function POSPage() {
 										</div>
 									</div>
 								))}
-								{orderItemsDraft.length === 0 && <div className="py-2 text-sm text-muted-foreground">No items yet</div>}
+								{orderItemsDraft.length === 0 && (
+									<div className="py-2 text-sm text-muted-foreground">Chưa có sản phẩm</div>
+								)}
 							</div>
 						</div>
 						<div className="flex items-center justify-between">
 							<div className="text-sm">
-								Status: <Badge variant="warning">{selectedOrder?.status}</Badge>
+								Trạng thái: <Badge variant="warning">{selectedOrder?.status}</Badge>
 							</div>
-							<div className="text-sm font-semibold">Total: {detailsTotal.toLocaleString()}</div>
+							<div className="text-sm font-semibold">Tổng: {detailsTotal.toLocaleString("vi-VN")}</div>
 						</div>
 						<div className="space-y-2">
-							<div className="text-sm font-medium">Add items</div>
+							<div className="text-sm font-medium">Thêm món hàng</div>
 							<div className="flex flex-wrap gap-2">
 								<Button
 									size="sm"
 									variant={selectedCategoryId === null ? "default" : "secondary"}
 									onClick={() => setSelectedCategoryId(null)}
 								>
-									All
+									Tất cả
 								</Button>
 								{categories.map((c) => (
 									<Button
@@ -682,7 +687,7 @@ export default function POSPage() {
 											<div className="mt-1 text-sm font-semibold">{p.price.toLocaleString()}</div>
 											<div className="mt-2">
 												<Button size="sm" className="w-full" onClick={() => addItemToDraft(p)}>
-													Add
+													Thêm vào đơn hàng
 												</Button>
 											</div>
 										</CardContent>
@@ -693,10 +698,10 @@ export default function POSPage() {
 					</div>
 					<DialogFooter>
 						<Button variant="secondary" onClick={closeOrderDetails}>
-							Close
+							Đóng
 						</Button>
 						<Button onClick={saveOrderItems} disabled={!selectedOrder}>
-							Save Changes
+							Lưu thay đổi
 						</Button>
 					</DialogFooter>
 				</DialogContent>
@@ -706,16 +711,16 @@ export default function POSPage() {
 			<Dialog open={showPaymentDialog} onOpenChange={setShowPaymentDialog}>
 				<DialogContent>
 					<DialogHeader>
-						<DialogTitle>Select payment method</DialogTitle>
+						<DialogTitle>Chọn phương thức thanh toán</DialogTitle>
 					</DialogHeader>
 					<RadioGroup value={payMethod} onValueChange={(v) => setPayMethod(v as PaymentMethod)}>
 						<div className="flex items-center space-x-2">
 							<RadioGroupItem value={PaymentMethod.CASH} id="cash" />
-							<Label htmlFor="cash">Cash</Label>
+							<Label htmlFor="cash">Tiền mặt</Label>
 						</div>
 						<div className="flex items-center space-x-2">
 							<RadioGroupItem value={PaymentMethod.BANK_TRANSFER} id="bank_transfer" />
-							<Label htmlFor="bank_transfer">Bank Transfer</Label>
+							<Label htmlFor="bank_transfer">Chuyển khoản</Label>
 						</div>
 					</RadioGroup>
 					<DialogFooter>
@@ -736,11 +741,11 @@ export default function POSPage() {
 									);
 								}}
 							>
-								Confirm Payment
+								Xác nhận thanh toán
 							</Button>
 						) : (
 							<Button disabled={!payMethod || cart.length === 0} onClick={onCreatePaid}>
-								Pay & Create
+								Thanh toán & Tạo đơn hàng
 							</Button>
 						)}
 					</DialogFooter>

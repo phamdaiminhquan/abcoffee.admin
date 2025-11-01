@@ -11,13 +11,11 @@ import { cn } from "@/utils";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import { LoginStateEnum, useLoginStateContext } from "./providers/login-provider";
 
 export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRef<"form">) {
-	const { t } = useTranslation();
 	const [loading, setLoading] = useState(false);
 	const [remember, setRemember] = useState(true);
 	const navigatge = useNavigate();
@@ -39,7 +37,7 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
 		try {
 			await signIn(values);
 			navigatge(GLOBAL_CONFIG.defaultRoute, { replace: true });
-			toast.success(t("sys.login.loginSuccessTitle"), {
+			toast.success("\u0110\u0103ng nh\u1eadp th\u00e0nh c\u00f4ng", {
 				closeButton: true,
 			});
 		} finally {
@@ -52,17 +50,19 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
 			<Form {...form} {...props}>
 				<form onSubmit={form.handleSubmit(handleFinish)} className="space-y-4">
 					<div className="flex flex-col items-center gap-2 text-center">
-						<h1 className="text-2xl font-bold">{t("sys.login.signInFormTitle")}</h1>
-						<p className="text-balance text-sm text-muted-foreground">{t("sys.login.signInFormDescription")}</p>
+						<h1 className="text-2xl font-bold">\u0110\u0103ng nh\u1eadp</h1>
+						<p className="text-balance text-sm text-muted-foreground">
+							Nh\u1eadp th\u00f4ng tin t\u00e0i kho\u1ea3n c\u1ee7a b\u1ea1n
+						</p>
 					</div>
 
 					<FormField
 						control={form.control}
 						name="username"
-						rules={{ required: t("sys.login.accountPlaceholder") }}
+						rules={{ required: "Vui l\u00f2ng nh\u1eadp t\u00e0i kho\u1ea3n" }}
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>{t("sys.login.userName")}</FormLabel>
+								<FormLabel>T\u00ean \u0111\u0103ng nh\u1eadp</FormLabel>
 								<FormControl>
 									<Input placeholder={DB_USER.map((user) => user.username).join("/")} {...field} />
 								</FormControl>
@@ -74,10 +74,10 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
 					<FormField
 						control={form.control}
 						name="password"
-						rules={{ required: t("sys.login.passwordPlaceholder") }}
+						rules={{ required: "Vui l\u00f2ng nh\u1eadp m\u1eadt kh\u1ea9u" }}
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel>{t("sys.login.password")}</FormLabel>
+								<FormLabel>M\u1eadt kh\u1ea9u</FormLabel>
 								<FormControl>
 									<Input type="password" placeholder={DB_USER[0].password} {...field} suppressHydrationWarning />
 								</FormControl>
@@ -86,7 +86,7 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
 						)}
 					/>
 
-					{/* 记住我/忘记密码 */}
+					{/* Remember me / Forgot password */}
 					<div className="flex flex-row justify-between">
 						<div className="flex items-center space-x-2">
 							<Checkbox
@@ -98,35 +98,37 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
 								htmlFor="remember"
 								className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
 							>
-								{t("sys.login.rememberMe")}
+								Ghi nh\u1edb
 							</label>
 						</div>
 						<Button variant="link" onClick={() => setLoginState(LoginStateEnum.RESET_PASSWORD)} size="sm">
-							{t("sys.login.forgetPassword")}
+							Qu\u00ean m\u1eadt kh\u1ea9u
 						</Button>
 					</div>
 
-					{/* 登录按钮 */}
+					{/* Sign in button */}
 					<Button type="submit" className="w-full">
 						{loading && <Loader2 className="animate-spin mr-2" />}
-						{t("sys.login.loginButton")}
+						\u0110\u0103ng nh\u1eadp
 					</Button>
 
-					{/* 手机登录/二维码登录 */}
+					{/* Mobile and QR login */}
 					<div className="grid gap-4 sm:grid-cols-2">
 						<Button variant="outline" className="w-full" onClick={() => setLoginState(LoginStateEnum.MOBILE)}>
 							<Icon icon="uil:mobile-android" size={20} />
-							{t("sys.login.mobileSignInFormTitle")}
+							\u0110\u0103ng nh\u1eadp b\u1eb1ng \u0111i\u1ec7n tho\u1ea1i
 						</Button>
 						<Button variant="outline" className="w-full" onClick={() => setLoginState(LoginStateEnum.QR_CODE)}>
 							<Icon icon="uil:qrcode-scan" size={20} />
-							{t("sys.login.qrSignInFormTitle")}
+							\u0110\u0103ng nh\u1eadp b\u1eb1ng QR
 						</Button>
 					</div>
 
-					{/* 其他登录方式 */}
+					{/* Alternative login methods */}
 					<div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
-						<span className="relative z-10 bg-background px-2 text-muted-foreground">{t("sys.login.otherSignIn")}</span>
+						<span className="relative z-10 bg-background px-2 text-muted-foreground">
+							Ph\u01b0\u01a1ng th\u1ee9c kh\u00e1c
+						</span>
 					</div>
 					<div className="flex cursor-pointer justify-around text-2xl">
 						<Button variant="ghost" size="icon">
@@ -140,11 +142,11 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
 						</Button>
 					</div>
 
-					{/* 注册 */}
+					{/* Sign up */}
 					<div className="text-center text-sm">
-						{t("sys.login.noAccount")}
+						Ch\u01b0a c\u00f3 t\u00e0i kho\u1ea3n?
 						<Button variant="link" className="px-1" onClick={() => setLoginState(LoginStateEnum.REGISTER)}>
-							{t("sys.login.signUpFormTitle")}
+							\u0110\u0103ng k\u00fd
 						</Button>
 					</div>
 				</form>

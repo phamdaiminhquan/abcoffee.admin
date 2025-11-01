@@ -17,7 +17,7 @@ export const useCopyToClipboard = (): ReturnType => {
 			return false;
 		}
 
-		// Try to save to clipboard then save it in the state if worked
+		// Thử sao chép vào clipboard và lưu lại vào state khi thành công
 		try {
 			await navigator.clipboard.writeText(text);
 			setCopiedText(text);

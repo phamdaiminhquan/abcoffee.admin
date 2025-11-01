@@ -1,4 +1,4 @@
-import useLocale from "@/locales/use-locale";
+import viVN from "antd/locale/vi_VN";
 import { StyleProvider } from "@ant-design/cssinjs";
 import type { ThemeConfig } from "antd";
 import { App, ConfigProvider, theme } from "antd";
@@ -11,7 +11,6 @@ import { useSettings } from "@/store/settingStore";
 import { removePx } from "@/utils/theme";
 
 export const AntdAdapter: UILibraryAdapter = ({ mode, children }) => {
-	const { language } = useLocale();
 	const { themeColorPresets, fontFamily, fontSize } = useSettings();
 	const algorithm = mode === ThemeMode.Light ? theme.defaultAlgorithm : theme.darkAlgorithm;
 
@@ -57,7 +56,7 @@ export const AntdAdapter: UILibraryAdapter = ({ mode, children }) => {
 
 	return (
 		<ConfigProvider
-			locale={language.antdLocal}
+			locale={viVN}
 			theme={{ algorithm, token, components }}
 			tag={{
 				style: {

@@ -81,12 +81,12 @@ export function ProductModal({ title, show, formValue, onOk, onCancel }: Product
 	const beforeUpload: AntUploadProps["beforeUpload"] = (file) => {
 		const allowed = ["image/jpeg", "image/jpg", "image/png", "image/gif", "image/webp"];
 		if (!allowed.includes(file.type)) {
-			toast.error("Invalid file type. Allowed: JPG, JPEG, PNG, GIF, WEBP", { position: "top-center" });
+			toast.error("Định dạng không hợp lệ. Cho phép: JPG, JPEG, PNG, GIF, WEBP", { position: "top-center" });
 			return AntUpload.LIST_IGNORE;
 		}
 		const isLt5M = file.size / 1024 / 1024 <= 5;
 		if (!isLt5M) {
-			toast.error("Image must be 5MB or smaller", { position: "top-center" });
+			toast.error("Ảnh phải có kích thước tối đa 5MB", { position: "top-center" });
 			return AntUpload.LIST_IGNORE;
 		}
 		return true;
@@ -106,7 +106,7 @@ export function ProductModal({ title, show, formValue, onOk, onCancel }: Product
 			form.setValue("image", res.filepath, { shouldDirty: true, shouldValidate: true });
 			setImagePreview(res.url || makePreviewUrl(res.filepath));
 			onSuccess?.(res as any, new XMLHttpRequest());
-			toast.success("Image uploaded");
+			toast.success("Tải ảnh thành công");
 		} catch (err) {
 			onError?.(err as any);
 		} finally {
@@ -129,13 +129,13 @@ export function ProductModal({ title, show, formValue, onOk, onCancel }: Product
 						<FormField
 							control={form.control}
 							name="name"
-							rules={{ required: "Product name is required" }}
+							rules={{ required: "Vui l\u00f2ng nh\u1eadp t\u00ean s\u1ea3n ph\u1ea9m" }}
 							render={({ field }) => (
 								<FormItem className="grid grid-cols-4 items-center gap-4">
-									<FormLabel className="text-right">Name</FormLabel>
+									<FormLabel className="text-right">T\u00ean s\u1ea3n ph\u1ea9m</FormLabel>
 									<div className="col-span-3">
 										<FormControl>
-											<Input {...field} placeholder="Enter product name" />
+											<Input {...field} placeholder={"Nh\u1eadp t\u00ean s\u1ea3n ph\u1ea9m"} />
 										</FormControl>
 										<FormMessage />
 									</div>
@@ -148,10 +148,10 @@ export function ProductModal({ title, show, formValue, onOk, onCancel }: Product
 							name="description"
 							render={({ field }) => (
 								<FormItem className="grid grid-cols-4 items-center gap-4">
-									<FormLabel className="text-right">Description</FormLabel>
+									<FormLabel className="text-right">M\u00f4 t\u1ea3</FormLabel>
 									<div className="col-span-3">
 										<FormControl>
-											<Textarea {...field} placeholder="Enter product description" rows={3} />
+											<Textarea {...field} placeholder={"Nh\u1eadp m\u00f4 t\u1ea3 s\u1ea3n ph\u1ea9m"} rows={3} />
 										</FormControl>
 										<FormMessage />
 									</div>
@@ -162,10 +162,13 @@ export function ProductModal({ title, show, formValue, onOk, onCancel }: Product
 						<FormField
 							control={form.control}
 							name="price"
-							rules={{ required: "Price is required", min: { value: 0, message: "Price must be positive" } }}
+							rules={{
+								required: "Vui l\u00f2ng nh\u1eadp gi\u00e1",
+								min: { value: 0, message: "Gi\u00e1 ph\u1ea3i l\u00e0 s\u1ed1 kh\u00f4ng \u00e2m" },
+							}}
 							render={({ field }) => (
 								<FormItem className="grid grid-cols-4 items-center gap-4">
-									<FormLabel className="text-right">Price</FormLabel>
+									<FormLabel className="text-right">Gi\u00e1</FormLabel>
 									<div className="col-span-3">
 										<FormControl>
 											<Input
@@ -173,7 +176,7 @@ export function ProductModal({ title, show, formValue, onOk, onCancel }: Product
 												type="number"
 												min="0"
 												step="1000"
-												placeholder="Enter price"
+												placeholder={"Nh\u1eadp gi\u00e1"}
 												onChange={(e) => field.onChange(Number(e.target.value))}
 											/>
 										</FormControl>
@@ -186,15 +189,15 @@ export function ProductModal({ title, show, formValue, onOk, onCancel }: Product
 						<FormField
 							control={form.control}
 							name="categoryId"
-							rules={{ required: "Category is required" }}
+							rules={{ required: "Vui l\u00f2ng ch\u1ecdn danh m\u1ee5c" }}
 							render={({ field }) => (
 								<FormItem className="grid grid-cols-4 items-center gap-4">
-									<FormLabel className="text-right">Category</FormLabel>
+									<FormLabel className="text-right">Danh m\u1ee5c</FormLabel>
 									<div className="col-span-3">
 										<FormControl>
 											<Select value={String(field.value)} onValueChange={(value) => field.onChange(Number(value))}>
 												<SelectTrigger>
-													<SelectValue placeholder="Select category" />
+													<SelectValue placeholder={"Chn danh me5c"} />
 												</SelectTrigger>
 												<SelectContent>
 													{categories.map((c) => (
@@ -216,17 +219,17 @@ export function ProductModal({ title, show, formValue, onOk, onCancel }: Product
 							name="status"
 							render={({ field }) => (
 								<FormItem className="grid grid-cols-4 items-center gap-4">
-									<FormLabel className="text-right">Status</FormLabel>
+									<FormLabel className="text-right">Tr\u1ea1ng th\u00e1i</FormLabel>
 									<div className="col-span-3">
 										<FormControl>
 											<RadioGroup onValueChange={field.onChange} value={field.value}>
 												<div className="flex items-center space-x-2">
 													<RadioGroupItem value={ProductStatus.ACTIVE} id="active" />
-													<Label htmlFor="active">Active</Label>
+													<Label htmlFor="active">Ho\u1ea1t \u0111\u1ed9ng</Label>
 												</div>
 												<div className="flex items-center space-x-2">
 													<RadioGroupItem value={ProductStatus.INACTIVE} id="inactive" />
-													<Label htmlFor="inactive">Inactive</Label>
+													<Label htmlFor="inactive">Kh\u00f4ng ho\u1ea1t \u0111\u1ed9ng</Label>
 												</div>
 											</RadioGroup>
 										</FormControl>
@@ -237,7 +240,7 @@ export function ProductModal({ title, show, formValue, onOk, onCancel }: Product
 						/>
 
 						<FormItem className="grid grid-cols-4 items-center gap-4">
-							<FormLabel className="text-right">Image Upload</FormLabel>
+							<FormLabel className="text-right">T\u1ea3i \u1ea3nh</FormLabel>
 							<div className="col-span-3">
 								<div className="flex items-start gap-2">
 									<div className="w-40 shrink-0">
@@ -253,7 +256,11 @@ export function ProductModal({ title, show, formValue, onOk, onCancel }: Product
 											placeholder={
 												imagePreview ? (
 													<div key={imagePreview || "empty"} className="relative w-full">
-														<img src={imagePreview} alt="preview" className="absolute inset-0 w-full object-cover" />
+														<img
+															src={imagePreview}
+															alt={"Xem tr\u01b0\u1edbc"}
+															className="absolute inset-0 w-full object-cover"
+														/>
 														<button
 															type="button"
 															className="absolute right-1 top-1 inline-flex h-7 w-7 items-center justify-center rounded-full bg-background/80 text-foreground shadow ring-1 ring-border hover:bg-background"
@@ -277,11 +284,13 @@ export function ProductModal({ title, show, formValue, onOk, onCancel }: Product
 										className="self-start"
 										onClick={() => setShowImagePicker(true)}
 									>
-										Choose from Library
+										{"Ch\u1ecdn t\u1eeb th\u01b0 vi\u1ec7n"}
 									</Button>
 								</div>
 								<div className="mt-2">
-									<p className="mt-1 text-xs text-text-secondary">Allowed .jpg, .jpeg, .png, .gif, .webp up to 5MB</p>
+									<p className="mt-1 text-xs text-text-secondary">
+										H\u1ed7 tr\u1ee3 .jpg, .jpeg, .png, .gif, .webp t\u1ed1i \u0111a 5MB
+									</p>
 								</div>
 							</div>
 						</FormItem>
@@ -291,10 +300,15 @@ export function ProductModal({ title, show, formValue, onOk, onCancel }: Product
 							name="image"
 							render={({ field }) => (
 								<FormItem className="grid grid-cols-4 items-center gap-4">
-									<FormLabel className="text-right">Image URL</FormLabel>
+									<FormLabel className="text-right">URL \u1ea3nh</FormLabel>
 									<div className="col-span-3">
 										<FormControl>
-											<Input {...field} placeholder="Enter image path or URL (optional)" />
+											<Input
+												{...field}
+												placeholder={
+													"Nh\u1eadp \u0111\u01b0\u1eddng d\u1eabn ho\u1eb7c URL \u1ea3nh (kh\u00f4ng b\u1eaft bu\u1ed9c)"
+												}
+											/>
 										</FormControl>
 										<FormMessage />
 									</div>
@@ -310,14 +324,14 @@ export function ProductModal({ title, show, formValue, onOk, onCancel }: Product
 									form.setValue("image", img.filepath, { shouldDirty: true, shouldValidate: true });
 									setImagePreview(img.url || makePreviewUrl(img.filepath));
 									setShowImagePicker(false);
-									toast.success("Image selected");
+									toast.success("\u0110\u00e3 ch\u1ecdn \u1ea3nh");
 								}}
 							/>
 
 							<Button type="button" variant="outline" onClick={onCancel}>
-								Cancel
+								H\u1ee7y
 							</Button>
-							<Button type="submit">Save</Button>
+							<Button type="submit">L\u01b0u</Button>
 						</DialogFooter>
 					</form>
 				</Form>

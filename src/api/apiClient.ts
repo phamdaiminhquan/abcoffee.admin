@@ -1,5 +1,4 @@
 import { GLOBAL_CONFIG } from "@/global-config";
-import { t } from "@/locales/i18n";
 import userStore from "@/store/userStore";
 import axios, { type AxiosRequestConfig, type AxiosError, type AxiosResponse } from "axios";
 import { toast } from "sonner";
@@ -22,16 +21,16 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
 	(res: AxiosResponse<Result<any>>) => {
-		if (!res.data) throw new Error(t("sys.api.apiRequestFailed"));
+		if (!res.data) throw new Error("Yêu cầu thất bại, vui lòng thử lại sau!");
 		const { status, data, message } = res.data;
 		if (status === ResultStatus.SUCCESS) {
 			return data;
 		}
-		throw new Error(message || t("sys.api.apiRequestFailed"));
+		throw new Error(message || "Yêu cầu thất bại, vui lòng thử lại sau!");
 	},
 	(error: AxiosError<Result>) => {
 		const { response, message } = error || {};
-		const errMsg = response?.data?.message || message || t("sys.api.errorMessage");
+		const errMsg = response?.data?.message || message || "Thao tác thất bại, hệ thống gặp sự cố!";
 		toast.error(errMsg, { position: "top-center" });
 		if (response?.status === 401) {
 			userStore.getState().actions.clearUserInfoAndToken();

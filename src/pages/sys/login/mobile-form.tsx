@@ -5,7 +5,6 @@ import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/ui/i
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
 import { ReturnButton } from "./components/ReturnButton";
 import { LoginStateEnum, useLoginStateContext } from "./providers/login-provider";
 
@@ -38,7 +37,6 @@ interface MobileFormValues {
 }
 
 function MobileForm() {
-	const { t } = useTranslation();
 	const [countdown, setCountdown] = useState(0);
 	const [second, setSecond] = useState(0);
 	const { loginState, backToLogin } = useLoginStateContext();
@@ -63,25 +61,25 @@ function MobileForm() {
 	};
 
 	const onFinish = (values: MobileFormValues) => {
-		console.log("Received values of form: ", values);
+		console.log("Gi\u00e1 tr\u1ecb bi\u1ec3u m\u1eabu:", values);
 	};
 
 	return (
 		<Form {...form}>
 			<form onSubmit={form.handleSubmit(onFinish)} className="space-y-4">
 				<div className="flex flex-col items-center gap-2 text-center">
-					<h1 className="text-2xl font-bold">{t("sys.login.mobileSignInFormTitle")}</h1>
+					<h1 className="text-2xl font-bold">\u0110\u0103ng nh\u1eadp b\u1eb1ng \u0111i\u1ec7n tho\u1ea1i</h1>
 				</div>
 
 				<FormField
 					control={form.control}
 					name="phone"
-					rules={{ required: t("sys.login.mobilePlaceholder") }}
+					rules={{ required: "Vui l\u00f2ng nh\u1eadp s\u1ed1 \u0111i\u1ec7n tho\u1ea1i" }}
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>{t("sys.login.mobile")}</FormLabel>
+							<FormLabel>S\u1ed1 \u0111i\u1ec7n tho\u1ea1i</FormLabel>
 							<FormControl>
-								<Input placeholder={t("sys.login.mobile")} {...field} />
+								<Input placeholder="S\u1ed1 \u0111i\u1ec7n tho\u1ea1i" {...field} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>
@@ -91,14 +89,14 @@ function MobileForm() {
 				<FormField
 					control={form.control}
 					name="code"
-					rules={{ required: t("sys.login.smsPlaceholder") }}
+					rules={{ required: "Vui l\u00f2ng nh\u1eadp m\u00e3 x\u00e1c minh" }}
 					render={({ field }) => (
 						<FormItem>
 							<FormLabel className="flex items-center justify-between">
-								<span className="text-sm">{t("sys.login.smsCode")}</span>
+								<span className="text-sm">M\u00e3 SMS</span>
 								<span className="text-sm text-muted-foreground" onClick={start}>
 									{countdown === 0 ? (
-										<span>{t("sys.login.sendSmsButton")}</span>
+										<span>G\u1eedi m\u00e3</span>
 									) : (
 										<div className="flex items-center justify-center">
 											<Countdown
@@ -109,7 +107,7 @@ function MobileForm() {
 												}}
 												onFinish={reset}
 											/>
-											<span className="ml-1">{t("sys.login.sendSmsText", { second })}</span>
+											<span className="ml-1">{`G\u1eedi l\u1ea1i sau ${second}s`}</span>
 										</div>
 									)}
 								</span>
@@ -138,7 +136,7 @@ function MobileForm() {
 				/>
 
 				<Button type="submit" className="w-full">
-					{t("sys.login.loginButton")}
+					\u0110\u0103ng nh\u1eadp
 				</Button>
 
 				<ReturnButton

@@ -9,7 +9,7 @@ import type { Role_Old } from "#/entity";
 import { BasicStatus } from "#/enum";
 import { RoleModal, type RoleModalProps } from "./role-modal";
 
-// TODO: fix
+// TODO: cần sửa
 // const ROLES: Role_Old[] = ROLE_LIST as Role_Old[];
 const ROLES: Role_Old[] = [];
 
@@ -48,7 +48,11 @@ export default function RolePage() {
 			dataIndex: "status",
 			align: "center",
 			width: 120,
-			render: (status) => <Badge variant={status === BasicStatus.DISABLE ? "error" : "success"}>{status === BasicStatus.DISABLE ? "Disable" : "Enable"}</Badge>,
+			render: (status) => (
+				<Badge variant={status === BasicStatus.DISABLE ? "error" : "success"}>
+					{status === BasicStatus.DISABLE ? "Disable" : "Enable"}
+				</Badge>
+			),
 		},
 		{ title: "Desc", dataIndex: "desc" },
 		{
@@ -99,7 +103,14 @@ export default function RolePage() {
 				</div>
 			</CardHeader>
 			<CardContent>
-				<Table rowKey="id" size="small" scroll={{ x: "max-content" }} pagination={false} columns={columns} dataSource={ROLES} />
+				<Table
+					rowKey="id"
+					size="small"
+					scroll={{ x: "max-content" }}
+					pagination={false}
+					columns={columns}
+					dataSource={ROLES}
+				/>
 			</CardContent>
 			<RoleModal {...roleModalPros} />
 		</Card>

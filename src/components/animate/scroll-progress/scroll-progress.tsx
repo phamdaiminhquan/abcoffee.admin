@@ -3,12 +3,12 @@ import { type HTMLMotionProps, type MotionValue, m, useSpring } from "motion/rea
 import type { CSSProperties } from "react";
 
 /**
- * ScrollProgress 组件属性接口
+ * Giao diện thuộc tính cho thành phần ScrollProgress
  * @interface Props
- * @extends {HTMLMotionProps<"div">} - 继承自 Framer Motion 的 div 元素属性
- * @property {string} [color] - 进度条颜色，可选
- * @property {MotionValue<number>} scrollYProgress - 滚动进度值，范围 0-1
- * @property {number} [height=4] - 进度条高度，默认为 4px
+ * @extends {HTMLMotionProps<"div">} - Kế thừa các thuộc tính của phần tử div trong Framer Motion
+ * @property {string} [color] - Màu thanh tiến trình, tùy chọn
+ * @property {MotionValue<number>} scrollYProgress - Tiến độ cuộn, phạm vi 0-1
+ * @property {number} [height=4] - Chiều cao thanh tiến trình, mặc định 4px
  */
 interface Props extends HTMLMotionProps<"div"> {
 	color?: string;
@@ -17,16 +17,16 @@ interface Props extends HTMLMotionProps<"div"> {
 }
 
 /**
- * 滚动进度条组件
+ * Thành phần thanh tiến độ cuộn
  *
- * 该组件用于显示页面滚动进度，创建一个平滑的进度条动画效果。
- * 使用 Framer Motion 的 spring 动画实现平滑过渡。
+ * Thành phần này hiển thị tiến độ cuộn của trang với hiệu ứng chuyển động mượt.
+ * Sử dụng spring animation của Framer Motion để tạo cảm giác linh hoạt.
  *
  * @component
- * @param {Props} props - 组件属性
- * @param {MotionValue<number>} props.scrollYProgress - 滚动进度值
- * @param {number} [props.height=4] - 进度条高度
- * @param {string} [props.color] - 进度条颜色，默认使用主题色
+ * @param {Props} props - Thuộc tính của thành phần
+ * @param {MotionValue<number>} props.scrollYProgress - Tiến độ cuộn
+ * @param {number} [props.height=4] - Chiều cao thanh tiến trình
+ * @param {string} [props.color] - Màu thanh tiến trình, mặc định lấy từ theme
  *
  * @example
  * ```tsx
@@ -35,23 +35,23 @@ interface Props extends HTMLMotionProps<"div"> {
  * ```
  */
 export function ScrollProgress({ scrollYProgress, height = 4, color, ...other }: Props) {
-	// 使用 spring 动画使进度条变化更平滑
+	// Dùng spring animation để tiến độ thay đổi mượt mà hơn
 	const scaleX = useSpring(scrollYProgress, {
-		stiffness: 100, // 弹簧刚度
-		damping: 30, // 阻尼系数
-		restDelta: 0.001, // 停止动画的阈值
+		stiffness: 100, // Độ cứng của lò xo
+		damping: 30, // Hệ số giảm chấn
+		restDelta: 0.001, // Ngưỡng dừng animation
 	});
 
 	const { themeTokens } = useTheme();
 
-	// 设置进度条颜色，优先使用传入的颜色，否则使用主题色
+	// Thiết lập màu thanh, ưu tiên màu truyền vào, nếu không có sẽ dùng màu theme
 	const backgroundColor = color || themeTokens.color.palette.primary.default;
 
-	// 进度条样式配置
+	// Cấu hình kiểu dáng cho thanh tiến trình
 	const style: CSSProperties = {
-		transformOrigin: "0%", // 设置变换原点在左侧
-		height, // 设置高度
-		backgroundColor, // 设置背景色
+		transformOrigin: "0%", // Đặt gốc biến đổi ở bên trái
+		height, // Thiết lập chiều cao
+		backgroundColor, // Thiết lập màu nền
 	};
 
 	return <m.div style={{ scaleX, ...style }} {...other} />;

@@ -57,12 +57,12 @@ export const baseThemeTokens = {
 		disabledBackground: "24%",
 	},
 	zIndex: {
-		appBar: "10", // z-index of the navigation bar at the top of the application
-		nav: "20", // z-index of the navigation bar at the top of the application
-		drawer: "50", // z-index of the drawer/navigation menu
-		modal: "50", // z-index of the modal/dialog
-		snackbar: "50", // z-index of the notification/toast/alert/message
-		tooltip: "50", // z-index of the tooltip
-		scrollbar: "100", // z-index of the scrollbar
+		appBar: "10", // z-index của thanh điều hướng phía trên ứng dụng
+		nav: "20", // z-index của khu vực điều hướng chính
+		drawer: "50", // z-index của menu dạng ngăn kéo
+		modal: "50", // z-index của hộp thoại/modal
+		snackbar: "50", // z-index của thông báo/toast
+		tooltip: "50", // z-index của tooltip
+		scrollbar: "100", // z-index của thanh cuộn
 	},
 };

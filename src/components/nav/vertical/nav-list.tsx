@@ -24,21 +24,21 @@ export function NavList({ data, depth = 1 }: NavListProps) {
 		<Collapsible open={open} onOpenChange={setOpen} data-nav-type="list">
 			<CollapsibleTrigger className="w-full">
 				<NavItem
-					// data
+					// dữ liệu hiển thị
 					title={data.title}
 					path={data.path}
 					icon={data.icon}
 					info={data.info}
 					caption={data.caption}
 					auth={data.auth}
-					// state
+					// trạng thái điều khiển
 					open={open}
 					active={isActive}
 					disabled={data.disabled}
-					// options
+					// tùy chọn bổ sung
 					hasChild={hasChild}
 					depth={depth}
-					// event
+					// sự kiện tương tác
 					onClick={handleClick}
 				/>
 			</CollapsibleTrigger>

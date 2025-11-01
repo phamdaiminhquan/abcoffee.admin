@@ -1,7 +1,7 @@
 import type { RcFile } from "antd/es/upload";
 import { toast } from "sonner";
 
-// Define more types here
+// Định nghĩa thêm các nhóm định dạng tại đây
 const FORMAT_PDF = ["pdf"];
 const FORMAT_TEXT = ["txt"];
 const FORMAT_PHOTOSHOP = ["psd"];
@@ -15,7 +15,7 @@ const FORMAT_IMG = ["jpg", "jpeg", "gif", "bmp", "png", "svg"];
 const FORMAT_VIDEO = ["m4v", "avi", "mpg", "mp4", "webm"];
 
 /**
- * 获取文件格式
+ * Lấy định dạng file
  * @param fileName
  */
 export function getFileFormat(fileName: string | undefined) {
@@ -61,7 +61,7 @@ export function getFileFormat(fileName: string | undefined) {
 }
 
 /**
- * 获取文件缩略图
+ * Lấy thumbnail tương ứng với định dạng file
  * @param fileName
  */
 export function getFileThumb(fileName: string | undefined) {

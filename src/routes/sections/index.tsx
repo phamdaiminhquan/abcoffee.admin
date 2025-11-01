@@ -4,12 +4,12 @@ import { dashboardRoutes } from "./dashboard";
 import { mainRoutes } from "./main";
 
 export const routesSection: RouteObject[] = [
-	// Auth
+	// Khu vực Auth
 	...authRoutes,
-	// Dashboard
+	// Khu vực Dashboard
 	...dashboardRoutes,
-	// Main
+	// Khu vực Main
 	...mainRoutes,
-	// No Match
+	// Route không khớp
 	{ path: "*", element: <Navigate to="/404" replace /> },
 ];

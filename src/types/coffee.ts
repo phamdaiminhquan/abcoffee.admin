@@ -93,16 +93,16 @@ export interface CreateOrderDetailDto {
 export interface CreateOrderDto {
 	customerName?: string;
 	userId?: number;
-	paymentMethod?: PaymentMethod; // Optional for POS pending orders
+	paymentMethod?: PaymentMethod; // Tùy chọn dùng cho đơn POS đang chờ
 	orderDetails: CreateOrderDetailDto[];
 }
 
 export interface UpdateOrderDto {
 	status?: OrderStatus;
 	cancellationReason?: string;
-	paymentMethod?: PaymentMethod; // Allow setting at payment time in POS
-	customerName?: string; // Allow editing customer name for pending orders
-	orderDetails?: CreateOrderDetailDto[]; // Allow modifying items (append/remove/update)
+	paymentMethod?: PaymentMethod; // Cho phép chọn phương thức thanh toán khi thu tiền tại POS
+	customerName?: string; // Cho phép chỉnh tên khách cho đơn đang chờ
+	orderDetails?: CreateOrderDetailDto[]; // Cho phép sửa danh sách món (thêm/xóa/cập nhật)
 }
 
 export interface PaymentMethodBreakdown {
@@ -111,13 +111,13 @@ export interface PaymentMethodBreakdown {
 }
 
 export interface RevenueReportDto {
-	date: string; // YYYY-MM-DD
+	date: string; // Định dạng YYYY-MM-DD
 	totalOrders: number;
 	totalRevenue: number;
 	paymentMethodBreakdown: PaymentMethodBreakdown;
 }
 
-// Generic paginated response shape used by Upload Admin API
+// Định dạng phản hồi phân trang dùng cho Upload Admin API
 export interface Paginated<T> {
 	data: T[];
 	page: number;
@@ -125,13 +125,13 @@ export interface Paginated<T> {
 	total: number;
 }
 
-// Upload module types
+// Kiểu dữ liệu cho mô-đun upload
 export interface UploadedImage {
 	id: number;
 	originalFilename: string;
 	savedFilename: string;
-	filepath: string; // relative path, e.g., "uploads/123-abc.jpg"
-	url: string; // absolute URL served by backend
+	filepath: string; // Đường dẫn tương đối, ví dụ "uploads/123-abc.jpg"
+	url: string; // URL tuyệt đối do backend cung cấp
 	filesize: number;
 	mimetype: string;
 	createdAt: string | Date;

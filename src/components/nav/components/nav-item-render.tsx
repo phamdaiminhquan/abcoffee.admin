@@ -19,7 +19,7 @@ export const NavItemRenderer: React.FC<NavItemRendererProps> = ({ item, classNam
 	}
 
 	if (hasChild) {
-		// Vertical nav items with children are clickable containers
+		// Mục menu dọc có con sẽ đóng vai trò là vùng bấm mở rộng
 		return (
 			<div className={className} onClick={onClick}>
 				{children}
@@ -27,7 +27,7 @@ export const NavItemRenderer: React.FC<NavItemRendererProps> = ({ item, classNam
 		);
 	}
 
-	// Default: internal link
+	// Mặc định: liên kết nội bộ
 	return (
 		<RouterLink href={path} className={className}>
 			{children}

@@ -25,7 +25,7 @@ export function UploadAvatar({ helperText, defaultAvatar = "", ...other }: Props
 			return;
 		}
 		if (info.file.status === "done" || info.file.status === "error") {
-			// TODO: Get this url from response in real world.
+			// TODO: Lấy URL từ phản hồi API trong môi trường thực tế
 			if (info.file.originFileObj) {
 				setImageUrl(getBlobUrl(info.file.originFileObj));
 			}

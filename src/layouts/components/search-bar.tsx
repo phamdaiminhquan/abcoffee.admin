@@ -1,5 +1,4 @@
 import { Icon } from "@/components/icon";
-import useLocale from "@/locales/use-locale";
 import { useRouter } from "@/routes/hooks";
 import { Badge } from "@/ui/badge";
 import { Button } from "@/ui/button";
@@ -16,7 +15,7 @@ interface SearchItem {
 	path: string;
 }
 
-// 高亮文本组件
+// Component tô sáng văn bản
 const HighlightText = ({ text, query }: { text: string; query: string }) => {
 	if (!query) return <>{text}</>;
 
@@ -39,13 +38,12 @@ const HighlightText = ({ text, query }: { text: string; query: string }) => {
 };
 
 const SearchBar = () => {
-	const { t } = useLocale();
 	const { replace } = useRouter();
 	const [open, setOpen] = useBoolean(false);
 	const [searchQuery, setSearchQuery] = useState("");
 	const navData = useFilteredNavData();
 
-	// Flatten navigation data into searchable items
+	// Trải phẳng dữ liệu điều hướng thành danh sách có thể tìm kiếm
 	const flattenedItems = useMemo(() => {
 		const items: SearchItem[] = [];
 
@@ -99,14 +97,18 @@ const SearchBar = () => {
 			</Button>
 
 			<CommandDialog open={open} onOpenChange={setOpen}>
-				<CommandInput placeholder="Type a command or search..." value={searchQuery} onValueChange={setSearchQuery} />
+				<CommandInput
+					placeholder="G\u00f5 l\u1ec7nh ho\u1eb7c t\u00ecm ki\u1ebfm..."
+					value={searchQuery}
+					onValueChange={setSearchQuery}
+				/>
 				<ScrollArea className="h-[400px]">
-					<CommandEmpty>No results found.</CommandEmpty>
-					<CommandGroup heading="Navigations">
+					<CommandEmpty>Kh\u00f4ng t\u00ecm th\u1ea5y k\u1ebft qu\u1ea3.</CommandEmpty>
+					<CommandGroup heading="\u0110i\u1ec1u h\u01b0\u1edbng">
 						{flattenedItems.map(({ key, label }) => (
 							<CommandItem key={key} onSelect={() => handleSelect(key)} className="flex flex-col items-start">
 								<div className="font-medium">
-									<HighlightText text={t(label)} query={searchQuery} />
+									<HighlightText text={label} query={searchQuery} />
 								</div>
 								<div className="text-xs text-muted-foreground">
 									<HighlightText text={key} query={searchQuery} />
@@ -120,15 +122,15 @@ const SearchBar = () => {
 					<div className="flex items-center gap-1">
 						<Badge variant="info">↑</Badge>
 						<Badge variant="info">↓</Badge>
-						<Text variant="caption">to navigate</Text>
+						<Text variant="caption">di chuy\u1ec3n</Text>
 					</div>
 					<div className="flex items-center gap-1">
 						<Badge variant="info">↵</Badge>
-						<Text variant="caption">to select</Text>
+						<Text variant="caption">ch\u1ecdn</Text>
 					</div>
 					<div className="flex items-center gap-1">
 						<Badge variant="info">ESC</Badge>
-						<Text variant="caption">to close</Text>
+						<Text variant="caption">\u0111\u00f3ng</Text>
 					</div>
 				</div>
 			</CommandDialog>

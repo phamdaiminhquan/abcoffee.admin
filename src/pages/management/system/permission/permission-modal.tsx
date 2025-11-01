@@ -34,7 +34,7 @@ export default function PermissionModal({ title, show, formValue, onOk, onCancel
 		defaultValues: formValue,
 	});
 
-	// TODO: fix
+	// TODO: cần sửa
 	// const permissions = useUserPermission();
 	const permissions: any[] = [];
 	const [compOptions, setCompOptions] = useState(PAGE_SELECT_OPTIONS);
@@ -188,7 +188,9 @@ export default function PermissionModal({ title, show, formValue, onOk, onCancel
 										<FormControl>
 											<AutoComplete
 												options={compOptions}
-												filterOption={(input, option) => ((option?.label || "") as string).toLowerCase().includes(input.toLowerCase())}
+												filterOption={(input, option) =>
+													((option?.label || "") as string).toLowerCase().includes(input.toLowerCase())
+												}
 												value={field.value || ""}
 												onChange={(value) => field.onChange(value || null)}
 											/>

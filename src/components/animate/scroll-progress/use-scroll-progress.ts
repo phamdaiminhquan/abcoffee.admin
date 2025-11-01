@@ -3,38 +3,38 @@ import { useScroll } from "motion/react";
 import { useMemo, useRef } from "react";
 
 /**
- * 返回类型定义，包含滚动进度值和元素引用
+ * Định nghĩa kiểu trả về, bao gồm tiến độ cuộn và tham chiếu phần tử
  */
 export type UseScrollProgressReturn = {
-	/** 水平滚动进度值 (0-1) */
+	/** Tiến độ cuộn ngang (0-1) */
 	scrollXProgress: MotionValue<number>;
-	/** 垂直滚动进度值 (0-1) */
+	/** Tiến độ cuộn dọc (0-1) */
 	scrollYProgress: MotionValue<number>;
-	/** 容器元素的引用，用于容器滚动模式 */
+	/** Tham chiếu vùng chứa, dùng cho chế độ cuộn theo container */
 	elementRef: React.RefObject<HTMLDivElement | null>;
 };
 
 /**
- * 滚动目标类型
- * - "document": 监听整个文档的滚动
- * - "container": 监听指定容器的滚动
+ * Kiểu mục tiêu cuộn
+ * - "document": Theo dõi cuộn toàn bộ tài liệu
+ * - "container": Theo dõi cuộn của vùng chứa được chỉ định
  */
 export type UseScrollProgress = "document" | "container";
 
 /**
- * 自定义 Hook，用于获取滚动进度
+ * Hook tùy chỉnh để lấy tiến độ cuộn
  *
- * @param target - 滚动目标类型，可选值为 "document" 或 "container"，默认为 "document"
- * @returns 返回包含滚动进度值和元素引用的对象
+ * @param target - Kiểu mục tiêu cuộn, nhận "document" hoặc "container", mặc định là "document"
+ * @returns Đối tượng chứa tiến độ cuộn và tham chiếu phần tử
  *
  * @example
- * // 监听整个文档的滚动
+ * // Theo dõi cuộn toàn bộ tài liệu
  * const { scrollYProgress } = useScrollProgress();
  *
  * @example
- * // 监听容器的滚动
+ * // Theo dõi cuộn của một vùng chứa
  * const { scrollYProgress, elementRef } = useScrollProgress("container");
- * // 将 elementRef 绑定到容器元素
+ * // Gắn elementRef vào phần tử vùng chứa
  */
 export function useScrollProgress(target: UseScrollProgress = "document"): UseScrollProgressReturn {
 	const elementRef = useRef<HTMLDivElement>(null);

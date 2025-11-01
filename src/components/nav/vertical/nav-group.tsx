@@ -1,5 +1,4 @@
 import { Icon } from "@/components/icon";
-import useLocale from "@/locales/use-locale";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/ui/collapsible";
 import { cn } from "@/utils";
 import { useToggle } from "react-use";
@@ -26,7 +25,6 @@ export function NavGroup({ name, items }: NavGroupProps) {
 }
 
 function Group({ name, open, onClick }: { name?: string; open: boolean; onClick: (nextValue: boolean) => void }) {
-	const { t } = useLocale();
 	return (
 		name && (
 			<div
@@ -38,12 +36,23 @@ function Group({ name, open, onClick }: { name?: string; open: boolean; onClick:
 			>
 				<Icon
 					icon="eva:arrow-ios-forward-fill"
-					className={cn("absolute left-[-4px] h-4 w-4 inline-flex shrink-0 transition-all duration-300 ease-in-out", "opacity-0 group-hover:opacity-100", {
-						"rotate-90": open,
-					})}
+					className={cn(
+						"absolute left-[-4px] h-4 w-4 inline-flex shrink-0 transition-all duration-300 ease-in-out",
+						"opacity-0 group-hover:opacity-100",
+						{
+							"rotate-90": open,
+						},
+					)}
 				/>
 
-				<span className={cn("text-xs font-medium transition-all duration-300 ease-in-out text-text-disabled", "hover:text-text-primary")}>{t(name)}</span>
+				<span
+					className={cn(
+						"text-xs font-medium transition-all duration-300 ease-in-out text-text-disabled",
+						"hover:text-text-primary",
+					)}
+				>
+					{name}
+				</span>
 			</div>
 		)
 	);

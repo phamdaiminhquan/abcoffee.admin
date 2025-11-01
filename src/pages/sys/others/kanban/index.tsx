@@ -38,7 +38,7 @@ export default function Kanban() {
 	const handleDragStart = (event: DragStartEvent) => {
 		const { active } = event;
 		setActiveId(active.id as string);
-		// 通过判断 id 格式来确定拖拽类型
+		// Xác định loại kéo thả dựa trên định dạng id
 		setActiveType(active.id.toString().startsWith("task-") ? "task" : "column");
 	};
 
@@ -53,7 +53,7 @@ export default function Kanban() {
 
 		if (active.id !== over.id) {
 			if (activeType === "column") {
-				// 处理列的拖拽
+				// Xử lý kéo thả cột
 				const oldIndex = state.columnOrder.indexOf(active.id as string);
 				const newIndex = state.columnOrder.indexOf(over.id as string);
 
@@ -62,7 +62,7 @@ export default function Kanban() {
 					columnOrder: arrayMove(state.columnOrder, oldIndex, newIndex),
 				});
 			} else {
-				// 处理任务的拖拽
+				// Xử lý kéo thả nhiệm vụ
 				const activeColumn = Object.values(state.columns).find((col) => col.taskIds.includes(active.id as string));
 				const overColumn = Object.values(state.columns).find(
 					(col) => col.taskIds.includes(over.id as string) || col.id === over.id,
@@ -71,7 +71,7 @@ export default function Kanban() {
 				if (!activeColumn || !overColumn) return;
 
 				if (activeColumn === overColumn) {
-					// 同列内移动
+					// Di chuyển trong cùng một cột
 					const newTaskIds = arrayMove(
 						activeColumn.taskIds,
 						activeColumn.taskIds.indexOf(active.id as string),
@@ -89,7 +89,7 @@ export default function Kanban() {
 						},
 					});
 				} else {
-					// 跨列移动
+					// Di chuyển sang cột khác
 					const sourceTaskIds = activeColumn.taskIds.filter((id) => id !== active.id);
 					const destinationTaskIds = [...overColumn.taskIds];
 					const overTaskIndex = overColumn.taskIds.indexOf(over.id as string);

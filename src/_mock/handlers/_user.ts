@@ -16,15 +16,15 @@ const signIn = http.post(`/api${UserApi.SignIn}`, async ({ request }) => {
 			message: "Incorrect username or password.",
 		});
 	}
-	// delete password
+	// Loại bỏ mật khẩu khỏi dữ liệu trả về
 	const { password: _, ...userWithoutPassword } = user;
 
-	// user role
+	// Vai trò của người dùng
 	const roles = DB_USER_ROLE.filter((item) => item.userId === user.id).map((item) =>
 		DB_ROLE.find((role) => role.id === item.roleId),
 	);
 
-	// user permissions
+	// Quyền của người dùng
 	const permissions = DB_ROLE_PERMISSION.filter((item) => roles.some((role) => role?.id === item.roleId)).map((item) =>
 		DB_PERMISSION.find((permission) => permission.id === item.permissionId),
 	);

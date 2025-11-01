@@ -53,7 +53,7 @@ export interface CommonOptions {
 	updatedAt?: string;
 }
 export interface User extends CommonOptions {
-	id: string; // uuid
+	id: string; // định danh uuid
 	username: string;
 	password: string;
 	email: string;
@@ -62,19 +62,19 @@ export interface User extends CommonOptions {
 }
 
 export interface Role extends CommonOptions {
-	id: string; // uuid
+	id: string; // định danh uuid
 	name: string;
 	code: string;
 }
 
 export interface Permission extends CommonOptions {
-	id: string; // uuid
+	id: string; // định danh uuid
 	name: string;
-	code: string; // resource:action  example: "user-management:read"
+	code: string; // resource:action, ví dụ "user-management:read"
 }
 
 export interface Menu extends CommonOptions, MenuMetaInfo {
-	id: string; // uuid
+	id: string; // định danh uuid
 	parentId: string;
 	name: string;
 	code: string;
@@ -82,7 +82,9 @@ export interface Menu extends CommonOptions, MenuMetaInfo {
 	type: PermissionType;
 }
 
-export type MenuMetaInfo = Partial<Pick<NavItemDataProps, "path" | "icon" | "caption" | "info" | "disabled" | "auth" | "hidden">> & {
+export type MenuMetaInfo = Partial<
+	Pick<NavItemDataProps, "path" | "icon" | "caption" | "info" | "disabled" | "auth" | "hidden">
+> & {
 	externalLink?: URL;
 	component?: string;
 };
