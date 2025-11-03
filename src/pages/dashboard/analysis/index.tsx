@@ -1,9 +1,6 @@
-import { Chart } from "@/components/chart/chart";
-import { useChart } from "@/components/chart/useChart";
 import Icon from "@/components/icon/icon";
 import { Button } from "@/ui/button";
 import { Card, CardAction, CardContent, CardHeader, CardTitle } from "@/ui/card";
-import { Progress } from "@/ui/progress";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/ui/select";
 import { Text, Title } from "@/ui/typography";
 import { cn } from "@/utils";
@@ -238,38 +235,10 @@ function Trend({ value }: { value: number }) {
 
 export default function Analysis() {
 	const [timeType, setTimeType] = useState<"day" | "week" | "month">("day");
-	const webAnalytic = dashboardData.webAnalytic[timeType];
 	const visitor = dashboardData.visitor[timeType];
 	const conversionRate = dashboardData.conversionRate[timeType];
 	const adCampaign = dashboardData.adCampaign[timeType];
-	const topPages = dashboardData.topPages[timeType];
-	const sessionDevices = dashboardData.sessionDevices[timeType];
 	const topChannels = dashboardData.topChannels[timeType];
-	const trafficData = dashboardData.trafficData[timeType];
-
-	const chartOptions = useChart({
-		xaxis: { categories: webAnalytic.chart.categories },
-	});
-
-	const deviceChartOptions = useChart({
-		labels: sessionDevices.map((d) => d.label),
-		stroke: {
-			show: false,
-		},
-		legend: {
-			show: false,
-		},
-		tooltip: {
-			fillSeriesColor: false,
-		},
-		plotOptions: {
-			pie: {
-				donut: {
-					size: "60%",
-				},
-			},
-		},
-	});
 
 	return (
 		<div className="flex flex-col gap-4">

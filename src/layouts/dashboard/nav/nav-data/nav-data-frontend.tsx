@@ -58,6 +58,11 @@ export const frontendNavData: NavProps["data"] = [
 							},
 						],
 					},
+					{
+						title: "\u0110\u00e1nh gi\u00e1",
+						path: "/management/reviews",
+						icon: <Icon icon="solar:star-bold-duotone" size="24" />,
+					},
 				],
 			},
 			{

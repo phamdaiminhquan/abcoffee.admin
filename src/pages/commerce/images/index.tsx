@@ -22,7 +22,6 @@ export default function ImagesPage() {
 	const [page, setPage] = useState(1);
 	const [pageSize, setPageSize] = useState(24);
 	const [detail, setDetail] = useState<UploadedImage | null>(null);
-	const [editName, setEditName] = useState("");
 
 	const [unusedOnly, setUnusedOnly] = useState(false);
 
@@ -166,7 +165,6 @@ export default function ImagesPage() {
 											<DropdownMenuItem
 												onClick={() => {
 													setDetail(img);
-													setEditName(img.originalFilename || "");
 												}}
 											>
 												<Icon icon="solar:alt-arrow-right-bold-duotone" /> Xem chi ti\u1ebft

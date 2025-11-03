@@ -62,6 +62,25 @@
 			"routingDefinedIn": "src/routes/sections/dashboard/frontend.tsx",
 			"sources": ["src/pages/management/user/account/index.tsx"]
 		},
+		"management.reviews": {
+			"name": "Management • Reviews",
+			"routes": ["/management/reviews"],
+			"routingDefinedIn": "src/routes/sections/dashboard/frontend.tsx",
+			"sources": [
+				"src/pages/management/reviews/index.tsx",
+				"src/pages/management/reviews/review-form.tsx",
+				"src/pages/management/reviews/review-detail.tsx"
+			],
+			"api": [
+				"GET /api/admin/reviews",
+				"GET /api/admin/reviews/:id",
+				"POST /api/admin/reviews",
+				"PATCH /api/admin/reviews/:id",
+				"DELETE /api/admin/reviews/:id"
+			],
+			"services": ["src/api/services/reviewService.ts"],
+			"types": ["src/types/review.ts"]
+		},
 
 		"management.system.permission": {
 			"name": "Management • System • Permission",

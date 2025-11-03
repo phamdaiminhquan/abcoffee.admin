@@ -49,6 +49,7 @@ export function getFrontendDashboardRoutes(): RouteObject[] {
 						{ path: "user/:id", element: Component("/pages/management/system/user/detail") },
 					],
 				},
+				{ path: "reviews", element: Component("/pages/management/reviews") },
 			],
 		},
 		{

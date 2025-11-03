@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import orderService from "@/api/services/orderService";
-import type { CreateOrderDto, Order, UpdateOrderDto } from "#/coffee";
+import type { CreateOrderDto, Order } from "#/coffee";
 import { OrderStatus } from "#/coffee";
 import { Card, CardContent, CardHeader } from "@/ui/card";
 import { Button } from "@/ui/button";

@@ -1,6 +1,8 @@
 import { faker } from "@faker-js/faker";
 import type { Menu, Permission, Role, User } from "#/entity";
 import { PermissionType } from "#/enum";
+import type { ReviewResponseDto } from "#/review";
+import { ALLOWED_REVIEW_RATINGS } from "#/review";
 
 const { GROUP, MENU, CATALOGUE } = PermissionType;
 
@@ -69,6 +71,16 @@ export const DB_MENU: Menu[] = [
 		type: MENU,
 		path: "management/user/account",
 		component: "/pages/management/user/account",
+	},
+	{
+		id: "management_reviews",
+		parentId: "management",
+		name: "\u0110\u00e1nh gi\u00e1",
+		code: "management:reviews",
+		type: MENU,
+		path: "/management/reviews",
+		component: "/pages/management/reviews",
+		icon: "solar:star-bold-duotone",
 	},
 	{
 		id: "management_system",
@@ -466,3 +478,33 @@ export const DB_ROLE_PERMISSION = [
 	{ id: faker.string.uuid(), roleId: "role_test_id", permissionId: "permission_read" },
 	{ id: faker.string.uuid(), roleId: "role_test_id", permissionId: "permission_update" },
 ];
+
+const buildReviewDataset = (): ReviewResponseDto[] => {
+	const items: ReviewResponseDto[] = [];
+	for (let index = 0; index < 24; index += 1) {
+		const rating = faker.helpers.arrayElement(ALLOWED_REVIEW_RATINGS);
+		const authorType = faker.helpers.arrayElement<ReviewResponseDto["authorType"]>(["user", "customer"]);
+		const createdAt = faker.date.past({ years: 1 });
+		const updatedAt = faker.date.between({ from: createdAt, to: new Date() });
+		const isDeleted = faker.datatype.boolean({ probability: 0.15 });
+		const deletedAt = isDeleted ? faker.date.between({ from: updatedAt, to: new Date() }) : null;
+		const imageCount = faker.datatype.boolean({ probability: 0.4 }) ? faker.number.int({ min: 1, max: 3 }) : 0;
+		const images = Array.from({ length: imageCount }, () => faker.image.urlPicsumPhotos({ width: 640, height: 480 }));
+		items.push({
+			id: 1000 + index,
+			comment: faker.lorem.sentences({ min: 1, max: 3 }),
+			rating,
+			images,
+			userId: authorType === "user" ? faker.number.int({ min: 1, max: 50 }) : null,
+			customerId: authorType === "customer" ? faker.number.int({ min: 1, max: 50 }) : null,
+			authorType,
+			authorName: faker.person.fullName(),
+			createdAt: createdAt.toISOString(),
+			updatedAt: updatedAt.toISOString(),
+			deletedAt: deletedAt ? deletedAt.toISOString() : null,
+		});
+	}
+	return items;
+};
+
+export const DB_REVIEWS: ReviewResponseDto[] = buildReviewDataset();
