@@ -61,25 +61,25 @@ function MobileForm() {
 	};
 
 	const onFinish = (values: MobileFormValues) => {
-		console.log("Gi\u00e1 tr\u1ecb bi\u1ec3u m\u1eabu:", values);
+		console.log("Giá trị biểu mẫu:", values);
 	};
 
 	return (
 		<Form {...form}>
 			<form onSubmit={form.handleSubmit(onFinish)} className="space-y-4">
 				<div className="flex flex-col items-center gap-2 text-center">
-					<h1 className="text-2xl font-bold">\u0110\u0103ng nh\u1eadp b\u1eb1ng \u0111i\u1ec7n tho\u1ea1i</h1>
+					<h1 className="text-2xl font-bold">Đăng nhập bằng điện thoại</h1>
 				</div>
 
 				<FormField
 					control={form.control}
 					name="phone"
-					rules={{ required: "Vui l\u00f2ng nh\u1eadp s\u1ed1 \u0111i\u1ec7n tho\u1ea1i" }}
+					rules={{ required: "Vui lòng nhập số điện thoại" }}
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>S\u1ed1 \u0111i\u1ec7n tho\u1ea1i</FormLabel>
+							<FormLabel>Số điện thoại</FormLabel>
 							<FormControl>
-								<Input placeholder="S\u1ed1 \u0111i\u1ec7n tho\u1ea1i" {...field} />
+								<Input placeholder="Số điện thoại" {...field} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>
@@ -89,14 +89,14 @@ function MobileForm() {
 				<FormField
 					control={form.control}
 					name="code"
-					rules={{ required: "Vui l\u00f2ng nh\u1eadp m\u00e3 x\u00e1c minh" }}
+					rules={{ required: "Vui lòng nhập mã xác minh" }}
 					render={({ field }) => (
 						<FormItem>
 							<FormLabel className="flex items-center justify-between">
-								<span className="text-sm">M\u00e3 SMS</span>
+								<span className="text-sm">Mã SMS</span>
 								<span className="text-sm text-muted-foreground" onClick={start}>
 									{countdown === 0 ? (
-										<span>G\u1eedi m\u00e3</span>
+										<span>Gửi mã</span>
 									) : (
 										<div className="flex items-center justify-center">
 											<Countdown
@@ -107,7 +107,7 @@ function MobileForm() {
 												}}
 												onFinish={reset}
 											/>
-											<span className="ml-1">{`G\u1eedi l\u1ea1i sau ${second}s`}</span>
+											<span className="ml-1">{`Gửi lại sau ${second}s`}</span>
 										</div>
 									)}
 								</span>
@@ -136,7 +136,7 @@ function MobileForm() {
 				/>
 
 				<Button type="submit" className="w-full">
-					\u0110\u0103ng nh\u1eadp
+					Đăng nhập
 				</Button>
 
 				<ReturnButton

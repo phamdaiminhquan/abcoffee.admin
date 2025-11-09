@@ -83,14 +83,14 @@ export default function SettingButton() {
 			</SheetTrigger>
 			<SheetContent style={sheetContentBgStyle} className="gap-0" onOpenAutoFocus={(e) => e.preventDefault()}>
 				<SheetHeader className="flex flex-row items-center justify-between px-6 py-4 shrink-0">
-					<SheetTitle>Thi\u1ebft l\u1eadp</SheetTitle>
+					<SheetTitle>Thiết lập</SheetTitle>
 					<SheetDescription />
 				</SheetHeader>
 				<ScrollArea>
 					<div className="flex flex-col gap-6 px-6 py-2">
 						{/* theme mode */}
 						<div className="flex flex-col gap-2">
-							<Text variant="subTitle1">Ch\u1ebf \u0111\u1ed9</Text>
+							<Text variant="subTitle1">Chế độ</Text>
 							<div className="flex flex-row gap-4">
 								<Card
 									onClick={() => updateSettings({ themeMode: ThemeMode.Light })}
@@ -117,7 +117,7 @@ export default function SettingButton() {
 
 						{/* theme layout */}
 						<div className="flex flex-col gap-2">
-							<Text variant="subTitle1">B\u1ed1 c\u1ee5c</Text>
+							<Text variant="subTitle1">Bố cục</Text>
 
 							<div className="grid grid-cols-3 gap-4">
 								{/* vertical */}
@@ -243,12 +243,10 @@ export default function SettingButton() {
 							<div className="flex flex-row items-center justify-between">
 								<Tooltip delayDuration={700} defaultOpen={false} disableHoverableContent>
 									<TooltipTrigger>
-										<Text variant="subTitle2">K\u00e9o gi\u00e3n chi\u1ec1u r\u1ed9ng</Text>
+										<Text variant="subTitle2">Kéo giãn chiều rộng</Text>
 										<Icon icon="solar:question-circle-linear" className="ml-1" />
 									</TooltipTrigger>
-									<TooltipContent>
-										N\u1ebfu t\u1eaft, n\u1ed9i dung s\u1ebd c\u00f3 \u0111\u1ed9 r\u1ed9ng c\u1ed1 \u0111\u1ecbnh
-									</TooltipContent>
+									<TooltipContent>Nếu tắt, nội dung sẽ có độ rộng cố định</TooltipContent>
 								</Tooltip>
 								<Switch
 									checked={themeStretch}
@@ -259,7 +257,7 @@ export default function SettingButton() {
 
 						{/* theme presets */}
 						<div className="flex flex-col gap-2">
-							<Text variant="subTitle1">Ch\u1ee7 \u0111\u1ec1 m\u00e0u</Text>
+							<Text variant="subTitle1">Chủ đề màu</Text>
 							<div className="flex flex-wrap gap-1">
 								{Object.entries(presetsColors).map(([preset, color]) => (
 									<div
@@ -286,9 +284,9 @@ export default function SettingButton() {
 
 						{/* font */}
 						<div className="flex flex-col gap-2">
-							<Text variant="subTitle1">Ph\u00f4ng ch\u1eef</Text>
+							<Text variant="subTitle1">Phông chữ</Text>
 
-							<Text variant="subTitle2">H\u1ecd ch\u1eef</Text>
+							<Text variant="subTitle2">Họ chữ</Text>
 							<div className="flex flex-row gap-3">
 								{Object.entries(FontFamilyPreset).map(([font, family]) => (
 									<Card
@@ -310,7 +308,7 @@ export default function SettingButton() {
 								))}
 							</div>
 
-							<Text variant="subTitle2">K\u00edch th\u01b0\u1edbc ch\u1eef</Text>
+							<Text variant="subTitle2">Kích thước chữ</Text>
 							<Slider
 								min={12}
 								max={20}
@@ -322,9 +320,9 @@ export default function SettingButton() {
 
 						{/* Page config */}
 						<div className="flex flex-col gap-2">
-							<Text variant="subTitle1">C\u1ea5u h\u00ecnh trang</Text>
+							<Text variant="subTitle1">Cấu hình trang</Text>
 							<div className="flex items-center justify-between">
-								<Text variant="subTitle2">Hi\u1ec3n th\u1ecb breadcrumb</Text>
+								<Text variant="subTitle2">Hiển thị breadcrumb</Text>
 								<Switch checked={breadCrumb} onCheckedChange={(checked) => updateSettings({ breadCrumb: checked })} />
 								{/* <div className="flex items-center justify-between text-sm text-text-disabled">
 									<div>{t("sys.settings.multiTab")}</div>
@@ -350,17 +348,17 @@ export default function SettingButton() {
 					>
 						<div
 							className="flex items-center justify-center"
-							aria-label={isFullscreen ? "Tho\u00e1t to\u00e0n m\u00e0n h\u00ecnh" : "To\u00e0n m\u00e0n h\u00ecnh"}
+							aria-label={isFullscreen ? "Thoát toàn màn hình" : "Toàn màn hình"}
 						>
 							{isFullscreen ? (
 								<>
 									<Icon icon="local:ic-settings-exit-fullscreen" />
-									<span className="ml-2">Tho\u00e1t to\u00e0n m\u00e0n h\u00ecnh</span>
+									<span className="ml-2">Thoát toàn màn hình</span>
 								</>
 							) : (
 								<>
 									<Icon icon="local:ic-settings-fullscreen" />
-									<span className="ml-2">To\u00e0n m\u00e0n h\u00ecnh</span>
+									<span className="ml-2">Toàn màn hình</span>
 								</>
 							)}
 						</div>

@@ -129,13 +129,13 @@ export function ProductModal({ title, show, formValue, onOk, onCancel }: Product
 						<FormField
 							control={form.control}
 							name="name"
-							rules={{ required: "Vui l\u00f2ng nh\u1eadp t\u00ean s\u1ea3n ph\u1ea9m" }}
+							rules={{ required: "Vui lòng nhập tên sản phẩm" }}
 							render={({ field }) => (
 								<FormItem className="grid grid-cols-4 items-center gap-4">
-									<FormLabel className="text-right">T\u00ean s\u1ea3n ph\u1ea9m</FormLabel>
+									<FormLabel className="text-right">Tên sản phẩm</FormLabel>
 									<div className="col-span-3">
 										<FormControl>
-											<Input {...field} placeholder={"Nh\u1eadp t\u00ean s\u1ea3n ph\u1ea9m"} />
+											<Input {...field} placeholder={"Nhập tên sản phẩm"} />
 										</FormControl>
 										<FormMessage />
 									</div>
@@ -148,10 +148,10 @@ export function ProductModal({ title, show, formValue, onOk, onCancel }: Product
 							name="description"
 							render={({ field }) => (
 								<FormItem className="grid grid-cols-4 items-center gap-4">
-									<FormLabel className="text-right">M\u00f4 t\u1ea3</FormLabel>
+									<FormLabel className="text-right">Mô tả</FormLabel>
 									<div className="col-span-3">
 										<FormControl>
-											<Textarea {...field} placeholder={"Nh\u1eadp m\u00f4 t\u1ea3 s\u1ea3n ph\u1ea9m"} rows={3} />
+											<Textarea {...field} placeholder={"Nhập mô tả sản phẩm"} rows={3} />
 										</FormControl>
 										<FormMessage />
 									</div>
@@ -163,12 +163,12 @@ export function ProductModal({ title, show, formValue, onOk, onCancel }: Product
 							control={form.control}
 							name="price"
 							rules={{
-								required: "Vui l\u00f2ng nh\u1eadp gi\u00e1",
-								min: { value: 0, message: "Gi\u00e1 ph\u1ea3i l\u00e0 s\u1ed1 kh\u00f4ng \u00e2m" },
+								required: "Vui lòng nhập giá",
+								min: { value: 0, message: "Giá phải là số không âm" },
 							}}
 							render={({ field }) => (
 								<FormItem className="grid grid-cols-4 items-center gap-4">
-									<FormLabel className="text-right">Gi\u00e1</FormLabel>
+									<FormLabel className="text-right">Giá</FormLabel>
 									<div className="col-span-3">
 										<FormControl>
 											<Input
@@ -176,7 +176,7 @@ export function ProductModal({ title, show, formValue, onOk, onCancel }: Product
 												type="number"
 												min="0"
 												step="1000"
-												placeholder={"Nh\u1eadp gi\u00e1"}
+												placeholder={"Nhập giá"}
 												onChange={(e) => field.onChange(Number(e.target.value))}
 											/>
 										</FormControl>
@@ -189,10 +189,10 @@ export function ProductModal({ title, show, formValue, onOk, onCancel }: Product
 						<FormField
 							control={form.control}
 							name="categoryId"
-							rules={{ required: "Vui l\u00f2ng ch\u1ecdn danh m\u1ee5c" }}
+							rules={{ required: "Vui lòng chọn danh mục" }}
 							render={({ field }) => (
 								<FormItem className="grid grid-cols-4 items-center gap-4">
-									<FormLabel className="text-right">Danh m\u1ee5c</FormLabel>
+									<FormLabel className="text-right">Danh mục</FormLabel>
 									<div className="col-span-3">
 										<FormControl>
 											<Select value={String(field.value)} onValueChange={(value) => field.onChange(Number(value))}>
@@ -219,17 +219,17 @@ export function ProductModal({ title, show, formValue, onOk, onCancel }: Product
 							name="status"
 							render={({ field }) => (
 								<FormItem className="grid grid-cols-4 items-center gap-4">
-									<FormLabel className="text-right">Tr\u1ea1ng th\u00e1i</FormLabel>
+									<FormLabel className="text-right">Trạng thái</FormLabel>
 									<div className="col-span-3">
 										<FormControl>
 											<RadioGroup onValueChange={field.onChange} value={field.value}>
 												<div className="flex items-center space-x-2">
 													<RadioGroupItem value={ProductStatus.ACTIVE} id="active" />
-													<Label htmlFor="active">Ho\u1ea1t \u0111\u1ed9ng</Label>
+													<Label htmlFor="active">Hoạt động</Label>
 												</div>
 												<div className="flex items-center space-x-2">
 													<RadioGroupItem value={ProductStatus.INACTIVE} id="inactive" />
-													<Label htmlFor="inactive">Kh\u00f4ng ho\u1ea1t \u0111\u1ed9ng</Label>
+													<Label htmlFor="inactive">Không hoạt động</Label>
 												</div>
 											</RadioGroup>
 										</FormControl>
@@ -240,7 +240,7 @@ export function ProductModal({ title, show, formValue, onOk, onCancel }: Product
 						/>
 
 						<FormItem className="grid grid-cols-4 items-center gap-4">
-							<FormLabel className="text-right">T\u1ea3i \u1ea3nh</FormLabel>
+							<FormLabel className="text-right">Tải ảnh</FormLabel>
 							<div className="col-span-3">
 								<div className="flex items-start gap-2">
 									<div className="w-40 shrink-0">
@@ -258,7 +258,7 @@ export function ProductModal({ title, show, formValue, onOk, onCancel }: Product
 													<div key={imagePreview || "empty"} className="relative w-full">
 														<img
 															src={imagePreview}
-															alt={"Xem tr\u01b0\u1edbc"}
+															alt={"Xem trước"}
 															className="absolute inset-0 w-full object-cover"
 														/>
 														<button
@@ -284,13 +284,11 @@ export function ProductModal({ title, show, formValue, onOk, onCancel }: Product
 										className="self-start"
 										onClick={() => setShowImagePicker(true)}
 									>
-										{"Ch\u1ecdn t\u1eeb th\u01b0 vi\u1ec7n"}
+										{"Chọn từ thư viện"}
 									</Button>
 								</div>
 								<div className="mt-2">
-									<p className="mt-1 text-xs text-text-secondary">
-										H\u1ed7 tr\u1ee3 .jpg, .jpeg, .png, .gif, .webp t\u1ed1i \u0111a 5MB
-									</p>
+									<p className="mt-1 text-xs text-text-secondary">Hỗ trợ .jpg, .jpeg, .png, .gif, .webp tối đa 5MB</p>
 								</div>
 							</div>
 						</FormItem>
@@ -300,15 +298,10 @@ export function ProductModal({ title, show, formValue, onOk, onCancel }: Product
 							name="image"
 							render={({ field }) => (
 								<FormItem className="grid grid-cols-4 items-center gap-4">
-									<FormLabel className="text-right">URL \u1ea3nh</FormLabel>
+									<FormLabel className="text-right">URL ảnh</FormLabel>
 									<div className="col-span-3">
 										<FormControl>
-											<Input
-												{...field}
-												placeholder={
-													"Nh\u1eadp \u0111\u01b0\u1eddng d\u1eabn ho\u1eb7c URL \u1ea3nh (kh\u00f4ng b\u1eaft bu\u1ed9c)"
-												}
-											/>
+											<Input {...field} placeholder={"Nhập đường dẫn hoặc URL ảnh (không bắt buộc)"} />
 										</FormControl>
 										<FormMessage />
 									</div>
@@ -324,14 +317,14 @@ export function ProductModal({ title, show, formValue, onOk, onCancel }: Product
 									form.setValue("image", img.filepath, { shouldDirty: true, shouldValidate: true });
 									setImagePreview(img.url || makePreviewUrl(img.filepath));
 									setShowImagePicker(false);
-									toast.success("\u0110\u00e3 ch\u1ecdn \u1ea3nh");
+									toast.success("Đã chọn ảnh");
 								}}
 							/>
 
 							<Button type="button" variant="outline" onClick={onCancel}>
-								H\u1ee7y
+								Hủy
 							</Button>
-							<Button type="submit">L\u01b0u</Button>
+							<Button type="submit">Lưu</Button>
 						</DialogFooter>
 					</form>
 				</Form>

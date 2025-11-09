@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Switch } from "@/ui/switch";
 import { Badge } from "@/ui/badge";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/ui/dropdown-menu";
+import { Slider } from "@/ui/slider";
 import { Icon } from "@/components/icon";
 import { toast } from "sonner";
 import reviewService from "@/api/services/reviewService";
@@ -18,6 +19,8 @@ import ReviewFormDialog from "./review-form";
 import ReviewDetailDialog from "./review-detail";
 
 const DEFAULT_PAGE_SIZE = 20;
+const MIN_RATING = Math.min(...ALLOWED_REVIEW_RATINGS);
+const MAX_RATING = Math.max(...ALLOWED_REVIEW_RATINGS);
 
 const formatDateTime = (input?: string | null) => (input ? new Date(input).toLocaleString("vi-VN") : "-");
 const truncate = (value: string, max = 96) => (value.length > max ? `${value.slice(0, max)}...` : value);
@@ -28,23 +31,27 @@ export default function ReviewsPage() {
 	const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
 	const [search, setSearch] = useState("");
 	const [ratingFilter, setRatingFilter] = useState<number | undefined>();
+	const [ratingRange, setRatingRange] = useState<[number, number] | null>(null);
 	const [includeDeleted, setIncludeDeleted] = useState(false);
 	const [formOpen, setFormOpen] = useState(false);
 	const [editingReview, setEditingReview] = useState<ReviewResponseDto | null>(null);
 	const [detailOpen, setDetailOpen] = useState(false);
 	const [detailReview, setDetailReview] = useState<ReviewResponseDto | null>(null);
 
-	const queryParams = useMemo(
-		() => ({
+	const queryParams = useMemo(() => {
+		const normalizedRange =
+			ratingRange && (ratingRange[0] > MIN_RATING || ratingRange[1] < MAX_RATING) ? ratingRange : null;
+		return {
 			page,
 			limit: pageSize,
 			search: search || undefined,
 			rating: ratingFilter,
+			minRating: normalizedRange ? normalizedRange[0] : undefined,
+			maxRating: normalizedRange ? normalizedRange[1] : undefined,
 			includeDeleted: includeDeleted || undefined,
 			sort: "createdAt:desc",
-		}),
-		[includeDeleted, page, pageSize, ratingFilter, search],
-	);
+		};
+	}, [includeDeleted, page, pageSize, ratingFilter, ratingRange, search]);
 
 	const reviewQuery = useQuery({
 		queryKey: ["admin-reviews", queryParams],
@@ -239,6 +246,7 @@ export default function ReviewsPage() {
 								value={ratingFilter ? String(ratingFilter) : ""}
 								onValueChange={(value) => {
 									setRatingFilter(value ? Number(value) : undefined);
+									setRatingRange(null);
 									setPage(1);
 								}}
 							>
@@ -254,6 +262,46 @@ export default function ReviewsPage() {
 									))}
 								</SelectContent>
 							</Select>
+						</div>
+						<div className="flex flex-col gap-1">
+							<span className="text-sm font-medium text-muted-foreground">Khoảng điểm</span>
+							<div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center">
+								<div className="flex items-center gap-2">
+									<span className="w-12 text-sm text-muted-foreground">
+										{(ratingRange?.[0] ?? MIN_RATING).toFixed(1)}
+									</span>
+									<div className="w-48 sm:w-64">
+										<Slider
+											min={MIN_RATING}
+											max={MAX_RATING}
+											step={0.5}
+											value={ratingRange ?? [MIN_RATING, MAX_RATING]}
+											onValueChange={(value) => {
+												if (Array.isArray(value) && value.length === 2) {
+													setRatingRange([value[0], value[1]]);
+													setRatingFilter(undefined);
+													setPage(1);
+												}
+											}}
+										/>
+									</div>
+									<span className="w-12 text-right text-sm text-muted-foreground">
+										{(ratingRange?.[1] ?? MAX_RATING).toFixed(1)}
+									</span>
+								</div>
+								<Button
+									type="button"
+									variant="ghost"
+									size="sm"
+									onClick={() => {
+										setRatingRange(null);
+										setPage(1);
+									}}
+									disabled={!ratingRange}
+								>
+									Xóa khoảng
+								</Button>
+							</div>
 						</div>
 						<div className="flex items-center gap-2">
 							<span className="text-sm text-muted-foreground">Hiển thị đã xóa</span>

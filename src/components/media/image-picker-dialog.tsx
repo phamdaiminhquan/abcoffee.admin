@@ -52,12 +52,12 @@ export function ImagePickerDialog({
 		<Dialog open={open} onOpenChange={onOpenChange}>
 			<DialogContent className="max-w-3xl">
 				<DialogHeader>
-					<DialogTitle>Select Image</DialogTitle>
+					<DialogTitle>Chọn ảnh</DialogTitle>
 				</DialogHeader>
 				<div className="space-y-3">
 					<div className="flex items-center justify-between gap-2">
 						<Input
-							placeholder="Search images..."
+							placeholder="Tìm kiếm ảnh..."
 							value={search}
 							onChange={(e) => setSearch(e.target.value)}
 							className="w-64"
@@ -95,17 +95,17 @@ export function ImagePickerDialog({
 								);
 							})}
 							{list.length === 0 && (
-								<div className="col-span-full py-6 text-center text-sm text-muted-foreground">No images</div>
+								<div className="col-span-full py-6 text-center text-sm text-muted-foreground">Không có ảnh</div>
 							)}
 						</div>
 					)}
 				</div>
 				<DialogFooter>
 					<Button variant="secondary" onClick={() => onOpenChange(false)}>
-						Cancel
+						Hủy
 					</Button>
 					<Button disabled={!selected} onClick={() => selected && onSelect(selected)}>
-						Select
+						Chọn
 					</Button>
 				</DialogFooter>
 			</DialogContent>

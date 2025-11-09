@@ -23,10 +23,10 @@ const defaultPermissionValue: Permission_Old = {
 };
 
 const PERMISSION_TYPE_LABEL: Record<PermissionType, string> = {
-	[PermissionType.GROUP]: "Nh\u00f3m",
-	[PermissionType.CATALOGUE]: "Danh m\u1ee5c",
+	[PermissionType.GROUP]: "Nhóm",
+	[PermissionType.CATALOGUE]: "Danh mục",
 	[PermissionType.MENU]: "Menu",
-	[PermissionType.COMPONENT]: "Th\u00e0nh ph\u1ea7n",
+	[PermissionType.COMPONENT]: "Thành phần",
 };
 
 export default function PermissionPage() {
@@ -34,7 +34,7 @@ export default function PermissionPage() {
 
 	const [permissionModalProps, setPermissionModalProps] = useState<PermissionModalProps>({
 		formValue: { ...defaultPermissionValue },
-		title: "T\u1ea1o m\u1edbi",
+		title: "Tạo mới",
 		show: false,
 		onOk: () => {
 			setPermissionModalProps((prev) => ({ ...prev, show: false }));
@@ -45,19 +45,19 @@ export default function PermissionPage() {
 	});
 	const columns: ColumnsType<Permission_Old> = [
 		{
-			title: "T\u00ean",
+			title: "Tên",
 			dataIndex: "name",
 			width: 300,
 			render: (_, record) => <div>{record.label}</div>,
 		},
 		{
-			title: "Lo\u1ea1i",
+			title: "Loại",
 			dataIndex: "type",
 			width: 60,
 			render: (_, record) => <Badge variant="info">{PERMISSION_TYPE_LABEL[record.type]}</Badge>,
 		},
 		{
-			title: "Bi\u1ec3u t\u01b0\u1ee3ng",
+			title: "Biểu tượng",
 			dataIndex: "icon",
 			width: 60,
 			render: (icon: string) => {
@@ -69,23 +69,23 @@ export default function PermissionPage() {
 			},
 		},
 		{
-			title: "Th\u00e0nh ph\u1ea7n",
+			title: "Thành phần",
 			dataIndex: "component",
 		},
 		{
-			title: "Tr\u1ea1ng th\u00e1i",
+			title: "Trạng thái",
 			dataIndex: "status",
 			align: "center",
 			width: 120,
 			render: (status) => (
 				<Badge variant={status === BasicStatus.DISABLE ? "error" : "success"}>
-					{status === BasicStatus.DISABLE ? "T\u1eaft" : "B\u1eadt"}
+					{status === BasicStatus.DISABLE ? "Tắt" : "Bật"}
 				</Badge>
 			),
 		},
-		{ title: "Th\u1ee9 t\u1ef1", dataIndex: "order", width: 60 },
+		{ title: "Thứ tự", dataIndex: "order", width: 60 },
 		{
-			title: "H\u00e0nh \u0111\u1ed9ng",
+			title: "Hành động",
 			key: "operation",
 			align: "center",
 			width: 100,
@@ -112,7 +112,7 @@ export default function PermissionPage() {
 			...prev,
 			show: true,
 			...defaultPermissionValue,
-			title: "T\u1ea1o m\u1edbi",
+			title: "Tạo mới",
 			formValue: { ...defaultPermissionValue, parentId: parentId ?? "" },
 		}));
 	};
@@ -121,7 +121,7 @@ export default function PermissionPage() {
 		setPermissionModalProps((prev) => ({
 			...prev,
 			show: true,
-			title: "Ch\u1ec9nh s\u1eeda",
+			title: "Chỉnh sửa",
 			formValue,
 		}));
 	};
@@ -129,8 +129,8 @@ export default function PermissionPage() {
 		<Card>
 			<CardHeader>
 				<div className="flex items-center justify-between">
-					<div>Danh s\u00e1ch quy\u1ec1n</div>
-					<Button onClick={() => onCreate()}>T\u1ea1o m\u1edbi</Button>
+					<div>Danh sách quyền</div>
+					<Button onClick={() => onCreate()}>Tạo mới</Button>
 				</div>
 			</CardHeader>
 			<CardContent>

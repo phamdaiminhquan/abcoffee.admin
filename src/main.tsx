@@ -10,7 +10,6 @@ dayjs.locale("vi");
 
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router";
 import App from "./App";
-import { worker } from "./_mock";
 import menuService from "./api/services/menuService";
 import { registerLocalIcons } from "./components/icon";
 import { GLOBAL_CONFIG } from "./global-config";
@@ -19,10 +18,18 @@ import { routesSection } from "./routes/sections";
 import { urlJoin } from "./utils";
 
 await registerLocalIcons();
-await worker.start({
-	onUnhandledRequest: "bypass",
-	serviceWorker: { url: urlJoin(GLOBAL_CONFIG.publicPath, "mockServiceWorker.js") },
-});
+// Chỉ bật MSW (mock) khi được cấu hình qua biến môi trường
+const enableMock =
+	(import.meta as any).env?.VITE_ENABLE_MSW === "true" ||
+	((import.meta as any).env?.DEV && (import.meta as any).env?.VITE_ENABLE_MSW !== "false");
+
+if (enableMock) {
+	const { worker } = await import("./_mock");
+	await worker.start({
+		onUnhandledRequest: "bypass",
+		serviceWorker: { url: urlJoin(GLOBAL_CONFIG.publicPath, "mockServiceWorker.js") },
+	});
+}
 if (GLOBAL_CONFIG.routerMode === "backend") {
 	await menuService.getMenuList();
 }

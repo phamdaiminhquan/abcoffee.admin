@@ -11,7 +11,7 @@ function ResetForm() {
 	const form = useForm();
 
 	const onFinish = (values: any) => {
-		console.log("Gi\u00e1 tr\u1ecb bi\u1ec3u m\u1eabu:", values);
+		console.log("Giá trị biểu mẫu:", values);
 	};
 
 	if (loginState !== LoginStateEnum.RESET_PASSWORD) return null;
@@ -24,10 +24,8 @@ function ResetForm() {
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onFinish)} className="space-y-4">
 					<div className="flex flex-col items-center gap-2 text-center">
-						<h1 className="text-2xl font-bold">Qu\u00ean m\u1eadt kh\u1ea9u</h1>
-						<p className="text-balance text-sm text-muted-foreground">
-							Nh\u1eadp email \u0111\u1ec3 nh\u1eadn li\u00ean k\u1ebft \u0111\u1eb7t l\u1ea1i
-						</p>
+						<h1 className="text-2xl font-bold">Quên mật khẩu</h1>
+						<p className="text-balance text-sm text-muted-foreground">Nhập email để nhận liên kết đặt lại</p>
 					</div>
 
 					<FormField
@@ -43,7 +41,7 @@ function ResetForm() {
 						)}
 					/>
 					<Button type="submit" className="w-full">
-						G\u1eedi email
+						Gửi email
 					</Button>
 					<ReturnButton onClick={backToLogin} />
 				</form>

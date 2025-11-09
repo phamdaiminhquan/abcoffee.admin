@@ -3,7 +3,7 @@ import type { NavProps } from "@/components/nav";
 
 export const frontendNavData: NavProps["data"] = [
 	{
-		name: "B\u00e1n h\u00e0ng",
+		name: "Bán hàng",
 		items: [
 			{
 				title: "POS",
@@ -12,17 +12,17 @@ export const frontendNavData: NavProps["data"] = [
 				icon: <Icon icon="solar:clipboard-bold-duotone" size="24" />,
 			},
 			{
-				title: "Qu\u1ea3n l\u00fd S\u1ea3n ph\u1ea9m",
+				title: "Quản lý Sản phẩm",
 				path: "/commerce/products",
 				icon: <Icon icon="solar:bag-bold-duotone" size="24" />,
 			},
 			{
-				title: "Qu\u1ea3n l\u00fd Danh m\u1ee5c",
+				title: "Quản lý Danh mục",
 				path: "/commerce/categories",
 				icon: <Icon icon="solar:tag-bold-duotone" size="24" />,
 			},
 			{
-				title: "Qu\u1ea3n l\u00fd H\u00ecnh \u1ea3nh",
+				title: "Quản lý Hình ảnh",
 				path: "/commerce/images",
 				icon: <Icon icon="solar:gallery-bold-duotone" size="24" />,
 			},

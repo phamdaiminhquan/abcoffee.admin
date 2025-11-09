@@ -11,12 +11,12 @@ export function TabItem({ tab, style, onClose }: TabItemProps) {
 	const renderTabLabel = useTabLabelRender();
 	const menuItems: MenuProps["items"] = [
 		{
-			label: "L\u00e0m m\u1edbi",
+			label: "Làm mới",
 			key: MultiTabOperation.REFRESH,
 			icon: <Icon icon="mdi:reload" size={18} />,
 		},
 		{
-			label: "\u0110\u00f3ng tab",
+			label: "Đóng tab",
 			key: MultiTabOperation.CLOSE,
 			icon: <Icon icon="material-symbols:close" size={18} />,
 			disabled: tabs.length === 1,
@@ -25,13 +25,13 @@ export function TabItem({ tab, style, onClose }: TabItemProps) {
 			type: "divider",
 		},
 		{
-			label: "\u0110\u00f3ng c\u00e1c tab b\u00ean tr\u00e1i",
+			label: "Đóng các tab bên trái",
 			key: MultiTabOperation.CLOSELEFT,
 			icon: <Icon icon="material-symbols:tab-close-right-outline" size={18} className="rotate-180" />,
 			disabled: tabs.findIndex((t) => t.key === tab.key) === 0,
 		},
 		{
-			label: "\u0110\u00f3ng c\u00e1c tab b\u00ean ph\u1ea3i",
+			label: "Đóng các tab bên phải",
 			key: MultiTabOperation.CLOSERIGHT,
 			icon: <Icon icon="material-symbols:tab-close-right-outline" size={18} />,
 			disabled: tabs.findIndex((t) => t.key === tab.key) === tabs.length - 1,
@@ -40,13 +40,13 @@ export function TabItem({ tab, style, onClose }: TabItemProps) {
 			type: "divider",
 		},
 		{
-			label: "\u0110\u00f3ng c\u00e1c tab kh\u00e1c",
+			label: "Đóng các tab khác",
 			key: MultiTabOperation.CLOSEOTHERS,
 			icon: <Icon icon="material-symbols:tab-close-outline" size={18} />,
 			disabled: tabs.length === 1,
 		},
 		{
-			label: "\u0110\u00f3ng t\u1ea5t c\u1ea3",
+			label: "Đóng tất cả",
 			key: MultiTabOperation.CLOSEALL,
 			icon: <Icon icon="mdi:collapse-all-outline" size={18} />,
 		},

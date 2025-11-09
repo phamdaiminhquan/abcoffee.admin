@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/ui/form";
 import { Input } from "@/ui/input";
 import { Textarea } from "@/ui/textarea";
@@ -6,7 +6,11 @@ import { Button } from "@/ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/ui/dialog";
 import { RadioGroup, RadioGroupItem } from "@/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/ui/select";
+import { Icon } from "@/components/icon";
+import { ImagePickerDialog } from "@/components/media/image-picker-dialog";
+import { GLOBAL_CONFIG } from "@/global-config";
 import { ALLOWED_REVIEW_RATINGS } from "#/review";
+import type { UploadedImage } from "#/coffee";
 import { useForm } from "react-hook-form";
 
 type AuthorSelection = "user" | "customer";
@@ -16,7 +20,7 @@ type FormValues = {
 	rating: number | string;
 	authorType: AuthorSelection;
 	authorId: string;
-	imagesText: string;
+	images: string[];
 };
 
 type ReviewFormDialogProps = {
@@ -40,12 +44,6 @@ type ReviewFormDialogProps = {
 	};
 };
 
-const parseImages = (value: string) =>
-	value
-		.split(/\n|,/) // split by newline or comma
-		.map((item) => item.trim())
-		.filter(Boolean);
-
 export function ReviewFormDialog({
 	open,
 	onOpenChange,
@@ -68,12 +66,17 @@ export function ReviewFormDialog({
 			rating: defaultValues?.rating ?? ALLOWED_REVIEW_RATINGS[ALLOWED_REVIEW_RATINGS.length - 1],
 			authorType: initialAuthorType,
 			authorId: defaultValues?.userId?.toString() ?? defaultValues?.customerId?.toString() ?? "",
-			imagesText: defaultValues?.images.join("\n") ?? "",
+			images: defaultValues?.images ?? [],
 		},
 	});
 
+	const [imagePickerOpen, setImagePickerOpen] = useState(false);
+	const [manualImage, setManualImage] = useState("");
+	const images = form.watch("images") ?? [];
+
 	useEffect(() => {
 		form.register("authorType");
+		form.register("images");
 	}, [form]);
 
 	useEffect(() => {
@@ -82,19 +85,45 @@ export function ReviewFormDialog({
 			rating: defaultValues?.rating ?? ALLOWED_REVIEW_RATINGS[ALLOWED_REVIEW_RATINGS.length - 1],
 			authorType: initialAuthorType,
 			authorId: defaultValues?.userId?.toString() ?? defaultValues?.customerId?.toString() ?? "",
-			imagesText: defaultValues?.images.join("\n") ?? "",
+			images: defaultValues?.images ?? [],
 		});
 		setAuthorType(initialAuthorType);
+		setManualImage("");
 	}, [defaultValues, form, initialAuthorType]);
+
+	const resolveImageUrl = useCallback((image: UploadedImage) => {
+		if (image.url) return image.url;
+		if (image.filepath) return `${GLOBAL_CONFIG.apiBaseUrl}/${image.filepath}`;
+		return "";
+	}, []);
+
+	const appendImage = useCallback(
+		(url: string) => {
+			const trimmed = url.trim();
+			if (!trimmed) return;
+			const next = Array.from(new Set([...(images as string[]), trimmed]));
+			form.setValue("images", next, { shouldDirty: true, shouldTouch: true });
+		},
+		[form, images],
+	);
+
+	const removeImageAt = useCallback(
+		(index: number) => {
+			const next = (images as string[]).filter((_, idx) => idx !== index);
+			form.setValue("images", next, { shouldDirty: true, shouldTouch: true });
+		},
+		[form, images],
+	);
 
 	const handleSubmit = form.handleSubmit(async (values) => {
 		const ratingNumber = Number(values.rating);
 		const authorIdNumber = values.authorId ? Number(values.authorId) : undefined;
+		const uniqueImages = Array.from(new Set((values.images ?? []).map((item) => item.trim()).filter(Boolean)));
 
 		const payload = {
 			comment: values.comment.trim(),
 			rating: ratingNumber,
-			images: parseImages(values.imagesText),
+			images: uniqueImages,
 			userId: authorType === "user" ? authorIdNumber : undefined,
 			customerId: authorType === "customer" ? authorIdNumber : undefined,
 		};
@@ -203,13 +232,69 @@ export function ReviewFormDialog({
 
 						<FormField
 							control={form.control}
-							name="imagesText"
-							render={({ field }) => (
+							name="images"
+							render={() => (
 								<FormItem>
-									<FormLabel>Danh sách ảnh (mỗi dòng một URL)</FormLabel>
-									<FormControl>
-										<Textarea rows={3} placeholder="https://..." {...field} />
-									</FormControl>
+									<FormLabel>Hình ảnh đính kèm</FormLabel>
+									<div className="space-y-3">
+										<div className="flex flex-col gap-2 sm:flex-row">
+											<div className="flex flex-1 items-center gap-2">
+												<Input
+													placeholder="Dán URL ảnh (https://...)"
+													value={manualImage}
+													onChange={(event) => setManualImage(event.target.value)}
+												/>
+												<Button
+													type="button"
+													onClick={() => {
+														appendImage(manualImage);
+														setManualImage("");
+													}}
+												>
+													Thêm URL
+												</Button>
+											</div>
+											<Button type="button" variant="outline" onClick={() => setImagePickerOpen(true)}>
+												<Icon icon="solar:gallery-bold-duotone" size={18} /> Chọn từ thư viện
+											</Button>
+										</div>
+										{images.length === 0 ? (
+											<p className="text-sm text-muted-foreground">Chưa có ảnh nào được chọn</p>
+										) : (
+											<div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+												{images.map((url, index) => (
+													<div key={`${url}-${index}`} className="flex gap-3 rounded-md border p-2">
+														<div className="h-16 w-16 flex-shrink-0 overflow-hidden rounded bg-muted">
+															{/* hiển thị ảnh nếu có thể tải */}
+															<img
+																src={url}
+																alt={url}
+																className="h-full w-full object-cover"
+																loading="lazy"
+																decoding="async"
+																onError={(event) => {
+																	event.currentTarget.style.display = "none";
+																}}
+															/>
+														</div>
+														<div className="flex flex-1 flex-col justify-between text-sm">
+															<a
+																href={url}
+																target="_blank"
+																rel="noreferrer"
+																className="truncate text-primary underline"
+															>
+																{url}
+															</a>
+															<Button type="button" variant="ghost" size="sm" onClick={() => removeImageAt(index)}>
+																<Icon icon="solar:trash-bin-trash-bold-duotone" size={16} /> Xóa
+															</Button>
+														</div>
+													</div>
+												))}
+											</div>
+										)}
+									</div>
 								</FormItem>
 							)}
 						/>
@@ -224,6 +309,17 @@ export function ReviewFormDialog({
 						</DialogFooter>
 					</form>
 				</Form>
+				<ImagePickerDialog
+					open={imagePickerOpen}
+					onOpenChange={(openState) => {
+						setImagePickerOpen(openState);
+					}}
+					onSelect={(image) => {
+						const url = resolveImageUrl(image);
+						appendImage(url);
+						setImagePickerOpen(false);
+					}}
+				/>
 			</DialogContent>
 		</Dialog>
 	);

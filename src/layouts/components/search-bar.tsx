@@ -97,14 +97,10 @@ const SearchBar = () => {
 			</Button>
 
 			<CommandDialog open={open} onOpenChange={setOpen}>
-				<CommandInput
-					placeholder="G\u00f5 l\u1ec7nh ho\u1eb7c t\u00ecm ki\u1ebfm..."
-					value={searchQuery}
-					onValueChange={setSearchQuery}
-				/>
+				<CommandInput placeholder="Gõ lệnh hoặc tìm kiếm..." value={searchQuery} onValueChange={setSearchQuery} />
 				<ScrollArea className="h-[400px]">
-					<CommandEmpty>Kh\u00f4ng t\u00ecm th\u1ea5y k\u1ebft qu\u1ea3.</CommandEmpty>
-					<CommandGroup heading="\u0110i\u1ec1u h\u01b0\u1edbng">
+					<CommandEmpty>Không tìm thấy kết quả.</CommandEmpty>
+					<CommandGroup heading="Điều hướng">
 						{flattenedItems.map(({ key, label }) => (
 							<CommandItem key={key} onSelect={() => handleSelect(key)} className="flex flex-col items-start">
 								<div className="font-medium">
@@ -122,15 +118,15 @@ const SearchBar = () => {
 					<div className="flex items-center gap-1">
 						<Badge variant="info">↑</Badge>
 						<Badge variant="info">↓</Badge>
-						<Text variant="caption">di chuy\u1ec3n</Text>
+						<Text variant="caption">di chuyển</Text>
 					</div>
 					<div className="flex items-center gap-1">
 						<Badge variant="info">↵</Badge>
-						<Text variant="caption">ch\u1ecdn</Text>
+						<Text variant="caption">chọn</Text>
 					</div>
 					<div className="flex items-center gap-1">
 						<Badge variant="info">ESC</Badge>
-						<Text variant="caption">\u0111\u00f3ng</Text>
+						<Text variant="caption">đóng</Text>
 					</div>
 				</div>
 			</CommandDialog>

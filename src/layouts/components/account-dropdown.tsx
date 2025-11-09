@@ -1,3 +1,4 @@
+import userService from "@/api/services/userService";
 import { useLoginStateContext } from "@/pages/sys/login/providers/login-provider";
 import { useRouter } from "@/routes/hooks";
 import { useUserActions, useUserInfo } from "@/store/userStore";
@@ -10,22 +11,24 @@ import {
 	DropdownMenuTrigger,
 } from "@/ui/dropdown-menu";
 import { NavLink } from "react-router";
+import { toast } from "sonner";
 
 /**
  * Account Dropdown
  */
 export default function AccountDropdown() {
 	const { replace } = useRouter();
-	const { username, email, avatar } = useUserInfo();
+	const { username, email, avatar, fullName } = useUserInfo();
 	const { clearUserInfoAndToken } = useUserActions();
 	const { backToLogin } = useLoginStateContext();
-	const logout = () => {
+	const displayName = fullName || username || email;
+	const logout = async () => {
 		try {
+			await userService.logout();
+			toast.success("Đăng xuất thành công");
+		} finally {
 			clearUserInfoAndToken();
 			backToLogin();
-		} catch (error) {
-			console.log(error);
-		} finally {
 			replace("/auth/login");
 		}
 	};
@@ -39,27 +42,27 @@ export default function AccountDropdown() {
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="w-56">
 				<div className="flex items-center gap-2 p-2">
-					<img className="h-10 w-10 rounded-full" src={avatar} alt="" />
+					<img className="h-10 w-10 rounded-full" src={avatar} alt="avatar" />
 					<div className="flex flex-col items-start">
-						<div className="text-text-primary text-sm font-medium">{username}</div>
+						<div className="text-text-primary text-sm font-medium">{displayName}</div>
 						<div className="text-text-secondary text-xs">{email}</div>
 					</div>
 				</div>
 				<DropdownMenuSeparator />
 				<DropdownMenuItem asChild>
 					<NavLink to="https://docs-admin.slashspaces.com/" target="_blank">
-						T\u00e0i li\u1ec7u
+						Tài liệu
 					</NavLink>
 				</DropdownMenuItem>
 				<DropdownMenuItem asChild>
-					<NavLink to="/management/user/profile">H\u1ed3 s\u01a1</NavLink>
+					<NavLink to="/management/user/profile">Hồ sơ</NavLink>
 				</DropdownMenuItem>
 				<DropdownMenuItem asChild>
-					<NavLink to="/management/user/account">T\u00e0i kho\u1ea3n</NavLink>
+					<NavLink to="/management/user/account">Tài khoản</NavLink>
 				</DropdownMenuItem>
 				<DropdownMenuSeparator />
-				<DropdownMenuItem className="font-bold text-warning" onClick={logout}>
-					\u0110\u0103ng xu\u1ea5t
+				<DropdownMenuItem className="font-bold text-warning" onClick={() => void logout()}>
+					Đăng xuất
 				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>

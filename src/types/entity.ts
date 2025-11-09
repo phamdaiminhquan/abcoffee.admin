@@ -7,15 +7,24 @@ export interface UserToken {
 }
 
 export interface UserInfo {
-	id: string;
+	id: string | number;
 	email: string;
-	username: string;
+	username?: string;
+	fullName?: string;
+	phone?: string;
 	password?: string;
 	avatar?: string;
 	roles?: Role[];
+	role?: string;
 	status?: BasicStatus;
 	permissions?: Permission[];
 	menu?: MenuTree[];
+	createdAt?: string;
+	updatedAt?: string;
+	createdBy?: string | number | null;
+	updatedBy?: string | number | null;
+	deletedAt?: string | null;
+	rewardPoints?: number;
 }
 
 export interface Permission_Old {

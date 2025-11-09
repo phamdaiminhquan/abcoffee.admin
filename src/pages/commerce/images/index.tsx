@@ -69,13 +69,13 @@ export default function ImagesPage() {
 			}
 			const status = err?.response?.status;
 			if (status === 409) {
-				const message = err?.response?.data?.message || "\u1ea2nh \u0111ang \u0111\u01b0\u1ee3c s\u1eed d\u1ee5ng";
+				const message = err?.response?.data?.message || "Ảnh đang được sử dụng";
 				const productIds = err?.response?.data?.details?.productIds;
-				toast.error(productIds?.length ? `${message} (s\u1ea3n ph\u1ea9m: ${productIds.join(", ")})` : message);
+				toast.error(productIds?.length ? `${message} (sản phẩm: ${productIds.join(", ")})` : message);
 			}
 		},
 		onSuccess: () => {
-			toast.success("\u0110\u00e3 x\u00f3a \u1ea3nh");
+			toast.success("Đã xóa ảnh");
 		},
 		onSettled: () => {
 			qc.invalidateQueries({ queryKey: ["images"] });
@@ -85,10 +85,10 @@ export default function ImagesPage() {
 	return (
 		<div className="space-y-3">
 			<div className="flex items-center justify-between gap-2">
-				<CardTitle className="text-base">Qu\u1ea3n l\u00fd H\u00ecnh \u1ea3nh</CardTitle>
+				<CardTitle className="text-base">Quản lý Hình ảnh</CardTitle>
 				<div className="flex items-center gap-2">
 					<Input
-						placeholder="T\u00ecm theo t\u00ean t\u1ec7p..."
+						placeholder="Tìm theo tên tệp..."
 						value={search}
 						onChange={(e) => {
 							setSearch(e.target.value);
@@ -97,7 +97,7 @@ export default function ImagesPage() {
 						className="w-60"
 					/>
 					<div className="flex items-center gap-2">
-						<span className="text-sm">Ch\u1ec9 \u1ea3nh ch\u01b0a d\u00f9ng</span>
+						<span className="text-sm">Chỉ ảnh chưa dùng</span>
 						<Switch
 							checked={unusedOnly}
 							onCheckedChange={(v) => {
@@ -108,7 +108,7 @@ export default function ImagesPage() {
 					</div>
 
 					<div className="flex items-center gap-1 text-sm">
-						<span>M\u1ed7i trang</span>
+						<span>Mỗi trang</span>
 						<select
 							className="h-9 rounded-md border bg-background px-2"
 							value={pageSize}
@@ -167,16 +167,15 @@ export default function ImagesPage() {
 													setDetail(img);
 												}}
 											>
-												<Icon icon="solar:alt-arrow-right-bold-duotone" /> Xem chi ti\u1ebft
+												<Icon icon="solar:alt-arrow-right-bold-duotone" /> Xem chi tiết
 											</DropdownMenuItem>
 											<DropdownMenuItem
 												variant="destructive"
 												onClick={() => {
-													if (window.confirm("X\u00f3a \u1ea3nh n\u00e0y? Kh\u00f4ng th\u1ec3 ho\u00e0n t\u00e1c."))
-														deleteMutation.mutate(img.id);
+													if (window.confirm("Xóa ảnh này? Không thể hoàn tác.")) deleteMutation.mutate(img.id);
 												}}
 											>
-												<Icon icon="mingcute:delete-2-fill" /> X\u00f3a
+												<Icon icon="mingcute:delete-2-fill" /> Xóa
 											</DropdownMenuItem>
 										</DropdownMenuContent>
 									</DropdownMenu>
@@ -185,9 +184,7 @@ export default function ImagesPage() {
 						);
 					})}
 					{images.length === 0 && (
-						<div className="col-span-full py-8 text-center text-sm text-muted-foreground">
-							Kh\u00f4ng c\u00f3 \u1ea3nh
-						</div>
+						<div className="col-span-full py-8 text-center text-sm text-muted-foreground">Không có ảnh</div>
 					)}
 				</div>
 			)}
@@ -195,11 +192,11 @@ export default function ImagesPage() {
 			{/* Pagination */}
 			<div className="flex items-center justify-between text-sm">
 				<div>
-					Trang {currentPage} / {totalPages} • {total} \u1ea3nh
+					Trang {currentPage} / {totalPages} • {total} ảnh
 				</div>
 				<div className="flex items-center gap-2">
 					<Button size="sm" variant="secondary" onClick={() => setPage(1)} disabled={currentPage === 1}>
-						\u0110\u1ea7u
+						Đầu
 					</Button>
 					<Button
 						size="sm"
@@ -207,7 +204,7 @@ export default function ImagesPage() {
 						onClick={() => setPage((p) => Math.max(1, p - 1))}
 						disabled={currentPage === 1}
 					>
-						Tr\u01b0\u1edbc
+						Trước
 					</Button>
 					<Button
 						size="sm"
@@ -223,7 +220,7 @@ export default function ImagesPage() {
 						onClick={() => setPage(totalPages)}
 						disabled={currentPage === totalPages}
 					>
-						Cu\u1ed1i
+						Cuối
 					</Button>
 				</div>
 			</div>
@@ -232,7 +229,7 @@ export default function ImagesPage() {
 			<Dialog open={!!detail} onOpenChange={(open) => !open && setDetail(null)}>
 				<DialogContent>
 					<DialogHeader>
-						<DialogTitle>Chi ti\u1ebft \u1ea3nh</DialogTitle>
+						<DialogTitle>Chi tiết ảnh</DialogTitle>
 					</DialogHeader>
 					{detail && (
 						<div className="space-y-3">
@@ -245,19 +242,19 @@ export default function ImagesPage() {
 							</div>
 							<div className="grid grid-cols-2 gap-3 text-sm">
 								<div>
-									<Label className="text-muted-foreground">T\u00ean t\u1ec7p g\u1ed1c</Label>
+									<Label className="text-muted-foreground">Tên tệp gốc</Label>
 									<div>{detail.originalFilename}</div>
 								</div>
 								<div>
-									<Label className="text-muted-foreground">T\u00ean t\u1ec7p l\u01b0u</Label>
+									<Label className="text-muted-foreground">Tên tệp lưu</Label>
 									<div>{detail.savedFilename}</div>
 								</div>
 								<div>
-									<Label className="text-muted-foreground">K\u00edch th\u01b0\u1edbc</Label>
+									<Label className="text-muted-foreground">Kích thước</Label>
 									<div>{(detail.filesize / 1024).toFixed(0)} KB</div>
 								</div>
 								<div>
-									<Label className="text-muted-foreground">Th\u1eddi \u0111i\u1ec3m t\u1ea3i l\u00ean</Label>
+									<Label className="text-muted-foreground">Thời điểm tải lên</Label>
 									<div>{new Date(detail.createdAt as any).toLocaleString()}</div>
 								</div>
 							</div>

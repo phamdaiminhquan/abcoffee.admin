@@ -1,11 +1,16 @@
-import userService from "@/api/services/userService";
+import userService, { type SignUpReq } from "@/api/services/userService";
 import { Button } from "@/ui/button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/ui/form";
 import { Input } from "@/ui/input";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { ReturnButton } from "./components/ReturnButton";
 import { LoginStateEnum, useLoginStateContext } from "./providers/login-provider";
+
+type RegisterFormValues = SignUpReq & {
+	confirmPassword: string;
+};
 
 function RegisterForm() {
 	const { loginState, backToLogin } = useLoginStateContext();
@@ -14,38 +19,42 @@ function RegisterForm() {
 		mutationFn: userService.signup,
 	});
 
-	const form = useForm({
+	const form = useForm<RegisterFormValues>({
 		defaultValues: {
-			username: "",
+			fullName: "",
 			email: "",
 			password: "",
 			confirmPassword: "",
+			phone: "",
 		},
 	});
 
-	const onFinish = async (values: any) => {
-		console.log("Gi\u00e1 tr\u1ecb bi\u1ec3u m\u1eabu:", values);
-		await signUpMutation.mutateAsync(values);
+	const onFinish = async (values: RegisterFormValues) => {
+		const { confirmPassword, ...payload } = values;
+		await signUpMutation.mutateAsync(payload);
+		toast.success("Đăng ký thành công. Vui lòng đăng nhập.");
 		backToLogin();
 	};
 
 	if (loginState !== LoginStateEnum.REGISTER) return null;
 
+	const isSubmitting = signUpMutation.isPending;
+
 	return (
 		<Form {...form}>
 			<form onSubmit={form.handleSubmit(onFinish)} className="space-y-4">
 				<div className="flex flex-col items-center gap-2 text-center">
-					<h1 className="text-2xl font-bold">\u0110\u0103ng k\u00fd</h1>
+					<h1 className="text-2xl font-bold">Đăng ký</h1>
 				</div>
 
 				<FormField
 					control={form.control}
-					name="username"
-					rules={{ required: "Vui l\u00f2ng nh\u1eadp t\u00ean \u0111\u0103ng nh\u1eadp" }}
+					name="fullName"
+					rules={{ required: "Vui lòng nhập họ và tên" }}
 					render={({ field }) => (
 						<FormItem>
 							<FormControl>
-								<Input placeholder="T\u00ean \u0111\u0103ng nh\u1eadp" {...field} />
+								<Input placeholder="Nguyễn Văn A" {...field} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>
@@ -55,11 +64,30 @@ function RegisterForm() {
 				<FormField
 					control={form.control}
 					name="email"
-					rules={{ required: "Vui l\u00f2ng nh\u1eadp email" }}
+					rules={{
+						required: "Vui lòng nhập email",
+						pattern: {
+							value: /.+@.+\..+/,
+							message: "Email không hợp lệ",
+						},
+					}}
 					render={({ field }) => (
 						<FormItem>
 							<FormControl>
-								<Input placeholder="Email" {...field} />
+								<Input type="email" autoComplete="email" placeholder="Email" {...field} />
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
+
+				<FormField
+					control={form.control}
+					name="phone"
+					render={({ field }) => (
+						<FormItem>
+							<FormControl>
+								<Input autoComplete="tel" placeholder="Số điện thoại (không bắt buộc)" {...field} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>
@@ -69,11 +97,11 @@ function RegisterForm() {
 				<FormField
 					control={form.control}
 					name="password"
-					rules={{ required: "Vui l\u00f2ng nh\u1eadp m\u1eadt kh\u1ea9u" }}
+					rules={{ required: "Vui lòng nhập mật khẩu" }}
 					render={({ field }) => (
 						<FormItem>
 							<FormControl>
-								<Input type="password" placeholder="M\u1eadt kh\u1ea9u" {...field} />
+								<Input type="password" autoComplete="new-password" placeholder="Mật khẩu" {...field} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>
@@ -84,31 +112,31 @@ function RegisterForm() {
 					control={form.control}
 					name="confirmPassword"
 					rules={{
-						required: "Vui l\u00f2ng x\u00e1c nh\u1eadn m\u1eadt kh\u1ea9u",
-						validate: (value) => value === form.getValues("password") || "M\u1eadt kh\u1ea9u kh\u00f4ng kh\u1edbp",
+						required: "Vui lòng xác nhận mật khẩu",
+						validate: (value) => value === form.getValues("password") || "Mật khẩu không khớp",
 					}}
 					render={({ field }) => (
 						<FormItem>
 							<FormControl>
-								<Input type="password" placeholder="X\u00e1c nh\u1eadn m\u1eadt kh\u1ea9u" {...field} />
+								<Input type="password" autoComplete="new-password" placeholder="Xác nhận mật khẩu" {...field} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>
 					)}
 				/>
 
-				<Button type="submit" className="w-full">
-					\u0110\u0103ng k\u00fd
+				<Button type="submit" className="w-full" disabled={isSubmitting}>
+					Đăng ký
 				</Button>
 
 				<div className="mb-2 text-xs text-gray">
-					<span>B\u1eb1ng vi\u1ec7c \u0111\u0103ng k\u00fd, b\u1ea1n \u0111\u1ed3ng \u00fd v\u1edbi</span>
+					<span>Bằng việc đăng ký, bạn đồng ý với</span>
 					<a href="./" className="text-sm underline! text-primary!">
-						\u0110i\u1ec1u kho\u1ea3n d\u1ecbch v\u1ee5
+						Điều khoản dịch vụ
 					</a>
 					{" & "}
 					<a href="./" className="text-sm underline! text-primary!">
-						Ch\u00ednh s\u00e1ch b\u1ea3o m\u1eadt
+						Chính sách bảo mật
 					</a>
 				</div>
 

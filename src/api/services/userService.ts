@@ -1,33 +1,64 @@
 import apiClient from "../apiClient";
 
-import type { UserInfo, UserToken } from "#/entity";
+import type { UserInfo } from "#/entity";
 
 export interface SignInReq {
-	username: string;
+	email: string;
 	password: string;
 }
 
-export interface SignUpReq extends SignInReq {
+export interface SignUpReq {
+	fullName: string;
 	email: string;
+	password: string;
+	phone?: string;
 }
-export type SignInRes = UserToken & { user: UserInfo };
+
+export interface AuthTokens {
+	accessToken: string;
+	refreshToken: string;
+}
+
+export interface SignInRes {
+	user: UserInfo;
+	tokens: AuthTokens;
+}
+
+export interface RefreshTokenReq {
+	refreshToken: string;
+}
+
+export type RefreshTokenRes = AuthTokens;
+
+export interface UpdateProfileReq {
+	fullName?: string;
+	phone?: string;
+	currentPassword?: string;
+	newPassword?: string;
+}
 
 export enum UserApi {
-	SignIn = "/auth/signin",
-	SignUp = "/auth/signup",
+	Login = "/auth/login",
+	Register = "/auth/register",
+	Refresh = "/auth/refresh-token",
 	Logout = "/auth/logout",
-	Refresh = "/auth/refresh",
-	User = "/user",
+	Profile = "/auth/profile",
 }
 
-const signin = (data: SignInReq) => apiClient.post<SignInRes>({ url: UserApi.SignIn, data });
-const signup = (data: SignUpReq) => apiClient.post<SignInRes>({ url: UserApi.SignUp, data });
-const logout = () => apiClient.get({ url: UserApi.Logout });
-const findById = (id: string) => apiClient.get<UserInfo[]>({ url: `${UserApi.User}/${id}` });
+const signin = (data: SignInReq) =>
+	apiClient.post<SignInRes>({ url: UserApi.Login, data, skipAuth: true, skipErrorHandler: true });
+const signup = (data: SignUpReq) => apiClient.post<SignInRes>({ url: UserApi.Register, data, skipAuth: true });
+const logout = () => apiClient.post<{ message: string }>({ url: UserApi.Logout });
+const refreshToken = (data: RefreshTokenReq) =>
+	apiClient.post<RefreshTokenRes>({ url: UserApi.Refresh, data, skipAuth: true, skipErrorHandler: true });
+const getProfile = () => apiClient.get<UserInfo>({ url: UserApi.Profile });
+const updateProfile = (data: UpdateProfileReq) => apiClient.put<UserInfo>({ url: UserApi.Profile, data });
 
 export default {
 	signin,
 	signup,
-	findById,
 	logout,
+	refreshToken,
+	getProfile,
+	updateProfile,
 };

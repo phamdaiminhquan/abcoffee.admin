@@ -13,6 +13,7 @@ export enum StorageEnum {
 	UserInfo = "userInfo",
 	UserToken = "userToken",
 	Settings = "settings",
+	RememberMe = "rememberMe",
 }
 
 export enum ThemeMode {
