@@ -136,7 +136,8 @@ export default function ImagesPage() {
 			) : (
 				<div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
 					{images.map((img) => {
-						const src = img.url || (img.filepath ? `${GLOBAL_CONFIG.apiBaseUrl}/${img.filepath}` : "");
+						const src = img.filepath ? `${GLOBAL_CONFIG.apiBaseUrl}/${img.filepath}` : "";
+						console.log("global", GLOBAL_CONFIG.apiBaseUrl);
 						return (
 							<Card key={img.id} className="group relative overflow-hidden">
 								<CardContent className="p-0">

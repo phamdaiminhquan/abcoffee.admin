@@ -106,13 +106,6 @@ export function getFrontendDashboardRoutes(): RouteObject[] {
 				},
 			],
 		},
-		{
-			path: "permission",
-			children: [
-				{ index: true, element: Component("/pages/sys/others/permission") },
-				{ path: "page-test", element: Component("/pages/sys/others/permission/page-test") },
-			],
-		},
 		{ path: "calendar", element: Component("/pages/sys/others/calendar") },
 		{ path: "blank", element: Component("/pages/sys/others/blank") },
 	];

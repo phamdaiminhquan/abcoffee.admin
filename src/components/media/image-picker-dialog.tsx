@@ -72,7 +72,7 @@ export function ImagePickerDialog({
 					) : (
 						<div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4">
 							{list.map((img) => {
-								const src = img.url || (img.filepath ? `${GLOBAL_CONFIG.apiBaseUrl}/${img.filepath}` : "");
+								const src = img.filepath ? `${GLOBAL_CONFIG.apiBaseUrl}/${img.filepath}` : "";
 								const active = img.id === selectedId;
 								return (
 									<Card

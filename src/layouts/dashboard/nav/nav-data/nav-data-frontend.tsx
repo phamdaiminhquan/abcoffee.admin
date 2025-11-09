@@ -189,18 +189,6 @@ export const frontendNavData: NavProps["data"] = [
 		name: "Khác",
 		items: [
 			{
-				title: "Phân quyền",
-				path: "/permission",
-				icon: <Icon icon="mingcute:safe-lock-fill" size="24" />,
-			},
-			{
-				title: "Kiểm tra phân quyền",
-				path: "/permission/page-test",
-				icon: <Icon icon="mingcute:safe-lock-fill" size="24" />,
-				auth: ["permission:read"],
-				hidden: true,
-			},
-			{
 				title: "Lịch",
 				path: "/calendar",
 				icon: <Icon icon="solar:calendar-bold-duotone" size="24" />,
