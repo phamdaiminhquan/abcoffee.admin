@@ -2,10 +2,10 @@
 <br> 
 <br>
 <img src="./src/assets/icons/ic-logo-badge.svg" height="140" />
-<h3> Slash Admin </h3>
+<h3> AB Coffee </h3>
   <p>
     <p style="font-size: 14px">
-      Slash Admin is a modern admin dashboard template built with React 19, Vite, shadcn/ui, and TypeScript. It is designed to help developers quickly create powerful admin management systems.
+      AB Coffee is a modern admin dashboard template built with React 19, Vite, shadcn/ui, and TypeScript. It is designed to help developers quickly create powerful admin management systems.
     </p>
     <br />
     <br />
@@ -16,7 +16,7 @@
     <a href="https://docs-admin.slashspaces.com/">Document</a>
     <br />
     <br />
-    <a href="https://trendshift.io/repositories/6387" target="_blank"><img src="https://trendshift.io/api/badge/repositories/6387" alt="d3george%2Fslash-admin | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
+    <a href="https://trendshift.io/repositories/6387" target="_blank"><img src="https://trendshift.io/api/badge/repositories/6387" alt="d3george%2FAB Coffee | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
 </div>
 
 **English** | [中文](./README.zh-CN.md)
@@ -30,9 +30,9 @@
 ## Preview
 + https://admin.slashspaces.com/
 
-|![login.png](https://d3george.github.io/github-static/slash-admin/sa-web-light.jpeg)|![login_dark.png](https://d3george.github.io/github-static/slash-admin/sa-web-dark.jpeg)
+|![login.png](https://d3george.github.io/github-static/AB Coffee/sa-web-light.jpeg)|![login_dark.png](https://d3george.github.io/github-static/AB Coffee/sa-web-dark.jpeg)
 | ----------------------------------------------------------------- | ------------------------------------------------------------------- |
-|![analysis.png](https://d3george.github.io/github-static/slash-admin/sa-mobile-light.jpeg)|![workbench.png](https://d3george.github.io/github-static/slash-admin/sa-mobile-dark.jpeg)
+|![analysis.png](https://d3george.github.io/github-static/AB Coffee/sa-mobile-light.jpeg)|![workbench.png](https://d3george.github.io/github-static/AB Coffee/sa-mobile-dark.jpeg)
 | | 
 
 ## Features
@@ -56,7 +56,7 @@
 ### Get the Project Code
 
 ```bash
-git clone https://github.com/d3george/slash-admin.git
+git clone https://github.com/d3george/AB Coffee.git
 ```
 
 ### Install Dependencies

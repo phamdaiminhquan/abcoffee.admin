@@ -14,7 +14,7 @@
 		"intendedConsumers": ["Developers", "AI assistants", "Contributors"]
 	},
 	"projectOverview": {
-		"name": "Slash Admin",
+		"name": "AB Coffee",
 		"techStack": {
 			"runtime": ["React 19", "TypeScript 5"],
 			"bundler": "Vite 6",

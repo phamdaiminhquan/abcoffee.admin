@@ -3,8 +3,8 @@ import { cn } from "@/utils";
 import type { ReactNode } from "react";
 import AccountDropdown from "../components/account-dropdown";
 import BreadCrumb from "../components/bread-crumb";
-import NoticeButton from "../components/notice";
-import SearchBar from "../components/search-bar";
+// import NoticeButton from "../components/notice";
+// import SearchBar from "../components/search-bar";
 
 interface HeaderProps {
 	leftSlot?: ReactNode;
@@ -29,8 +29,8 @@ export default function Header({ leftSlot }: HeaderProps) {
 			</div>
 
 			<div className="flex items-center gap-1">
-				<SearchBar />
-				<NoticeButton />
+				{/* <SearchBar /> */}
+				{/* <NoticeButton /> */}
 				{/* <SettingButton /> */}
 				<AccountDropdown />
 			</div>

@@ -29,10 +29,10 @@ function RegisterForm() {
 		},
 	});
 
-	const onFinish = async (values: RegisterFormValues) => {
-		const { confirmPassword, ...payload } = values;
-		await signUpMutation.mutateAsync(payload);
-		toast.success("Đăng ký thành công. Vui lòng đăng nhập.");
+	const onFinish = async (_values: RegisterFormValues) => {
+		// const { confirmPassword, ...payload } = values;
+		// await signUpMutation.mutateAsync(payload);
+		toast.info("Chức năng đăng ký đang được bảo trì. Vui lòng liên hệ quản trị viên.");
 		backToLogin();
 	};
 

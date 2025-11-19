@@ -1,15 +1,29 @@
 import { cn } from "@/utils";
 import { NavLink } from "react-router";
-import { Icon } from "../icon";
 
 interface Props {
 	size?: number | string;
 	className?: string;
 }
-function Logo({ size = 50, className }: Props) {
+
+const resolveFontSize = (size?: number | string) => {
+	if (typeof size === "number") {
+		return `${size}px`;
+	}
+	if (typeof size === "string" && size.trim().length > 0) {
+		return size;
+	}
+	return undefined;
+};
+
+function Logo({ size = 36, className }: Props) {
 	return (
-		<NavLink to="/" className={cn(className)}>
-			<Icon icon="local:ic-logo-badge" size={size} color="var(--colors-palette-primary-default)" />
+		<NavLink
+			to="/"
+			className={cn("inline-flex items-center font-semibold uppercase tracking-wide", className)}
+			style={{ fontSize: resolveFontSize(size), color: "var(--colors-palette-primary-default)" }}
+		>
+			<span>ab</span>
 		</NavLink>
 	);
 }
